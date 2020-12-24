@@ -1,6 +1,0 @@
-module Pods_Dear_World {
-  umbrella header "Pods-Dear,World-umbrella.h"
-
-  export *
-  module * { export * }
-}
