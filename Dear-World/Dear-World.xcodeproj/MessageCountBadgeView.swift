@@ -11,24 +11,34 @@ import SnapKit
 import Then
 
 public final class MessageCountBadgeView: UIView {
-
     private var totalCount: UILabel = UILabel()
+    
     public var count: Int = 0 {
         didSet {
             self.totalCount.text = "\(count)"
         }
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupSubviews()
     }
+    
+    override public func didMoveToSuperview() {
+        self.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(60)
+        }
+    }
+    
     private func setupUI() {
         self.snp.makeConstraints {
             $0.width.equalTo(88)
             $0.height.equalTo(80)
         }
     }
+    
     private func setupSubviews() {
         let mainLogo: UIImageView = UIImageView().then {
             $0.image = UIImage(named: "earth")
@@ -56,7 +66,7 @@ public final class MessageCountBadgeView: UIView {
         }
 
         self.totalCount.do {
-            $0.text = "-1"
+            $0.text = "11111111111111111"
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 14)
         }
