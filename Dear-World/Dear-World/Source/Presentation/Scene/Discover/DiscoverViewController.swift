@@ -18,7 +18,7 @@ final class DiscoverViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         //FIXME: 배경색 변경
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .breathingWhite
     }
     
     required init?(coder: NSCoder) {
@@ -65,7 +65,7 @@ final class DiscoverViewController: UIViewController {
             $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
         }
         
-        messageCollectionView.backgroundColor = .blue
+        messageCollectionView.backgroundColor = .breathingWhite
         self.view.addSubview(self.messageCollectionView)
         self.messageCollectionView.snp.makeConstraints {
             $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
