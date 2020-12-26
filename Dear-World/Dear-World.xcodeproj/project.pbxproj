@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB292597259E0062B15A /* MessageCountBadgeView.swift */; };
 		121BDB44259735200062B15A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB43259735200062B15A /* UIColor+.swift */; };
+		121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB582597652A0062B15A /* MessageTableViewCell.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		121BDB292597259E0062B15A /* MessageCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCountBadgeView.swift; path = "Dear-World.xcodeproj/MessageCountBadgeView.swift"; sourceTree = SOURCE_ROOT; };
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 				3902F14F2597531600A3DF8C /* Extension */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		121BDB57259764F10062B15A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				121BDB582597652A0062B15A /* MessageTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		3902F128259714AB00A3DF8C /* Cell */ = {
@@ -247,6 +257,7 @@
 		3958260025962F77007325AB /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				121BDB57259764F10062B15A /* Cell */,
 				395826112596322B007325AB /* DiscoverViewController.swift */,
 			);
 			path = Discover;
@@ -445,6 +456,7 @@
 				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
+				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
 				3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
