@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MessageTableViewCell: UICollectionViewCell {
+final class MessageTableViewCell: UICollectionViewCell {
     let emojiLabel: UILabel = UILabel()
     let nameLabel: UILabel = UILabel()
     let countryLabel: UILabel = UILabel()
@@ -28,10 +28,11 @@ class MessageTableViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        fatalError()
         setupUI()
     }
     
-    func setupUI() {
+    private func setupUI() {
         self.do {
             $0.backgroundColor = .white
             $0.frame.size.width = 200
@@ -89,12 +90,14 @@ class MessageTableViewCell: UICollectionViewCell {
             $0.font = .systemFont(ofSize: 12)
             $0.textColor = .black
             $0.textContainerInset = .zero
+            $0.isScrollEnabled = false
+            $0.isEditable = false
         }
         self.addSubview(self.detailTextView)
         self.detailTextView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(30)
             $0.top.equalTo(emojiView.snp.bottom).offset(10)
-            $0.height.equalTo(42)
+            $0.height.equalTo(43)
         }
         
         self.likeView.do {
