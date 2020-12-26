@@ -7,6 +7,7 @@
 
 import RxCocoa
 import RxGesture
+import RxOptional
 import RxSwift
 import SnapKit
 import Then
@@ -19,6 +20,8 @@ final class CheeringMapViewController: UIViewController {
   private let cheeringCountLabel: UILabel = UILabel()
   private let worldMapView: UIView = UIView()
   private let rankingTableView: UITableView = UITableView()
+  
+  private var worldMapHeight: CGFloat = 208
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -98,14 +101,17 @@ final class CheeringMapViewController: UIViewController {
       $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
     }
     rankingTableView.rx.contentOffset
-      .map { 208 - $0.y }
-      .filter { $0 > 0 }
+      .map { $0.y }
       .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
-      .subscribe(onNext: { [weak self] height in
+      .subscribe(onNext: { [weak self] y in
         guard let self = self else { return }
+        self.worldMapHeight -= y
+        self.worldMapHeight = max(0, self.worldMapHeight)
+        self.worldMapHeight = min(208, self.worldMapHeight)
         self.worldMapView.snp.updateConstraints {
-          $0.height.equalTo(height)
+          $0.height.equalTo(self.worldMapHeight)
         }
+        self.rankingTableView.contentOffset = .zero
       })
       .disposed(by: disposeBag)
   }
