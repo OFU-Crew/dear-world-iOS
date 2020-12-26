@@ -8,6 +8,7 @@
 import SnapKit
 import Then
 import UIKit
+import ReactorKit
 
 final class DiscoverViewController: UIViewController {
     private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
@@ -17,7 +18,6 @@ final class DiscoverViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        //FIXME: 배경색 변경
         self.view.backgroundColor = .breathingWhite
     }
     
@@ -73,13 +73,13 @@ final class DiscoverViewController: UIViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.width.equalTo(300)
         }
+        
     }
     
     private func setupCollectionView() {
-        self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "cell")
+        self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "messageCell")
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
-        
         
         let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20
@@ -91,7 +91,7 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath)
         return cell
     }
     

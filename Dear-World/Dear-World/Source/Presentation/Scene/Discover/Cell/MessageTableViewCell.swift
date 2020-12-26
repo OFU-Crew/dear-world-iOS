@@ -34,7 +34,6 @@ final class MessageTableViewCell: UICollectionViewCell {
     private func setupUI() {
         self.do {
             $0.backgroundColor = .white
-            $0.frame.size.width = 200
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = 20
         }
