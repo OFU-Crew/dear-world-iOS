@@ -19,6 +19,7 @@ final class CheeringMapViewController: UIViewController {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let cheeringCountLabel: UILabel = UILabel()
   private let worldMapView: UIView = UIView()
+  private let headerView: UIView = UIView()
   private let rankingTableView: UITableView = UITableView()
   
   private var worldMapHeight: CGFloat = 208
@@ -86,32 +87,52 @@ final class CheeringMapViewController: UIViewController {
       $0.width.equalTo(worldMapView.snp.height).multipliedBy(335.0 / 208.0)
       $0.centerX.equalToSuperview()
     }
-    
+    let headerTitleLabel: UILabel = UILabel().then {
+      $0.text = "Cheer Rank"
+      $0.font = .boldSystemFont(ofSize: 18)
+      $0.textColor = .warmBlue
+    }
+    headerView.addSubview(headerTitleLabel)
+    headerTitleLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.bottom.equalToSuperview().inset(10)
+    }
+    headerView.snp.makeConstraints {
+      $0.width.equalTo(UIScreen.main.bounds.width)
+    }
     self.view.addSubview(rankingTableView)
     rankingTableView.do {
       $0.backgroundColor = .white
       $0.layer.cornerRadius = 20
+      $0.tableHeaderView = headerView
+      $0.contentOffset = CGPoint(x: 0, y: -55)
       $0.register(CountryTableViewCell.self, forCellReuseIdentifier: "CountryTableViewCell")
       $0.rowHeight = UITableView.automaticDimension
       $0.estimatedRowHeight = 64
       $0.dataSource = self
+      $0.separatorStyle = .none
     }
     rankingTableView.snp.makeConstraints {
       $0.top.equalTo(worldMapView.snp.bottom).offset(50)
       $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
     }
     rankingTableView.rx.contentOffset
-      .map { $0.y }
+      .filter { $0.y > -50 }
+      .map { $0.y + 55 }
+      .filter { $0 > 1 }
       .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
+      .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] y in
         guard let self = self else { return }
+        Logger.log(self.rankingTableView.contentOffset)
+        Logger.log(y)
         self.worldMapHeight -= y
         self.worldMapHeight = max(0, self.worldMapHeight)
         self.worldMapHeight = min(208, self.worldMapHeight)
         self.worldMapView.snp.updateConstraints {
           $0.height.equalTo(self.worldMapHeight)
         }
-        self.rankingTableView.contentOffset = .zero
+        self.rankingTableView.contentOffset = CGPoint(x: 0, y: -55)
       })
       .disposed(by: disposeBag)
   }
