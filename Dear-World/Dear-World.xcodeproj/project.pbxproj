@@ -15,7 +15,6 @@
 		3958259D25948E43007325AB /* Dear_WorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958259C25948E43007325AB /* Dear_WorldUITests.swift */; };
 		395825B725948EE4007325AB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 395825B625948EE4007325AB /* Colors.xcassets */; };
 		395825F0259494B1007325AB /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395825EF259494B1007325AB /* ReactorKit */; };
-		395826052596304D007325AB /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 395826042596304D007325AB /* Discover.storyboard */; };
 		395826122596322B007325AB /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826112596322B007325AB /* DiscoverViewController.swift */; };
 		3958261B2596D06C007325AB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 3958261A2596D06C007325AB /* Then */; };
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
@@ -54,7 +53,6 @@
 		3958259C25948E43007325AB /* Dear_WorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dear_WorldUITests.swift; sourceTree = "<group>"; };
 		3958259E25948E43007325AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		395826042596304D007325AB /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -210,7 +208,6 @@
 		3958260025962F77007325AB /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				395826042596304D007325AB /* Discover.storyboard */,
 				395826112596322B007325AB /* DiscoverViewController.swift */,
 			);
 			path = Discover;
@@ -356,7 +353,6 @@
 			files = (
 				3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */,
 				395825B725948EE4007325AB /* Colors.xcassets in Resources */,
-				395826052596304D007325AB /* Discover.storyboard in Resources */,
 				3958258425948E43007325AB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
