@@ -45,7 +45,7 @@ final class DiscoverViewController: UIViewController {
             $0.layer.cornerRadius = 19
             $0.textAlignment = .center
             $0.textColor = .warmBlue
-            $0.layer.borderColor = UIColor.livelyBlue.cgColor
+            $0.layer.borderColor = UIColor.warmBlue.cgColor
         }
         view.addSubview(totalCount)
         totalCount.snp.makeConstraints {
