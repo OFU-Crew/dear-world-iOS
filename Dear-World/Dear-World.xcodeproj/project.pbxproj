@@ -16,7 +16,12 @@
 		3958259225948E43007325AB /* Dear_WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958259125948E43007325AB /* Dear_WorldTests.swift */; };
 		3958259D25948E43007325AB /* Dear_WorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958259C25948E43007325AB /* Dear_WorldUITests.swift */; };
 		395825B725948EE4007325AB /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 395825B625948EE4007325AB /* Colors.xcassets */; };
-		395825F0259494B1007325AB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 395825EF259494B1007325AB /* SwiftPackageProductDependency */; };
+		395825F0259494B1007325AB /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395825EF259494B1007325AB /* ReactorKit */; };
+		395826052596304D007325AB /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 395826042596304D007325AB /* Discover.storyboard */; };
+		395826122596322B007325AB /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826112596322B007325AB /* DiscoverViewController.swift */; };
+		3958261B2596D06C007325AB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 3958261A2596D06C007325AB /* Then */; };
+		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
+		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +57,8 @@
 		3958259C25948E43007325AB /* Dear_WorldUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dear_WorldUITests.swift; sourceTree = "<group>"; };
 		3958259E25948E43007325AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		395826042596304D007325AB /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
+		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				395825F0259494B1007325AB /* BuildFile in Frameworks */,
+				395826212596D0B0007325AB /* Alamofire in Frameworks */,
+				395826272596D225007325AB /* SnapKit in Frameworks */,
+				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
+				3958261B2596D06C007325AB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +203,42 @@
 		395825B525948ECE007325AB /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				3958260025962F77007325AB /* Discover */,
+				3958260125962F7E007325AB /* Cheering Map */,
+				3958260225962F94007325AB /* Send Message */,
+				3958260325962FAE007325AB /* About */,
 			);
 			path = Scene;
+			sourceTree = "<group>";
+		};
+		3958260025962F77007325AB /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				395826042596304D007325AB /* Discover.storyboard */,
+				395826112596322B007325AB /* DiscoverViewController.swift */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		3958260125962F7E007325AB /* Cheering Map */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Cheering Map";
+			sourceTree = "<group>";
+		};
+		3958260225962F94007325AB /* Send Message */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Send Message";
+			sourceTree = "<group>";
+		};
+		3958260325962FAE007325AB /* About */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = About;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +258,10 @@
 			);
 			name = "Dear-World";
 			packageProductDependencies = (
-				395825EF259494B1007325AB /* SwiftPackageProductDependency */,
+				395825EF259494B1007325AB /* ReactorKit */,
+				3958261A2596D06C007325AB /* Then */,
+				395826202596D0B0007325AB /* Alamofire */,
+				395826262596D225007325AB /* SnapKit */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -288,7 +335,10 @@
 			);
 			mainGroup = 3958256E25948E41007325AB;
 			packageReferences = (
-				395825EE259494B1007325AB /* RemoteSwiftPackageReference */,
+				395825EE259494B1007325AB /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				395826192596D06C007325AB /* XCRemoteSwiftPackageReference "Then" */,
+				3958261F2596D0B0007325AB /* XCRemoteSwiftPackageReference "Alamofire" */,
+				395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -308,6 +358,7 @@
 			files = (
 				3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */,
 				395825B725948EE4007325AB /* Colors.xcassets in Resources */,
+				395826052596304D007325AB /* Discover.storyboard in Resources */,
 				3958258425948E43007325AB /* Assets.xcassets in Resources */,
 				3958258225948E41007325AB /* Main.storyboard in Resources */,
 			);
@@ -335,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3958257F25948E41007325AB /* ViewController.swift in Sources */,
+				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				3958257D25948E41007325AB /* SceneDelegate.swift in Sources */,
 			);
@@ -673,7 +725,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		395825EE259494B1007325AB /* RemoteSwiftPackageReference */ = {
+		395825EE259494B1007325AB /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactorKit/ReactorKit";
 			requirement = {
@@ -681,13 +733,52 @@
 				minimumVersion = 2.1.1;
 			};
 		};
+		395826192596D06C007325AB /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.0;
+			};
+		};
+		3958261F2596D0B0007325AB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.1;
+			};
+		};
+		395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		395825EF259494B1007325AB /* SwiftPackageProductDependency */ = {
+		395825EF259494B1007325AB /* ReactorKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 395825EE259494B1007325AB /* RemoteSwiftPackageReference */;
+			package = 395825EE259494B1007325AB /* XCRemoteSwiftPackageReference "ReactorKit" */;
 			productName = ReactorKit;
+		};
+		3958261A2596D06C007325AB /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 395826192596D06C007325AB /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		395826202596D0B0007325AB /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3958261F2596D0B0007325AB /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		395826262596D225007325AB /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
