@@ -16,7 +16,7 @@ final class CountryTableViewCell: UITableViewCell {
   let countryFlagLabel: UILabel = UILabel()
   let countryNameLabel: UILabel = UILabel()
   let messageCountLabel: UILabel = UILabel()
-  // TODO: 🔮 하트 버튼 구현 후 변경
+  // FIXME: 🔮 하트 버튼 구현 후 변경
   let heartButton: UIButton = UIButton()
   
   // MARK: 🏁 Initialize
@@ -36,10 +36,10 @@ final class CountryTableViewCell: UITableViewCell {
   private func setupUI() {
     self.contentView.addSubview(rankLabel)
     self.contentView.addSubview(countryFlagLabel)
-    // TODO: 🔮 더미 데이터 변경
+    // FIXME: 🔮 더미 데이터 변경
     rankLabel.do {
       $0.font = .boldSystemFont(ofSize: 12)
-      // TODO: 🔮 더미 데이터 변경
+      // FIXME: 🔮 더미 데이터 변경
       $0.text = "1st"
     }
     rankLabel.snp.makeConstraints {
@@ -49,7 +49,7 @@ final class CountryTableViewCell: UITableViewCell {
     
     countryFlagLabel.do {
       $0.font = .boldSystemFont(ofSize: 14)
-      // TODO: 🔮 더미 데이터 변경
+      // FIXME: 🔮 더미 데이터 변경
       $0.text = "🇰🇷"
     }
     countryFlagLabel.snp.makeConstraints {
@@ -60,7 +60,7 @@ final class CountryTableViewCell: UITableViewCell {
     self.contentView.addSubview(countryNameLabel)
     countryNameLabel.do {
       $0.font = .boldSystemFont(ofSize: 14)
-      // TODO: 🔮 더미 데이터 변경
+      // FIXME: 🔮 더미 데이터 변경
       $0.text = "South Korea"
       $0.textColor = .warmBlue
     }
@@ -81,7 +81,7 @@ final class CountryTableViewCell: UITableViewCell {
     self.contentView.addSubview(messageCountLabel)
     messageCountLabel.do {
       $0.font = .systemFont(ofSize: 14)
-      // TODO: 🔮 더미 데이터 변경
+      // FIXME: 🔮 더미 데이터 변경
       $0.text = 952_682_252.decimalString
     }
     messageCountLabel.snp.makeConstraints {
@@ -95,7 +95,7 @@ final class CountryTableViewCell: UITableViewCell {
     heartButton.do {
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 16
-      // TODO: 🔮 더미 데이터 변경
+      // FIXME: 🔮 더미 데이터 변경
       $0.backgroundColor = .red
     }
     heartButton.snp.makeConstraints {
@@ -107,7 +107,7 @@ final class CountryTableViewCell: UITableViewCell {
   
   // MARK: 🔩 Configuration
   func configure() {
-    // TODO: 🔮 더미 데이터 변경
+    // FIXME: 🔮 더미 데이터 변경
     countryFlagLabel.text = "🇰🇷"
     messageCountLabel.text = 952_682_252.decimalString
   }
