@@ -39,13 +39,13 @@ final class DiscoverViewController: UIViewController {
         
         let totalCount: UILabel = UILabel().then {
             $0.text = "10,000"
-            $0.backgroundColor = UIColor.init(named: "livelyBlue")
+            $0.backgroundColor = .livelyBlue
             $0.layer.masksToBounds = true
             $0.layer.borderWidth = 2
             $0.layer.cornerRadius = 19
             $0.textAlignment = .center
-            $0.textColor = UIColor(named: "warmBlue")
-            $0.layer.borderColor = UIColor(named: "warmBlue")?.cgColor
+            $0.textColor = .warmBlue
+            $0.layer.borderColor = UIColor.warmBlue.cgColor
         }
         view.addSubview(totalCount)
         totalCount.snp.makeConstraints {

@@ -3,7 +3,7 @@ disabled_rules: #사용하지 않는 룰
 
     # 탭을 필요없이 두번이상 하지 않습니다 https://realm.github.io/SwiftLint/indentation_width.html
     - indentation_width
-    
+    - identifier_name
     - vertical_whitespace_opening_braces
     
     - switch_case_on_newline
@@ -568,7 +568,6 @@ file_length:
   warning: 300
   error: 600
 function_body_length:
-  warning: 60
-  error: 40
-  
+  warning: 100
+  error: 100
 reporter: "xcode"
