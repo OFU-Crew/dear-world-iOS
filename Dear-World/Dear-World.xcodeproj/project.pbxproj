@@ -12,6 +12,8 @@
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
+		3902F12425970E5600A3DF8C /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Int+.swift */; };
+		3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* CountryTableViewCell.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -49,6 +51,8 @@
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		3902F129259714D800A3DF8C /* CountryTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,6 +98,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3902F12225970E4700A3DF8C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3902F12325970E5600A3DF8C /* Int+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3902F128259714AB00A3DF8C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				3902F129259714D800A3DF8C /* CountryTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		121BDB42259734FE0062B15A /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +202,7 @@
 		395825B025948E8E007325AB /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				3902F12225970E4700A3DF8C /* Extensions */,
 				3958257A25948E41007325AB /* AppDelegate.swift */,
 				395826322596E693007325AB /* Logger.swift */,
 			);
@@ -234,6 +255,7 @@
 		3958260125962F7E007325AB /* Cheering Map */ = {
 			isa = PBXGroup;
 			children = (
+				3902F128259714AB00A3DF8C /* Cell */,
 				3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */,
 			);
 			path = "Cheering Map";
@@ -420,8 +442,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
+				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
+				3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor.swift in Sources */,
