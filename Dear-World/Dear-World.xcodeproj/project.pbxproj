@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
-		3958257F25948E41007325AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257E25948E41007325AB /* ViewController.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
 		3958259225948E43007325AB /* Dear_WorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958259125948E43007325AB /* Dear_WorldTests.swift */; };
@@ -41,9 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3958257E25948E41007325AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3958258625948E43007325AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3958258825948E43007325AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -168,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				3958257A25948E41007325AB /* AppDelegate.swift */,
-				3958257E25948E41007325AB /* ViewController.swift */,
 				395826322596E693007325AB /* Logger.swift */,
 			);
 			path = Core;
@@ -220,6 +219,7 @@
 		3958260125962F7E007325AB /* Cheering Map */ = {
 			isa = PBXGroup;
 			children = (
+				3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */,
 			);
 			path = "Cheering Map";
 			sourceTree = "<group>";
@@ -403,10 +403,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3958257F25948E41007325AB /* ViewController.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
+				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
