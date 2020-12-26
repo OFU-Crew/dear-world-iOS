@@ -27,6 +27,12 @@
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
 		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
 		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
+		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
+		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
+		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
+		39F4657D25977DB300621327 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 39F4657C25977DB300621327 /* RxGesture */; };
+		39F465822597811900621327 /* CheerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F465812597811900621327 /* CheerButton.swift */; };
+		39F465CC2597919700621327 /* RxOptional in Frameworks */ = {isa = PBXBuildFile; productRef = 39F465CB2597919700621327 /* RxOptional */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,7 @@
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
+		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
@@ -69,6 +76,7 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		39F465812597811900621327 /* CheerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheerButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +84,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39C8322A2597651F00236DDF /* RxSwift in Frameworks */,
+				39C832282597651F00236DDF /* RxRelay in Frameworks */,
+				39F4657D25977DB300621327 /* RxGesture in Frameworks */,
 				395826212596D0B0007325AB /* Alamofire in Frameworks */,
+				39C8322C2597651F00236DDF /* RxCocoa in Frameworks */,
+				39F465CC2597919700621327 /* RxOptional in Frameworks */,
 				395826272596D225007325AB /* SnapKit in Frameworks */,
 				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
 				3958261B2596D06C007325AB /* Then in Frameworks */,
@@ -239,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				121BDB292597259E0062B15A /* MessageCountBadgeView.swift */,
+				39F465812597811900621327 /* CheerButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +324,11 @@
 				3958261A2596D06C007325AB /* Then */,
 				395826202596D0B0007325AB /* Alamofire */,
 				395826262596D225007325AB /* SnapKit */,
+				39C832272597651F00236DDF /* RxRelay */,
+				39C832292597651F00236DDF /* RxSwift */,
+				39C8322B2597651F00236DDF /* RxCocoa */,
+				39F4657C25977DB300621327 /* RxGesture */,
+				39F465CB2597919700621327 /* RxOptional */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -387,6 +406,9 @@
 				395826192596D06C007325AB /* XCRemoteSwiftPackageReference "Then" */,
 				3958261F2596D0B0007325AB /* XCRemoteSwiftPackageReference "Alamofire" */,
 				395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */,
+				39F4657B25977DB300621327 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -460,6 +482,7 @@
 				3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
+				39F465822597811900621327 /* CheerButton.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
@@ -823,6 +846,30 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		39F4657B25977DB300621327 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.3;
+			};
+		};
+		39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxOptional";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -845,6 +892,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		39C832272597651F00236DDF /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		39C832292597651F00236DDF /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		39C8322B2597651F00236DDF /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		39F4657C25977DB300621327 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39F4657B25977DB300621327 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
+		39F465CB2597919700621327 /* RxOptional */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */;
+			productName = RxOptional;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

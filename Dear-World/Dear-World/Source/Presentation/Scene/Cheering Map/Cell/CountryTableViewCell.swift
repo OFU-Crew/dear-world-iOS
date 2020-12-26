@@ -50,7 +50,7 @@ final class CountryTableViewCell: UITableViewCell {
     countryFlagLabel.do {
       $0.font = .boldSystemFont(ofSize: 14)
       // FIXME: 🔮 더미 데이터 변경
-      $0.text = "🇰🇷"
+      $0.text = ["🇰🇷", "🇯🇵", "🇨🇦", "🇨🇮"].randomElement()!
     }
     countryFlagLabel.snp.makeConstraints {
       $0.top.equalToSuperview().inset(14)
