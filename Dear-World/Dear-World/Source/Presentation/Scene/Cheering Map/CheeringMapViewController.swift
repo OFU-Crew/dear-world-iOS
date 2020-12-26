@@ -31,7 +31,7 @@ final class CheeringMapViewController: UIViewController {
   
   // MARK: 📍 Setup
   private func setupUI() {
-    self.view.backgroundColor = UIColor(named: "breathingWhite")
+    self.view.backgroundColor = .breathingWhite
     let logoImageView: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "earth")
     }
@@ -52,7 +52,7 @@ final class CheeringMapViewController: UIViewController {
     let titleLabel: UILabel = UILabel().then {
       $0.text = "Cheering Map"
       $0.font = .boldSystemFont(ofSize: 22)
-      $0.textColor = UIColor(named: "warmBlue")
+        $0.textColor = .warmBlue
     }
     self.view.addSubview(titleLabel)
     titleLabel.snp.makeConstraints {
@@ -62,6 +62,7 @@ final class CheeringMapViewController: UIViewController {
     
     self.view.addSubview(worldMapView)
     worldMapView.do {
+        // FIXME: 🔮 셋업하고 변경
       $0.backgroundColor = .red
     }
     worldMapView.snp.makeConstraints {

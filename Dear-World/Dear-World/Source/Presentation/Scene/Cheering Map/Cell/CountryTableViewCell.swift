@@ -62,7 +62,7 @@ final class CountryTableViewCell: UITableViewCell {
       $0.font = .boldSystemFont(ofSize: 14)
       // TODO: 🔮 더미 데이터 변경
       $0.text = "South Korea"
-      $0.textColor = UIColor(named: "warmBlue")
+      $0.textColor = .warmBlue
     }
     countryNameLabel.snp.makeConstraints {
       $0.top.equalToSuperview().inset(12)
