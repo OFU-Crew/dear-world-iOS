@@ -7,16 +7,35 @@
 
 import UIKit
 
-class MessageTableViewCell: UITableViewCell {
+class MessageTableViewCell: UICollectionViewCell {
+//    let emojiView: UIView = UIView()
+    let emojiImage = UIImageView()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+        setupUI()
+    }
+    
+    func setupUI() {
+        let emojiView: UIImageView = UIImageView().then {
+            $0.backgroundColor = .yellow
+        }
+        self.backgroundColor = .red
+        self.frame.size.width = 200
+        
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 20
+        
     }
 
 }
