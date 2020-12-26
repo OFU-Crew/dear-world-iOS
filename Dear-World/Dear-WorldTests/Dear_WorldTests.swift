@@ -5,8 +5,8 @@
 //  Created by dongyoung.lee on 2020/12/24.
 //
 
-import XCTest
 @testable import Dear_World
+import XCTest
 
 class DearWorldTests: XCTestCase {
 

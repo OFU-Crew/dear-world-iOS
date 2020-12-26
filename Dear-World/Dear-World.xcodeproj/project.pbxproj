@@ -20,6 +20,7 @@
 		3958261B2596D06C007325AB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 3958261A2596D06C007325AB /* Then */; };
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
 		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
+		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826042596304D007325AB /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			children = (
 				3958257A25948E41007325AB /* AppDelegate.swift */,
 				3958257E25948E41007325AB /* ViewController.swift */,
+				395826322596E693007325AB /* Logger.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 			files = (
 				3958257F25948E41007325AB /* ViewController.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
+				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,8 +1,12 @@
 # - 제작 Jercy - 
 disabled_rules: #사용하지 않는 룰
+
     # 탭을 필요없이 두번이상 하지 않습니다 https://realm.github.io/SwiftLint/indentation_width.html
     - indentation_width
-
+    
+    - vertical_whitespace_opening_braces
+    
+    - switch_case_on_newline
     # if 문에서 리턴을 할경우 바로 return을 쓰면 안됨 https://realm.github.io/SwiftLint/conditional_returns_on_newline.html
     - conditional_returns_on_newline
     
