@@ -54,11 +54,27 @@ final class DiscoverViewController: UIViewController, View {
             })
             .disposed(by: self.disposeBag)
         
+        reactor.state
+            .map(\.isRefreshing)
+            .filter { !$0 }
+            .bind {[weak self] _ in
+                self?.messageCollectionView.refreshControl?.endRefreshing()
+            }
+            .disposed(by: self.disposeBag)
+        
         self.countryLabel
             .rx.observe(String.self, "text")
+            .filter { $0 != nil }
+            .map { $0! }
             .distinctUntilChanged()
-            .map{$0!}
-            .map{Reactor.Action.countryDidChanged(country: $0)}
+            .map { Reactor.Action.countryDidChanged(country: $0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.messageCollectionView
+            .refreshControl?.rx
+            .controlEvent(.valueChanged)
+            .map { Reactor.Action.refresh }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
     }
@@ -111,6 +127,7 @@ final class DiscoverViewController: UIViewController, View {
         self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "messageCell")
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
+        self.messageCollectionView.refreshControl = UIRefreshControl()
         
         let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20
