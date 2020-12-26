@@ -10,49 +10,56 @@ import Then
 import UIKit
 
 final class DiscoverViewController: UIViewController {
+    private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
+    private let filterContainerView: UIView = UIView()
+    private let countryLabel: UILabel = UILabel()
+    
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = .gray
+        //FIXME: 배경색 변경
+        self.view.backgroundColor = .white
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
     private func setupUI() {
-        let mainLogo: UIImageView = UIImageView().then {
-            $0.image = UIImage(named: "earth")
-        }
-        view.addSubview(mainLogo)
+        self.view.addSubview(self.messageCountBadgeView)
         
-        mainLogo.snp.makeConstraints {
-            $0.width.height.equalTo(48)
+        self.view.addSubview(self.filterContainerView)
+        self.filterContainerView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(60)
+            $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
+            $0.height.equalTo(26)
         }
         
-        let totalCount: UILabel = UILabel().then {
-            $0.text = "10,000"
-            $0.backgroundColor = .livelyBlue
-            $0.layer.masksToBounds = true
-            $0.layer.borderWidth = 2
-            $0.layer.cornerRadius = 19
-            $0.textAlignment = .center
+        countryLabel.do {
+            $0.font = .boldSystemFont(ofSize: 22)
             $0.textColor = .warmBlue
-            $0.layer.borderColor = UIColor.warmBlue.cgColor
+            $0.text = "Whole world"
         }
-        view.addSubview(totalCount)
-        totalCount.snp.makeConstraints {
-            $0.width.equalTo(88)
-            $0.height.equalTo(37)
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(mainLogo.snp.bottom).offset(-6)
+        
+        filterContainerView.addSubview(countryLabel)
+        countryLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(filterContainerView.snp.leading)
+        }
+        
+        let select: UIImageView = UIImageView().then {
+            $0.image = UIImage(named: "select")
+        }
+        
+        filterContainerView.addSubview(select)
+        select.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(14)
+            $0.height.equalTo(8)
+            $0.trailing.equalTo(filterContainerView.snp.trailing)
+            $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
         }
     }
 }
