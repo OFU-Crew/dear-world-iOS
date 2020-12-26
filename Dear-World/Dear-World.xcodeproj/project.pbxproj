@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB292597259E0062B15A /* MessageCountBadgeView.swift */; };
+		121BDB44259735200062B15A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB43259735200062B15A /* UIColor.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		121BDB292597259E0062B15A /* MessageCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCountBadgeView.swift; path = "Dear-World.xcodeproj/MessageCountBadgeView.swift"; sourceTree = SOURCE_ROOT; };
+		121BDB43259735200062B15A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		121BDB42259734FE0062B15A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				121BDB43259735200062B15A /* UIColor.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		3958256E25948E41007325AB = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +153,7 @@
 		395825AD25948E5B007325AB /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				121BDB42259734FE0062B15A /* Common */,
 				395825B025948E8E007325AB /* Core */,
 				395825B125948E98007325AB /* Domain */,
 				395825B225948E9F007325AB /* Presentation */,
@@ -413,6 +424,7 @@
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
+				121BDB44259735200062B15A /* UIColor.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 			);
