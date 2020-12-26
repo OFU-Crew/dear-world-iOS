@@ -15,4 +15,5 @@ extension UIColor {
     public static let nightBlue: UIColor = UIColor(named: "nightBlue")!
     public static let refreshingWhite: UIColor = UIColor(named: "refreshingWhite")!
     public static let warmBlue: UIColor = UIColor(named: "warmBlue")!
+    public static let loveRed: UIColor = UIColor(named: "loveRed")!
 }
