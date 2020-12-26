@@ -14,6 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         // Override point for customization after application launch.
+        let tabBar = UITabBarController()
+        tabBar.addChild(DiscoverViewController())
+//        tabBar.addChild(CheeringMapViewController())
+        
+        UIApplication.shared.windows.first?.rootViewController = tabBar
         return true
     }
 
