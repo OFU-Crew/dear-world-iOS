@@ -13,9 +13,9 @@ import Then
 public final class MessageCountBadgeView: UIView {
     private var totalCount: UILabel = UILabel()
     
-    public var count: Int = 0 {
+    public var count: Int? {
         didSet {
-            self.totalCount.text = "\(count)"
+            self.totalCount.text = "\(count ?? 0)"
         }
     }
     
@@ -51,7 +51,7 @@ public final class MessageCountBadgeView: UIView {
         }
 
         let totalCountContainer: UIView = UIView().then {
-            $0.backgroundColor = UIColor.init(named: "livelyBlue")
+            $0.backgroundColor = UIColor(named: "livelyBlue")
             $0.layer.masksToBounds = true
             $0.layer.borderWidth = 2
             $0.layer.cornerRadius = 19
@@ -66,13 +66,14 @@ public final class MessageCountBadgeView: UIView {
         }
 
         self.totalCount.do {
-            $0.text = "11111111111111111"
+            $0.text = "-1"
             $0.textAlignment = .center
             $0.font = .systemFont(ofSize: 14)
+            $0.textColor = UIColor(named: "warmBlue")
         }
         totalCountContainer.addSubview(totalCount)
         totalCount.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
 
