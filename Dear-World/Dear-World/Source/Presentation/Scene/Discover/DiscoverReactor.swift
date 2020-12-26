@@ -10,7 +10,7 @@ import ReactorKit
 
 class DiscoverReactor: Reactor {
     enum Action {
-        case countryDidChanged
+        case countryDidChanged(country: String)
     }
     enum Mutation {
         case setMessages(result: [MessageMock])

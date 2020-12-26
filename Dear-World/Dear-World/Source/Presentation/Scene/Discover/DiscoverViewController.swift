@@ -5,16 +5,21 @@
 //  Created by dongyoung.lee on 2020/12/25.
 //
 
+import ReactorKit
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 import UIKit
-import ReactorKit
 
-final class DiscoverViewController: UIViewController {
+final class DiscoverViewController: UIViewController, View {
     private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
     private let filterContainerView: UIView = UIView()
     private let countryLabel: UILabel = UILabel()
     private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var messages: [MessageMock] = []
+    
+    var disposeBag: DisposeBag = DisposeBag()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,6 +34,33 @@ final class DiscoverViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupCollectionView()
+        self.reactor = DiscoverReactor()
+    }
+    func bind(reactor: DiscoverReactor) {
+        
+        //TODO: RxCocoa import되면 Binder extension 만들 것
+        reactor.state
+            .map(\.messageCount)
+            .subscribe { [weak self] count in
+                self?.messageCountBadgeView.count = count
+            }
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map(\.messages)
+            .subscribe(onNext: {[weak self] mess in
+                self?.messages = mess
+                self?.messageCollectionView.reloadData()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.countryLabel
+            .rx.observe(String.self, "text")
+            .distinctUntilChanged()
+            .map{$0!}
+            .map{Reactor.Action.countryDidChanged(country: $0)}
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
     }
     
     private func setupUI() {
@@ -73,7 +105,6 @@ final class DiscoverViewController: UIViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.width.equalTo(300)
         }
-        
     }
     
     private func setupCollectionView() {
@@ -87,11 +118,17 @@ final class DiscoverViewController: UIViewController {
 }
 extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.messages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath) as? MessageTableViewCell else {return UICollectionViewCell()}
+        cell.nameLabel.text = self.messages[indexPath.row].name
+        cell.emojiLabel.text = self.messages[indexPath.row].emoji
+        cell.detailTextView.text = self.messages[indexPath.row].detail
+        cell.likeCountLabel.text = self.messages[indexPath.row].likes.decimalString
+        cell.countryLabel.text = self.messages[indexPath.row].countryName
+        
         return cell
     }
     
