@@ -28,7 +28,6 @@ final class MessageTableViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        fatalError()
         setupUI()
     }
     
