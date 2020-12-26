@@ -80,7 +80,8 @@ final class DiscoverViewController: UIViewController {
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
         
-        let layout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+        let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20
     }
 }
