@@ -77,6 +77,12 @@ final class DiscoverViewController: UIViewController, View {
             .map { Reactor.Action.refresh }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        self.messageCollectionView
+            .rx.isReachedBottom
+            .map { Reactor.Action.loadMore }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
     }
     
     private func setupUI() {
@@ -153,4 +159,25 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         return CGSize(width: collectionView.frame.width, height: 192)
     }
     
+}
+
+extension Reactive where Base: UIScrollView {
+  public var isReachedBottom: ControlEvent<Void> {
+    let source = self.contentOffset
+      .filter { [weak base = self.base] offset in
+        guard let base = base else { return false }
+        return base.isReachedBottom(withTolerance: base.frame.height / 2)
+      }
+      .map { _ in }
+    return ControlEvent(events: source)
+  }
+}
+
+extension UIScrollView {
+  func isReachedBottom(withTolerance tolerance: CGFloat = 0) -> Bool {
+    guard self.frame.height > 0 else { return false }
+    guard self.contentSize.height > 0 else { return false }
+    let contentOffsetBottom = self.contentOffset.y + self.frame.height
+    return contentOffsetBottom >= self.contentSize.height - tolerance
+  }
 }

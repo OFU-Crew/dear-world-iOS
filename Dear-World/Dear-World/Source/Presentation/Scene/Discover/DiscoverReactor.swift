@@ -17,6 +17,7 @@ class DiscoverReactor: Reactor {
     enum Mutation {
         case setMessages(result: [MessageMock])
         case setRefreshing(Bool)
+        case addMessages(result: [MessageMock])
 //        case setLoading(Bool)
     }
     struct State {
@@ -47,10 +48,9 @@ class DiscoverReactor: Reactor {
             ])
         case .loadMore:
             return Observable<Mutation>.concat([
-                
+                APIMock().getMessages(page: 2, country: currentState.country)
+                    .map { Mutation.addMessages(result: $0) }
             ])
-            
-            
         }
     }
     
@@ -61,7 +61,8 @@ class DiscoverReactor: Reactor {
             newState.messages = results
         case let .setRefreshing(flag):
             newState.isRefreshing = flag
-            
+        case let .addMessages(result: results):
+            newState.messages = state.messages + results
         }
         return newState
     }
