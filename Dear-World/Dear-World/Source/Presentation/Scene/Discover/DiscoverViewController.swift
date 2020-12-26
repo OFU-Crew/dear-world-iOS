@@ -8,12 +8,17 @@
 import SnapKit
 import Then
 import UIKit
+import ReactorKit
 
 final class DiscoverViewController: UIViewController {
+    private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
+    private let filterContainerView: UIView = UIView()
+    private let countryLabel: UILabel = UILabel()
+    private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = .breathingWhite
     }
     
     required init?(coder: NSCoder) {
@@ -23,37 +28,75 @@ final class DiscoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupCollectionView()
     }
     
     private func setupUI() {
-        let mainLogo: UIImageView = UIImageView().then {
-            $0.image = UIImage(named: "earth")
-        }
-        view.addSubview(mainLogo)
+        self.view.addSubview(self.messageCountBadgeView)
         
-        mainLogo.snp.makeConstraints {
-            $0.width.height.equalTo(48)
+        self.view.addSubview(self.filterContainerView)
+        self.filterContainerView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(60)
+            $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
+            $0.height.equalTo(26)
         }
         
-        let totalCount: UILabel = UILabel().then {
-            $0.text = "10,000"
-            $0.backgroundColor = .livelyBlue
-            $0.layer.masksToBounds = true
-            $0.layer.borderWidth = 2
-            $0.layer.cornerRadius = 19
-            $0.textAlignment = .center
+        countryLabel.do {
+            $0.font = .boldSystemFont(ofSize: 22)
             $0.textColor = .warmBlue
-            $0.layer.borderColor = UIColor.warmBlue.cgColor
+            $0.text = "Whole world"
         }
-        view.addSubview(totalCount)
-        totalCount.snp.makeConstraints {
-            $0.width.equalTo(88)
-            $0.height.equalTo(37)
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(mainLogo.snp.bottom).offset(-6)
+        
+        filterContainerView.addSubview(countryLabel)
+        countryLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(filterContainerView.snp.leading)
         }
+        
+        let select: UIImageView = UIImageView().then {
+            $0.image = UIImage(named: "select")
+        }
+        filterContainerView.addSubview(select)
+        select.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(14)
+            $0.height.equalTo(8)
+            $0.trailing.equalTo(filterContainerView.snp.trailing)
+            $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
+        }
+        
+        messageCollectionView.backgroundColor = .breathingWhite
+        self.view.addSubview(self.messageCollectionView)
+        self.messageCollectionView.snp.makeConstraints {
+            $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
+            $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            $0.width.equalTo(300)
+        }
+        
+    }
+    
+    private func setupCollectionView() {
+        self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "messageCell")
+        self.messageCollectionView.delegate = self
+        self.messageCollectionView.dataSource = self
+        
+        let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumLineSpacing = 20
     }
 }
-
+extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 192)
+    }
+    
+}
