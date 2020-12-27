@@ -167,14 +167,24 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         cell.detailTextView.text = self.messages[indexPath.row].detail
         cell.likeCountLabel.text = self.messages[indexPath.row].likes.decimalString
         cell.countryLabel.text = self.messages[indexPath.row].countryName
+        bindShareButton(button: cell.shareButton)
         
         return cell
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 192)
     }
     
+    private func bindShareButton(button: UIButton) {
+        button
+            .rx.tap
+            .bind {
+                let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self.view
+                self.present(activityVC, animated: true)
+            }
+            .disposed(by: self.disposeBag)
+    }
 }
 
 extension Reactive where Base: UIScrollView {
