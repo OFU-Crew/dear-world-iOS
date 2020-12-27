@@ -18,11 +18,14 @@ final class CheeringMapViewController: UIViewController {
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let cheeringCountLabel: UILabel = UILabel()
+  private let titleLabel: UILabel = UILabel()
   private let worldMapView: UIView = UIView()
   private let headerView: UIView = UIView()
   private let rankingTableView: UITableView = UITableView()
   
+  private var titleHeight: CGFloat = 26
   private var worldMapHeight: CGFloat = 208
+  private var canScrollTableView: Bool = false
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -65,7 +68,7 @@ final class CheeringMapViewController: UIViewController {
       $0.bottom.equalToSuperview()
     }
     
-    let titleLabel: UILabel = UILabel().then {
+    titleLabel.do {
       $0.text = "Cheering Map"
       $0.font = .boldSystemFont(ofSize: 22)
       $0.textColor = .warmBlue
@@ -73,6 +76,7 @@ final class CheeringMapViewController: UIViewController {
     self.view.addSubview(titleLabel)
     titleLabel.snp.makeConstraints {
       $0.centerX.equalToSuperview()
+      $0.height.equalTo(titleHeight)
       $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(28)
     }
     
@@ -87,54 +91,69 @@ final class CheeringMapViewController: UIViewController {
       $0.width.equalTo(worldMapView.snp.height).multipliedBy(335.0 / 208.0)
       $0.centerX.equalToSuperview()
     }
+    
     let headerTitleLabel: UILabel = UILabel().then {
       $0.text = "Cheer Rank"
       $0.font = .boldSystemFont(ofSize: 18)
       $0.textColor = .warmBlue
     }
     headerView.addSubview(headerTitleLabel)
+    headerView.do {
+      $0.backgroundColor = .white
+      $0.layer.masksToBounds = true
+      $0.layer.cornerRadius = 20
+      $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
     headerTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
       $0.bottom.equalToSuperview().inset(10)
     }
-    headerView.snp.makeConstraints {
-      $0.width.equalTo(UIScreen.main.bounds.width)
-    }
     self.view.addSubview(rankingTableView)
+    self.view.addSubview(headerView)
+    headerView.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(55)
+      $0.top.equalTo(worldMapView.snp.bottom).offset(50)
+    }
+    
     rankingTableView.do {
       $0.backgroundColor = .white
-      $0.layer.cornerRadius = 20
-      $0.tableHeaderView = headerView
-      $0.contentOffset = CGPoint(x: 0, y: -55)
+      $0.showsVerticalScrollIndicator = false
       $0.register(CountryTableViewCell.self, forCellReuseIdentifier: "CountryTableViewCell")
       $0.rowHeight = UITableView.automaticDimension
       $0.estimatedRowHeight = 64
       $0.dataSource = self
+      $0.allowsSelection = false
       $0.separatorStyle = .none
     }
     rankingTableView.snp.makeConstraints {
-      $0.top.equalTo(worldMapView.snp.bottom).offset(50)
       $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+      $0.top.equalTo(headerView.snp.bottom)
     }
     rankingTableView.rx.contentOffset
-      .filter { $0.y > -50 }
-      .map { $0.y + 55 }
-      .filter { $0 > 1 }
+      .map { $0.y }
       .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: { [weak self] y in
         guard let self = self else { return }
-        Logger.log(self.rankingTableView.contentOffset)
-        Logger.log(y)
-        self.worldMapHeight -= y
-        self.worldMapHeight = max(0, self.worldMapHeight)
-        self.worldMapHeight = min(208, self.worldMapHeight)
-        self.worldMapView.snp.updateConstraints {
-          $0.height.equalTo(self.worldMapHeight)
-        }
-        self.rankingTableView.contentOffset = CGPoint(x: 0, y: -55)
+        self.updateLayouts(y)
       })
       .disposed(by: disposeBag)
+  }
+  
+  private func updateLayouts(_ tableViewOffsetY: CGFloat) {
+    worldMapHeight -= tableViewOffsetY
+    worldMapHeight = max(0, worldMapHeight)
+    worldMapHeight = min(208, worldMapHeight)
+    worldMapView.snp.updateConstraints {
+      $0.height.equalTo(worldMapHeight)
+    }
+    titleHeight -= tableViewOffsetY / 8
+    titleHeight = max(0, worldMapHeight)
+    titleHeight = min(26, worldMapHeight)
+    titleLabel.snp.updateConstraints {
+      $0.height.equalTo(titleHeight)
+    }
   }
 }
 extension CheeringMapViewController: UITableViewDataSource {
@@ -147,6 +166,8 @@ extension CheeringMapViewController: UITableViewDataSource {
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath
   ) -> UITableViewCell {
-    return tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell", for: indexPath) as! CountryTableViewCell
+    cell.cheerUpButton.anchorView = self.view
+    return cell
   }
 }
