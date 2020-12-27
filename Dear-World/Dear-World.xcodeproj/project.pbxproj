@@ -16,6 +16,7 @@
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
 		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
 		128313EE2598A14E00BDF8A3 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* List.swift */; };
+		128313F42598CDA900BDF8A3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313F32598CDA900BDF8A3 /* MainTabBarController.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -98,6 +99,7 @@
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		128313F32598CDA900BDF8A3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +228,14 @@
 				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		128313F22598CD6800BDF8A3 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				128313F32598CDA900BDF8A3 /* MainTabBarController.swift */,
+			);
+			path = Container;
 			sourceTree = "<group>";
 		};
 		3902F128259714AB00A3DF8C /* Cell */ = {
@@ -371,6 +381,7 @@
 		395825B525948ECE007325AB /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				128313F22598CD6800BDF8A3 /* Container */,
 				39658F8B259AD9760050D180 /* Splash */,
 				3958260025962F77007325AB /* Discover */,
 				3958260125962F7E007325AB /* Cheering Map */,
@@ -711,6 +722,7 @@
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
+				128313F42598CDA900BDF8A3 /* MainTabBarController.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,

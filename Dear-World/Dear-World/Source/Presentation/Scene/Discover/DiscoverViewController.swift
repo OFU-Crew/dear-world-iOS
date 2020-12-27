@@ -153,7 +153,6 @@ final class DiscoverViewController: UIViewController, View {
         self.outerScrollView.do {
             $0.isScrollEnabled = true
             $0.showsVerticalScrollIndicator = false
-            $0.backgroundColor = .red
             $0.contentSize.height = self.view.frame.height + 264
             $0.delegate = self
         }
