@@ -54,20 +54,43 @@ final class CheerUpButton: UIButton {
       $0.borderWidth = 1
       $0.borderColor = UIColor.grayWhite.cgColor
     }
-    self.addTarget(self, action: #selector(activateEffect), for: .touchDown)
-    self.addTarget(self, action: #selector(deactivateEffect), for: [.touchUpInside, .touchUpOutside])
+    self.addTarget(self, action: #selector(activate), for: .touchDown)
+    self.addTarget(self, action: #selector(deactivate), for: [.touchUpInside,
+                                                              .touchUpOutside,
+                                                              .touchCancel,
+                                                              .touchDragExit])
+    self.addTarget(self, action: #selector(occurHapticFeedback), for: [.touchDown])
   }
   
   @objc
-  func activateEffect() {
-    guard let view = anchorView, let emitter = emitter else { return }
+  private func occurHapticFeedback() {
+    let generator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    generator.impactOccurred()
+    DispatchQueue.main
+      .asyncAfter(deadline: .now() + 0.2) { [weak self] in
+        guard self?.currentBackgroundImage == Active.backgroundImage else { return }
+        self?.occurHapticFeedback()
+      }
+  }
+  
+  @objc
+  private func activate() {
+    guard let view = anchorView else { return }
+    let emitter: CAEmitterLayer = {
+      if let emitter: CAEmitterLayer = self.emitter {
+        emitter.removeFromSuperlayer()
+        return emitter
+      }
+      return CAEmitterLayer()
+    }()
+    self.emitter = emitter
     let point: CGPoint = convert(self.bounds.origin, to: view)
     emitter.emitterPosition = CGPoint(
       x: point.x + (self.bounds.width / 2),
       y: point.y + (self.bounds.height / 2)
     )
     let heart: CAEmitterCell = CAEmitterCell().then {
-      $0.birthRate = 8
+      $0.birthRate = 9
       $0.lifetime = 2
       $0.velocity = 100
       $0.velocityRange = -5
@@ -81,13 +104,18 @@ final class CheerUpButton: UIButton {
       $0.contents = UIImage(named: "heart_liked")?.cgImage
     }
     emitter.emitterCells = [heart]
-    emitter.removeFromSuperlayer()
     view.layer.addSublayer(emitter)
+    self.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+    layer.cornerRadius = 14
   }
   
   @objc
-  func deactivateEffect() {
+  private func deactivate() {
     emitter?.contents = []
     emitter?.removeFromSuperlayer()
+    emitter = nil
+    
+    self.contentEdgeInsets = .zero
+    layer.cornerRadius = 16
   }
 }
