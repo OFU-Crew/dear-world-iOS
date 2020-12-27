@@ -21,7 +21,7 @@ final class CheerUpButton: UIButton {
     static let backgroundImage: UIImage = .from(color: .white)
   }
   
-  var emitter: CAEmitterLayer?
+  var emitter: CAEmitterLayer? = CAEmitterLayer()
   weak var anchorView: UIView?
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -58,15 +58,6 @@ final class CheerUpButton: UIButton {
     self.addTarget(self, action: #selector(deactivateEffect), for: [.touchUpInside, .touchUpOutside])
   }
   
-//  func active() {
-//    self.imageView?.image = Active.image
-//    self.backgroundColor = .refreshingWhite
-//  }
-//
-//  func deactive() {
-//    self.imageView?.image = Deactive.image
-//    self.backgroundColor = .white
-//  }
   @objc
   func activateEffect() {
     guard let view = anchorView, let emitter = emitter else { return }
@@ -98,6 +89,5 @@ final class CheerUpButton: UIButton {
   func deactivateEffect() {
     emitter?.contents = []
     emitter?.removeFromSuperlayer()
-    emitter = nil
   }
 }
