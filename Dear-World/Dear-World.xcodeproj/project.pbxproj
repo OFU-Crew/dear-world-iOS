@@ -33,6 +33,9 @@
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
 		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
 		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
+		39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DB22598D139001D7E69 /* SelectCountryView.swift */; };
+		39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */ = {isa = PBXBuildFile; productRef = 39672DBB2598E803001D7E69 /* UITextView+Placeholder */; };
+		39672DC12598E95A001D7E69 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DC02598E95A001D7E69 /* TextView.swift */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -77,7 +80,7 @@
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; };
 		128313ED2598A14E00BDF8A3 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
+		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		3902F129259714D800A3DF8C /* CountryTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -95,6 +98,8 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39672DB22598D139001D7E69 /* SelectCountryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SelectCountryView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39672DC02598E95A001D7E69 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -111,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */,
 				39C8322A2597651F00236DDF /* RxSwift in Frameworks */,
 				39C832282597651F00236DDF /* RxRelay in Frameworks */,
 				39F4657D25977DB300621327 /* RxGesture in Frameworks */,
@@ -311,6 +317,8 @@
 				121BDB292597259E0062B15A /* MessageCountBadgeView.swift */,
 				39F465812597811900621327 /* CheerButton.swift */,
 				121BDB8D259829840062B15A /* CountrySelectController.swift */,
+				39672DB22598D139001D7E69 /* SelectCountryView.swift */,
+				39672DC02598E95A001D7E69 /* TextView.swift */,
 				39F0C1B62598927C00A7001F /* ErrorView.swift */,
 			);
 			path = View;
@@ -402,6 +410,7 @@
 				39C8322B2597651F00236DDF /* RxCocoa */,
 				39F4657C25977DB300621327 /* RxGesture */,
 				39F465CB2597919700621327 /* RxOptional */,
+				39672DBB2598E803001D7E69 /* UITextView+Placeholder */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -482,6 +491,7 @@
 				39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */,
 				39F4657B25977DB300621327 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */,
+				39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -548,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				121BDB712597A5D60062B15A /* APIMock.swift in Sources */,
+				39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */,
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
@@ -567,6 +578,7 @@
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
+				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
@@ -933,6 +945,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/UITextView-Placeholder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
 		39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -979,6 +999,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		39672DBB2598E803001D7E69 /* UITextView+Placeholder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */;
+			productName = "UITextView+Placeholder";
 		};
 		39C832272597651F00236DDF /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;

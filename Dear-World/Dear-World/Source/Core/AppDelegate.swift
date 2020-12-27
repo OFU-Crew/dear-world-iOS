@@ -18,6 +18,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     let tabBarController: UITabBarController = UITabBarController()
     tabBarController.addChild(DiscoverViewController())
     tabBarController.addChild(CheeringMapViewController())
+    tabBarController.addChild(SendMessageViewController())
     
     let mainWindow: UIWindow = UIWindow()
     window = mainWindow
