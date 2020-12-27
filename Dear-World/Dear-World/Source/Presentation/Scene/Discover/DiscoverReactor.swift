@@ -13,12 +13,12 @@ class DiscoverReactor: Reactor {
         case countryDidChanged(country: String)
         case refresh
         case loadMore
-//        case countryTouched
     }
     enum Mutation {
         case setMessages(result: [MessageMock])
         case setRefreshing(Bool)
         case addMessages(result: [MessageMock])
+        case setCountry(country: String)
 //        case setLoading(Bool)
     }
     struct State {
@@ -38,8 +38,11 @@ class DiscoverReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case let .countryDidChanged(country):
-            return APIMock().getMessages(page: 1, country: country)
-                .map { Mutation.setMessages(result: $0)}
+            return Observable<Mutation>.merge(
+                APIMock().getMessages(page: 1, country: country)
+                    .map { Mutation.setMessages(result: $0)},
+                Observable.just(Mutation.setCountry(country: country))
+            )
         case .refresh:
             return Observable<Mutation>.concat([
                 Observable.just(Mutation.setRefreshing(true)),
@@ -66,6 +69,8 @@ class DiscoverReactor: Reactor {
             newState.isRefreshing = flag
         case let .addMessages(result: results):
             newState.messages = state.messages + results
+        case let .setCountry(country: country):
+            newState.country = country
         }
         return newState
     }

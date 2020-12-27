@@ -101,7 +101,6 @@ extension CountrySelectController {
                 presented.view.frame.origin.y = base.view.frame.height - 500
             } completion: { (finished) in
                 presented.didMove(toParent: base)
-                observer.onCompleted()
             }
             
             presented.rx.methodInvoked(#selector(UIViewController.willMove(toParent:)))

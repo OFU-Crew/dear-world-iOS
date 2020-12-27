@@ -62,6 +62,11 @@ final class DiscoverViewController: UIViewController, View {
             }
             .disposed(by: self.disposeBag)
         
+        reactor.state
+            .map(\.country)
+            .bind(to: self.countryLabel.rx.text)
+            .disposed(by: self.disposeBag)
+        
         self.countryLabel
             .rx.observe(String.self, "text")
             .filter { $0 != nil }
@@ -87,11 +92,12 @@ final class DiscoverViewController: UIViewController, View {
         self.filterContainerView
             .rx.tapGesture()
             .skip(1)
-            .debug("aaa", trimOutput: true)
-            .flatMap{ a -> Observable<String> in
+            .flatMap { [weak self] _ -> Observable<String> in
+                guard let self = self else { return Observable.just("") }
                 return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
             }
-            .bind{ print($0) }
+            .map { Reactor.Action.countryDidChanged(country: $0) }
+            .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
     }
     
