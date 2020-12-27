@@ -83,6 +83,16 @@ final class DiscoverViewController: UIViewController, View {
             .map { Reactor.Action.loadMore }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        self.filterContainerView
+            .rx.tapGesture()
+            .skip(1)
+            .debug("aaa", trimOutput: true)
+            .flatMap{ a -> Observable<String> in
+                return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
+            }
+            .bind{ print($0) }
+            .disposed(by: self.disposeBag)
     }
     
     private func setupUI() {

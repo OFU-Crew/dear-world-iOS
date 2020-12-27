@@ -13,6 +13,7 @@
 		121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB662597982F0062B15A /* DiscoverReactor.swift */; };
 		121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB6B2597A49B0062B15A /* MessageMock.swift */; };
 		121BDB712597A5D60062B15A /* APIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB702597A5D60062B15A /* APIMock.swift */; };
+		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -62,7 +63,7 @@
 		121BDB662597982F0062B15A /* DiscoverReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverReactor.swift; sourceTree = "<group>"; };
 		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
-		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
+		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +260,7 @@
 			children = (
 				121BDB292597259E0062B15A /* MessageCountBadgeView.swift */,
 				39F465812597811900621327 /* CheerButton.swift */,
+				121BDB8D259829840062B15A /* CountrySelectController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -496,6 +498,7 @@
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
+				121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */,
 			);

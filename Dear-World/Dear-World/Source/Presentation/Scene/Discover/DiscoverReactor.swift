@@ -13,6 +13,7 @@ class DiscoverReactor: Reactor {
         case countryDidChanged(country: String)
         case refresh
         case loadMore
+//        case countryTouched
     }
     enum Mutation {
         case setMessages(result: [MessageMock])
@@ -51,6 +52,8 @@ class DiscoverReactor: Reactor {
                 APIMock().getMessages(page: 2, country: currentState.country)
                     .map { Mutation.addMessages(result: $0) }
             ])
+//        case .countryTouched:
+//            return
         }
     }
     
