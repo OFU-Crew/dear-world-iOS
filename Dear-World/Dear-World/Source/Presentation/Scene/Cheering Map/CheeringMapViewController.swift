@@ -34,11 +34,6 @@ final class CheeringMapViewController: UIViewController {
     super.init(nibName: nil, bundle: nil)
     
     setupUI()
-    let errorView = ErrorView(reason: [.pageNotFound, .networkConnectionFailure].randomElement()!)
-    self.view.addSubview(errorView)
-    errorView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
-    }
   }
   
   required init?(coder: NSCoder) {
