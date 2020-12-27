@@ -6,7 +6,7 @@
 //
 
 import Foundation
-public struct MessageMock {
+public struct MessageMock: Equatable {
     var emoji = "🎅🏻"
     var name = "Judy"
     var country: String = "🇰🇷"

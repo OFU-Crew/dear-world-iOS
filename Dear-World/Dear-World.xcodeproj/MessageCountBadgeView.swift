@@ -49,7 +49,6 @@ public final class MessageCountBadgeView: UIView {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
         }
-
         let totalCountContainer: UIView = UIView().then {
             $0.backgroundColor = .livelyBlue
             $0.layer.masksToBounds = true
@@ -64,7 +63,6 @@ public final class MessageCountBadgeView: UIView {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(mainLogo.snp.bottom).offset(-6)
         }
-
         self.totalCount.do {
             $0.text = "-1"
             $0.textAlignment = .center

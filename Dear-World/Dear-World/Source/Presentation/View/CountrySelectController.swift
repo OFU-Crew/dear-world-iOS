@@ -91,7 +91,7 @@ extension CountrySelectController {
                 return Disposables.create()
             }
             presenting.view.isUserInteractionEnabled = false
-            var presented: CountrySelectController = CountrySelectController()
+            let presented: CountrySelectController = CountrySelectController()
             presented.loadViewIfNeeded()
             base.addChild(presented)
             base.view.addSubview(presented.view)
@@ -99,19 +99,19 @@ extension CountrySelectController {
             UIView.animate(withDuration: 0.3) {
                 presenting.view.alpha = 0.6
                 presented.view.frame.origin.y = base.view.frame.height - 500
-            } completion: { (finished) in
+            } completion: { (_) in
                 presented.didMove(toParent: base)
             }
             
             presented.rx.methodInvoked(#selector(UIViewController.willMove(toParent:)))
                 .bind { _ in
-                    if let country = presented.selectedCountry {
+                    if let country: String = presented.selectedCountry {
                         observer.onNext(country)
                     }
                     UIView.animate(withDuration: 0.3) {
                         presenting.view.alpha = 1
                         presented.view.frame.origin.y = base.view.frame.height
-                    } completion: { (isFinished) in
+                    } completion: { (_) in
                         presenting.view.isUserInteractionEnabled = true
                         presented.view.removeFromSuperview()
                         presented.removeFromParent()

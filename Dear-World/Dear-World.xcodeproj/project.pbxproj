@@ -14,6 +14,8 @@
 		121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB6B2597A49B0062B15A /* MessageMock.swift */; };
 		121BDB712597A5D60062B15A /* APIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB702597A5D60062B15A /* APIMock.swift */; };
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
+		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
+		128313EE2598A14E00BDF8A3 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* List.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -71,6 +73,8 @@
 		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
+		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; };
+		128313ED2598A14E00BDF8A3 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +152,31 @@
 				121BDB582597652A0062B15A /* MessageTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		128313EA2598A0C800BDF8A3 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				128313EC2598A12600BDF8A3 /* Model */,
+				128313EB2598A12300BDF8A3 /* API */,
+				128313E22598A08700BDF8A3 /* Message.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		128313EB2598A12300BDF8A3 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				128313ED2598A14E00BDF8A3 /* List.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		128313EC2598A12600BDF8A3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		3902F128259714AB00A3DF8C /* Cell */ = {
@@ -260,6 +289,7 @@
 		395825B125948E98007325AB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				128313EA2598A0C800BDF8A3 /* Message */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -527,6 +557,8 @@
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				39F465822597811900621327 /* CheerButton.swift in Sources */,
+				128313EE2598A14E00BDF8A3 /* List.swift in Sources */,
+				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
