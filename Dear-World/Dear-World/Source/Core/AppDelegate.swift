@@ -9,20 +9,20 @@ import UIKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        let tabBarController: UITabBarController = UITabBarController()
-        tabBarController.addChild(DiscoverViewController())
-        tabBarController.addChild(CheeringMapViewController())
-        
-        let mainWindow: UIWindow = UIWindow()
-        window = mainWindow
-        mainWindow.rootViewController = tabBarController
-        mainWindow.makeKeyAndVisible()
-        return true
-    }
+  var window: UIWindow?
+  
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    let tabBarController: UITabBarController = UITabBarController()
+    tabBarController.addChild(DiscoverViewController())
+    tabBarController.addChild(CheeringMapViewController())
+    
+    let mainWindow: UIWindow = UIWindow()
+    window = mainWindow
+    mainWindow.rootViewController = tabBarController
+    mainWindow.makeKeyAndVisible()
+    return true
+  }
 }

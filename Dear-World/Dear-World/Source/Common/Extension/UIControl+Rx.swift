@@ -10,8 +10,8 @@ import RxSwift
 import UIKit
 
 extension Reactive where Base: UIControl {
-    var state: Observable<UIControl.State> {
-        base.rx.observe(UIControl.State.self, "state")
-            .filterNil()
-    }
+  var state: Observable<UIControl.State> {
+    base.rx.observe(UIControl.State.self, "state")
+      .filterNil()
+  }
 }
