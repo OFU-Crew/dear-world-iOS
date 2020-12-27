@@ -34,6 +34,11 @@ final class CheeringMapViewController: UIViewController {
     super.init(nibName: nil, bundle: nil)
     
     setupUI()
+    let errorView = ErrorView(reason: [.pageNotFound, .networkConnectionFailure].randomElement()!)
+    self.view.addSubview(errorView)
+    errorView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
   
   required init?(coder: NSCoder) {
@@ -61,7 +66,7 @@ final class CheeringMapViewController: UIViewController {
     
     cheeringCountLabel.do {
       // FIXME: 🔮 더미 데이터 변경
-      $0.text = 353_513.decimalString
+      $0.text = 353_513.formatted
     }
     self.view.addSubview(cheeringCountLabel)
     cheeringCountLabel.snp.makeConstraints {

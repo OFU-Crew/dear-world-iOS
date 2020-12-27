@@ -41,6 +41,7 @@
 		39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C18F25987A2B00A7001F /* ServiceAPI.swift */; };
 		39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C19A2598860100A7001F /* ResponseWrapper.swift */; };
 		39F0C1A02598877600A7001F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C19F2598877600A7001F /* NetworkError.swift */; };
+		39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1B62598927C00A7001F /* ErrorView.swift */; };
 		39F4657D25977DB300621327 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 39F4657C25977DB300621327 /* RxGesture */; };
 		39F465822597811900621327 /* CheerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F465812597811900621327 /* CheerButton.swift */; };
 		39F465CC2597919700621327 /* RxOptional in Frameworks */ = {isa = PBXBuildFile; productRef = 39F465CB2597919700621327 /* RxOptional */; };
@@ -97,6 +98,7 @@
 		39F0C18F25987A2B00A7001F /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		39F0C19A2598860100A7001F /* ResponseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseWrapper.swift; sourceTree = "<group>"; };
 		39F0C19F2598877600A7001F /* NetworkError.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39F0C1B62598927C00A7001F /* ErrorView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F465812597811900621327 /* CheerButton.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheerButton.swift; sourceTree = "<group>"; tabWidth = 2; wrapsLines = 0; };
 /* End PBXFileReference section */
 
@@ -279,6 +281,7 @@
 				121BDB292597259E0062B15A /* MessageCountBadgeView.swift */,
 				39F465812597811900621327 /* CheerButton.swift */,
 				121BDB8D259829840062B15A /* CountrySelectController.swift */,
+				39F0C1B62598927C00A7001F /* ErrorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
+				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
