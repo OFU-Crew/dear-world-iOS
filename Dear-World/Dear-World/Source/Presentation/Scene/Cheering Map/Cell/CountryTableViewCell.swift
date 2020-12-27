@@ -5,6 +5,8 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 import UIKit
@@ -16,8 +18,9 @@ final class CountryTableViewCell: UITableViewCell {
   let countryFlagLabel: UILabel = UILabel()
   let countryNameLabel: UILabel = UILabel()
   let messageCountLabel: UILabel = UILabel()
-  // FIXME: 🔮 하트 버튼 구현 후 변경
-  let heartButton: UIButton = UIButton()
+  let cheerUpButton: CheerUpButton = CheerUpButton()
+  
+  let disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -91,14 +94,13 @@ final class CountryTableViewCell: UITableViewCell {
       $0.centerY.equalTo(messageImageView)
     }
     
-    self.contentView.addSubview(heartButton)
-    heartButton.do {
+    self.contentView.addSubview(cheerUpButton)
+    cheerUpButton.do {
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 16
       // FIXME: 🔮 더미 데이터 변경
-      $0.backgroundColor = .red
     }
-    heartButton.snp.makeConstraints {
+    cheerUpButton.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.trailing.equalToSuperview().inset(20)
       $0.width.height.equalTo(32)

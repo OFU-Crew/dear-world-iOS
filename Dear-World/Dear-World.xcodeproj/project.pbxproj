@@ -30,6 +30,9 @@
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
+		39F0C1632597B34F00A7001F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1622597B34F00A7001F /* UIView+.swift */; };
+		39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C16A2597C7DF00A7001F /* UIImage+.swift */; };
+		39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C175259860D700A7001F /* UIControl+Rx.swift */; };
 		39F4657D25977DB300621327 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 39F4657C25977DB300621327 /* RxGesture */; };
 		39F465822597811900621327 /* CheerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F465812597811900621327 /* CheerButton.swift */; };
 		39F465CC2597919700621327 /* RxOptional in Frameworks */ = {isa = PBXBuildFile; productRef = 39F465CB2597919700621327 /* RxOptional */; };
@@ -56,7 +59,6 @@
 		121BDB292597259E0062B15A /* MessageCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCountBadgeView.swift; path = "Dear-World.xcodeproj/MessageCountBadgeView.swift"; sourceTree = SOURCE_ROOT; };
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
-		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -76,7 +78,10 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		39F465812597811900621327 /* CheerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheerButton.swift; sourceTree = "<group>"; };
+		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; };
+		39F465812597811900621327 /* CheerButton.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheerButton.swift; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +147,9 @@
 			children = (
 				3902F12325970E5600A3DF8C /* Int+.swift */,
 				121BDB43259735200062B15A /* UIColor+.swift */,
+				39F0C1622597B34F00A7001F /* UIView+.swift */,
+				39F0C16A2597C7DF00A7001F /* UIImage+.swift */,
+				39F0C175259860D700A7001F /* UIControl+Rx.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -484,8 +492,11 @@
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				39F465822597811900621327 /* CheerButton.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
+				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
+				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
+				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
