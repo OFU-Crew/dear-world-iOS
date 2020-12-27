@@ -35,9 +35,27 @@ final class DiscoverViewController: UIViewController, View {
         setupUI()
         setupCollectionView()
         self.reactor = DiscoverReactor()
+        startInitAnimation()
     }
-    func bind(reactor: DiscoverReactor) {
+    private func startInitAnimation() {
+//        self.view.isUserInteractionEnabled = false
+        animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
+        animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)
+    }
+    
+    private func animate(view: UIView, alpha: CGFloat, length: CGFloat, duration: Double, delay: Double = 0) {
+        view.alpha = alpha
+        view.frame.origin.y += length
         
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * delay) {
+            UIView.animate(withDuration: duration) {
+                view.alpha = 1
+                view.frame.origin.y -= length
+            }
+//        }
+    }
+    
+    func bind(reactor: DiscoverReactor) {
         //TODO: RxCocoa import되면 Binder extension 만들 것
         reactor.state
             .map(\.messageCount)
@@ -56,6 +74,7 @@ final class DiscoverViewController: UIViewController, View {
         
         reactor.state
             .map(\.isRefreshing)
+            .distinctUntilChanged()
             .filter { !$0 }
             .bind {[weak self] _ in
                 self?.messageCollectionView.refreshControl?.endRefreshing()
@@ -64,8 +83,20 @@ final class DiscoverViewController: UIViewController, View {
         
         reactor.state
             .map(\.country)
+            .distinctUntilChanged()
             .bind(to: self.countryLabel.rx.text)
             .disposed(by: self.disposeBag)
+        
+        
+//        reactor.state
+//            .map(\.isAnimating)
+//            .filter { $0 }
+//            .bind { _ in
+//                self.messageCollectionView
+//                    .visibleCells
+//                    .forEach { self.initAnimation(view: $0, alpha: 0.3, length: 100, duration: 0.5) }
+//            }
+//            .disposed(by: self.disposeBag)
         
         self.countryLabel
             .rx.observe(String.self, "text")
@@ -99,6 +130,8 @@ final class DiscoverViewController: UIViewController, View {
             .map { Reactor.Action.countryDidChanged(country: $0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        
     }
     
     private func setupUI() {
@@ -168,7 +201,9 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         cell.likeCountLabel.text = self.messages[indexPath.row].likes.decimalString
         cell.countryLabel.text = self.messages[indexPath.row].countryName
         bindShareButton(button: cell.shareButton)
-        
+        if self.reactor?.currentState.currentPage == 1 {
+//            self.animate(view: cell, alpha: 0.3, length: 50, duration: 0.5, delay: Double(indexPath.row))
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

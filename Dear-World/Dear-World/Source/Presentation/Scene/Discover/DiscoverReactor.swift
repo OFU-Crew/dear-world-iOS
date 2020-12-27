@@ -13,13 +13,16 @@ class DiscoverReactor: Reactor {
         case countryDidChanged(country: String)
         case refresh
         case loadMore
+        
     }
     enum Mutation {
         case setMessages(result: [MessageMock])
         case setRefreshing(Bool)
-        case addMessages(result: [MessageMock])
+        case addMessages(result: [MessageMock], page: Int)
         case setCountry(country: String)
-//        case setLoading(Bool)
+//        case animateCell
+        case setLoading(Bool)
+//        case setPage(page: Int)
     }
     struct State {
         var messageCount: Int = 0
@@ -28,6 +31,8 @@ class DiscoverReactor: Reactor {
         var messages: [MessageMock] = []
         var isRefreshing: Bool = false
         var isLoading: Bool = false
+        var isAnimating: Bool = false
+        var currentPage: Int = 1
     }
     var initialState: State
 
@@ -38,22 +43,24 @@ class DiscoverReactor: Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case let .countryDidChanged(country):
-            return Observable<Mutation>.merge(
+            return .concat(
+                .just(Mutation.setCountry(country: country)),
+                .just(.setLoading(true)),
                 APIMock().getMessages(page: 1, country: country)
-                    .map { Mutation.setMessages(result: $0)},
-                Observable.just(Mutation.setCountry(country: country))
+                    .map { .setMessages(result: $0) },
+                .just(.setLoading(false))
             )
         case .refresh:
-            return Observable<Mutation>.concat([
-                Observable.just(Mutation.setRefreshing(true)),
+            return .concat([
+                .just(Mutation.setRefreshing(true)),
                 APIMock().getMessages(page: 1, country: currentState.country)
-                .map { Mutation.setMessages(result: $0) },
-                Observable.just(Mutation.setRefreshing(false))
+                    .map { .setMessages(result: $0) },
+                .just(Mutation.setRefreshing(false))
             ])
         case .loadMore:
             return Observable<Mutation>.concat([
                 APIMock().getMessages(page: 2, country: currentState.country)
-                    .map { Mutation.addMessages(result: $0) }
+                    .map { Mutation.addMessages(result: $0, page: 2) }
             ])
 //        case .countryTouched:
 //            return
@@ -65,12 +72,16 @@ class DiscoverReactor: Reactor {
         switch mutation {
         case let .setMessages(results):
             newState.messages = results
+            newState.currentPage = 1
         case let .setRefreshing(flag):
             newState.isRefreshing = flag
-        case let .addMessages(result: results):
+        case let .addMessages(result: results, page: page):
             newState.messages = state.messages + results
+            newState.currentPage = page
         case let .setCountry(country: country):
             newState.country = country
+        case let .setLoading(flag):
+            newState.isLoading = flag
         }
         return newState
     }
