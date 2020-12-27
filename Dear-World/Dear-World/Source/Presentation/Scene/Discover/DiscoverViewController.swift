@@ -5,16 +5,21 @@
 //  Created by dongyoung.lee on 2020/12/25.
 //
 
+import ReactorKit
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 import UIKit
-import ReactorKit
 
-final class DiscoverViewController: UIViewController {
+final class DiscoverViewController: UIViewController, View {
     private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
     private let filterContainerView: UIView = UIView()
     private let countryLabel: UILabel = UILabel()
     private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var messages: [MessageMock] = []
+    
+    var disposeBag: DisposeBag = DisposeBag()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,6 +34,104 @@ final class DiscoverViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupCollectionView()
+        self.reactor = DiscoverReactor()
+        startInitAnimation()
+    }
+    private func startInitAnimation() {
+//        self.view.isUserInteractionEnabled = false
+        animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
+        animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)
+    }
+    
+    private func animate(view: UIView, alpha: CGFloat, length: CGFloat, duration: Double, delay: Double = 0) {
+        view.alpha = alpha
+        view.frame.origin.y += length
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * delay) {
+            UIView.animate(withDuration: duration) {
+                view.alpha = 1
+                view.frame.origin.y -= length
+            }
+//        }
+    }
+    
+    func bind(reactor: DiscoverReactor) {
+        //TODO: RxCocoa import되면 Binder extension 만들 것
+        reactor.state
+            .map(\.messageCount)
+            .subscribe { [weak self] count in
+                self?.messageCountBadgeView.count = count
+            }
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map(\.messages)
+            .subscribe(onNext: {[weak self] mess in
+                self?.messages = mess
+                self?.messageCollectionView.reloadData()
+            })
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map(\.isRefreshing)
+            .distinctUntilChanged()
+            .filter { !$0 }
+            .bind {[weak self] _ in
+                self?.messageCollectionView.refreshControl?.endRefreshing()
+            }
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map(\.country)
+            .distinctUntilChanged()
+            .bind(to: self.countryLabel.rx.text)
+            .disposed(by: self.disposeBag)
+        
+        
+//        reactor.state
+//            .map(\.isAnimating)
+//            .filter { $0 }
+//            .bind { _ in
+//                self.messageCollectionView
+//                    .visibleCells
+//                    .forEach { self.initAnimation(view: $0, alpha: 0.3, length: 100, duration: 0.5) }
+//            }
+//            .disposed(by: self.disposeBag)
+        
+        self.countryLabel
+            .rx.observe(String.self, "text")
+            .filter { $0 != nil }
+            .map { $0! }
+            .distinctUntilChanged()
+            .map { Reactor.Action.countryDidChanged(country: $0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.messageCollectionView
+            .refreshControl?.rx
+            .controlEvent(.valueChanged)
+            .map { Reactor.Action.refresh }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.messageCollectionView
+            .rx.isReachedBottom
+            .map { Reactor.Action.loadMore }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.filterContainerView
+            .rx.tapGesture()
+            .skip(1)
+            .flatMap { [weak self] _ -> Observable<String> in
+                guard let self = self else { return Observable.just("") }
+                return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
+            }
+            .map { Reactor.Action.countryDidChanged(country: $0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        
     }
     
     private func setupUI() {
@@ -73,13 +176,13 @@ final class DiscoverViewController: UIViewController {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
             $0.width.equalTo(300)
         }
-        
     }
     
     private func setupCollectionView() {
         self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "messageCell")
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
+        self.messageCollectionView.refreshControl = UIRefreshControl()
         
         let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20
@@ -87,16 +190,55 @@ final class DiscoverViewController: UIViewController {
 }
 extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.messages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath) as? MessageTableViewCell else {return UICollectionViewCell()}
+        cell.nameLabel.text = self.messages[indexPath.row].name
+        cell.emojiLabel.text = self.messages[indexPath.row].emoji
+        cell.detailTextView.text = self.messages[indexPath.row].detail
+        cell.likeCountLabel.text = self.messages[indexPath.row].likes.decimalString
+        cell.countryLabel.text = self.messages[indexPath.row].countryName
+        bindShareButton(button: cell.shareButton)
+        if self.reactor?.currentState.currentPage == 1 {
+//            self.animate(view: cell, alpha: 0.3, length: 50, duration: 0.5, delay: Double(indexPath.row))
+        }
         return cell
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 192)
     }
     
+    private func bindShareButton(button: UIButton) {
+        button
+            .rx.tap
+            .bind {
+                let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self.view
+                self.present(activityVC, animated: true)
+            }
+            .disposed(by: self.disposeBag)
+    }
+}
+
+extension Reactive where Base: UIScrollView {
+  public var isReachedBottom: ControlEvent<Void> {
+    let source = self.contentOffset
+      .filter { [weak base = self.base] offset in
+        guard let base = base else { return false }
+        return base.isReachedBottom(withTolerance: base.frame.height / 2)
+      }
+      .map { _ in }
+    return ControlEvent(events: source)
+  }
+}
+
+extension UIScrollView {
+  func isReachedBottom(withTolerance tolerance: CGFloat = 0) -> Bool {
+    guard self.frame.height > 0 else { return false }
+    guard self.contentSize.height > 0 else { return false }
+    let contentOffsetBottom = self.contentOffset.y + self.frame.height
+    return contentOffsetBottom >= self.contentSize.height - tolerance
+  }
 }

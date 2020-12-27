@@ -15,6 +15,7 @@ final class MessageTableViewCell: UICollectionViewCell {
     // TODO: likeView를 커스텀뷰로 만들기
     let likeView: UIImageView = UIImageView()
     let likeCountLabel: UILabel = UILabel()
+    let shareButton: UIButton = UIButton()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,11 +25,13 @@ final class MessageTableViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+        bind()
     }
     
     private func setupUI() {
@@ -122,11 +125,12 @@ final class MessageTableViewCell: UICollectionViewCell {
             $0.leading.equalTo(likeView.snp.trailing).offset(5)
         }
         
-        let shareButton: UIButton = UIButton().then {
+        self.shareButton.do {
             $0.backgroundColor = .refreshingWhite
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = 8
             $0.setImage(UIImage(named: "share"), for: .normal)
+            $0.setImage(UIImage(named: "share_press"), for: .highlighted)
             $0.tintColor = .warmBlue
         }
         self.addSubview(shareButton)
@@ -136,5 +140,8 @@ final class MessageTableViewCell: UICollectionViewCell {
             $0.width.equalTo(30)
             $0.height.equalTo(25)
         }
+    }
+    func bind() {
+
     }
 }
