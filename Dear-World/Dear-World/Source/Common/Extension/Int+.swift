@@ -8,7 +8,7 @@
 import Foundation
 
 extension Int {
-  var decimalString: String? {
+  var formatted: String? {
     let numberFormatter: NumberFormatter = NumberFormatter().then {
       $0.numberStyle = .decimal
     }

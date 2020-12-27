@@ -85,7 +85,7 @@ final class CountryTableViewCell: UITableViewCell {
     messageCountLabel.do {
       $0.font = .systemFont(ofSize: 14)
       // FIXME: 🔮 더미 데이터 변경
-      $0.text = 952_682_252.decimalString
+      $0.text = 952_682_252.formatted
     }
     messageCountLabel.snp.makeConstraints {
       $0.top.equalTo(countryNameLabel.snp.bottom).offset(5)
@@ -111,6 +111,6 @@ final class CountryTableViewCell: UITableViewCell {
   func configure() {
     // FIXME: 🔮 더미 데이터 변경
     countryFlagLabel.text = "🇰🇷"
-    messageCountLabel.text = 952_682_252.decimalString
+    messageCountLabel.text = 952_682_252.formatted
   }
 }
