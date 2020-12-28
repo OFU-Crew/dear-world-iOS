@@ -6,6 +6,8 @@
 //
 
 import RxCocoa
+import RxKeyboard
+import RxOptional
 import RxSwift
 import UIKit
 import UITextView_Placeholder
@@ -22,14 +24,18 @@ final class SendMessageViewController: UIViewController {
   private let nameTextField: UITextField = UITextField()
   private let nameCountLabel: UILabel = UILabel()
   private let messageTextView: TextView = TextView()
+  private let progressBar: UIProgressView = UIProgressView()
+  private let bottomBar: UIView = UIView()
+  private let messageCharacterStatusLabel: UILabel = UILabel()
   private let arrowImageViews: UIStackView = UIStackView()
+  
+  private let disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   init() {
     super.init(nibName: nil, bundle: nil)
     
     setupUI()
-    refreshButton.rx.tap.subscribe(onNext: { self.rotateArrowImageViews() })
   }
   
   required init?(coder: NSCoder) {
@@ -164,14 +170,47 @@ final class SendMessageViewController: UIViewController {
       $0.top.equalTo(nameTextField.snp.bottom).offset(20)
     }
     
+    self.view.addSubview(bottomBar)
+    bottomBar.do {
+      $0.backgroundColor = .breathingWhite
+    }
+    bottomBar.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(48)
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
+    }
+    
+    self.view.addSubview(progressBar)
+    progressBar.do {
+      $0.progressTintColor = .livelyBlue
+      $0.tintColor = .grayWhite
+      $0.progress = 0.4
+    }
+    progressBar.snp.makeConstraints {
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(1)
+      $0.bottom.equalTo(bottomBar.snp.top)
+    }
+    
+    bottomBar.addSubview(messageCharacterStatusLabel)
+    messageCharacterStatusLabel.do {
+      $0.text = "0/300"
+      $0.textColor = .grayWhite
+      $0.font = .systemFont(ofSize: 14)
+    }
+    messageCharacterStatusLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().inset(20)
+    }
+    
     let earthImageView: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "earth")!
     }
-    self.view.addSubview(earthImageView)
+    bottomBar.addSubview(earthImageView)
     earthImageView.snp.makeConstraints {
       $0.width.height.equalTo(16)
-      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(16)
-      $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+      $0.bottom.equalTo(bottomBar).inset(16)
+      $0.trailing.equalTo(bottomBar).inset(20)
     }
     
     let speechBubbleImageView: UIImageView = UIImageView().then {
@@ -183,8 +222,8 @@ final class SendMessageViewController: UIViewController {
       $0.textAlignment = .center
       $0.font = .systemFont(ofSize: 11)
     }
-    self.view.addSubview(speechBubbleImageView)
-    self.view.addSubview(waitingLabel)
+    bottomBar.addSubview(speechBubbleImageView)
+    bottomBar.addSubview(waitingLabel)
     speechBubbleImageView.snp.makeConstraints {
       $0.center.equalTo(waitingLabel)
     }
@@ -200,13 +239,29 @@ final class SendMessageViewController: UIViewController {
       $0.axis = .horizontal
       $0.spacing = 5
     }
-    self.view.addSubview(arrowImageViews)
+    bottomBar.addSubview(arrowImageViews)
     arrowImageViews.snp.makeConstraints {
       $0.centerY.equalTo(waitingLabel)
       $0.trailing.equalTo(waitingLabel.snp.leading).offset(-20)
     }
     
+    RxKeyboard.instance.visibleHeight
+      .drive(onNext: { [weak self] keyboardHeight in
+        self?.updateBottomBarLayout(with: keyboardHeight)
+      })
+      .disposed(by: disposeBag)
+    
     rotateArrowImageViews()
+  }
+  
+  private func updateBottomBarLayout(with keyboardHeight: CGFloat) {
+    var keyboardHeight: CGFloat = keyboardHeight
+    if keyboardHeight > 0 {
+      keyboardHeight -= self.view.safeAreaInsets.bottom
+    }
+    self.bottomBar.snp.updateConstraints {
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(keyboardHeight)
+    }
   }
   
   // FIXME: 🛠 Timer로 구현해라 부엉아!

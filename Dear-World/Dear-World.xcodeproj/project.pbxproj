@@ -36,6 +36,7 @@
 		39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DB22598D139001D7E69 /* SelectCountryView.swift */; };
 		39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */ = {isa = PBXBuildFile; productRef = 39672DBB2598E803001D7E69 /* UITextView+Placeholder */; };
 		39672DC12598E95A001D7E69 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DC02598E95A001D7E69 /* TextView.swift */; };
+		3971EB0C259A682C0084E6DC /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3971EB0B259A682C0084E6DC /* RxKeyboard */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -117,6 +118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */,
+				3971EB0C259A682C0084E6DC /* RxKeyboard in Frameworks */,
 				39C8322A2597651F00236DDF /* RxSwift in Frameworks */,
 				39C832282597651F00236DDF /* RxRelay in Frameworks */,
 				39F4657D25977DB300621327 /* RxGesture in Frameworks */,
@@ -411,6 +413,7 @@
 				39F4657C25977DB300621327 /* RxGesture */,
 				39F465CB2597919700621327 /* RxOptional */,
 				39672DBB2598E803001D7E69 /* UITextView+Placeholder */,
+				3971EB0B259A682C0084E6DC /* RxKeyboard */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -492,6 +495,7 @@
 				39F4657B25977DB300621327 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */,
 				39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */,
+				3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -953,6 +957,14 @@
 				minimumVersion = 1.4.0;
 			};
 		};
+		3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1004,6 +1016,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */;
 			productName = "UITextView+Placeholder";
+		};
+		3971EB0B259A682C0084E6DC /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
 		};
 		39C832272597651F00236DDF /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -66,7 +66,6 @@ final class DiscoverViewController: UIViewController, View {
             .map(\.messages)
             .distinctUntilChanged()
             .subscribe(onNext: {[weak self] mess in
-                print("!!")
                 self?.messages = mess
                 self?.messageCollectionView.reloadData()
             })
@@ -228,7 +227,7 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         cell.nameLabel.text = self.messages[indexPath.row].name
         cell.emojiLabel.text = self.messages[indexPath.row].emoji
         cell.detailTextView.text = self.messages[indexPath.row].detail
-        cell.likeCountLabel.text = self.messages[indexPath.row].likes.decimalString
+        cell.likeCountLabel.text = self.messages[indexPath.row].likes.formatted
         cell.countryLabel.text = self.messages[indexPath.row].countryName
         bindShareButton(button: cell.shareButton)
         if reactor?.currentState.currentPage == 1 {
