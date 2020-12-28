@@ -41,6 +41,7 @@
 		3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */; };
 		3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */; };
 		3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB28259A7D720084E6DC /* SendMessageReactor.swift */; };
+		3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */ = {isa = PBXBuildFile; productRef = 3971EB31259A8BC90084E6DC /* SwiftRichString */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -134,6 +135,7 @@
 				39C8322C2597651F00236DDF /* RxCocoa in Frameworks */,
 				39F465CC2597919700621327 /* RxOptional in Frameworks */,
 				395826272596D225007325AB /* SnapKit in Frameworks */,
+				3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */,
 				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
 				3958261B2596D06C007325AB /* Then in Frameworks */,
 			);
@@ -450,6 +452,7 @@
 				39F465CB2597919700621327 /* RxOptional */,
 				39672DBB2598E803001D7E69 /* UITextView+Placeholder */,
 				3971EB0B259A682C0084E6DC /* RxKeyboard */,
+				3971EB31259A8BC90084E6DC /* SwiftRichString */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -532,6 +535,7 @@
 				39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */,
 				39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */,
 				3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */,
+				3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -1005,6 +1009,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftRichString";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.2;
+			};
+		};
 		39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1061,6 +1073,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		3971EB31259A8BC90084E6DC /* SwiftRichString */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */;
+			productName = SwiftRichString;
 		};
 		39C832272597651F00236DDF /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;
