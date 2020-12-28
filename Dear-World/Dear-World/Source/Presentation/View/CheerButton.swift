@@ -90,7 +90,7 @@ final class CheerUpButton: UIButton {
       y: point.y + (self.bounds.height / 2)
     )
     let heart: CAEmitterCell = CAEmitterCell().then {
-      $0.birthRate = 9
+      $0.birthRate = 15
       $0.lifetime = 2
       $0.velocity = 100
       $0.velocityRange = -5

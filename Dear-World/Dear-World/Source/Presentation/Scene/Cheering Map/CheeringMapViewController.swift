@@ -19,7 +19,7 @@ final class CheeringMapViewController: UIViewController {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let cheeringCountLabel: UILabel = UILabel()
   private let titleLabel: UILabel = UILabel()
-  private let worldMapView: UIView = UIView()
+  private let worldMapView: UIImageView = UIImageView()
   private let headerView: UIView = UIView()
   private let rankingTableView: UITableView = UITableView()
   
@@ -83,7 +83,7 @@ final class CheeringMapViewController: UIViewController {
     self.view.addSubview(worldMapView)
     worldMapView.do {
       // FIXME: 🔮 셋업하고 변경
-      $0.backgroundColor = .red
+      $0.image = UIImage(named: "world_map")
     }
     worldMapView.snp.makeConstraints {
       $0.top.equalTo(titleLabel.snp.bottom).offset(50)

@@ -83,6 +83,15 @@
         }
       },
       {
+        "package": "RxKeyboard",
+        "repositoryURL": "https://github.com/RxSwiftCommunity/RxKeyboard",
+        "state": {
+          "branch": null,
+          "revision": "ed5940a7e29c3a4b4925b2d76260f793d311d58e",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "RxOptional",
         "repositoryURL": "https://github.com/RxSwiftCommunity/RxOptional",
         "state": {
@@ -125,6 +134,15 @@
           "branch": null,
           "revision": "e421a7b3440a271834337694e6050133a3958bc7",
           "version": "2.7.0"
+        }
+      },
+      {
+        "package": "UITextView+Placeholder",
+        "repositoryURL": "https://github.com/devxoul/UITextView-Placeholder",
+        "state": {
+          "branch": null,
+          "revision": "5a133b7efc4e8dd9de91c9eada48270d90c83ef0",
+          "version": "1.4.0"
         }
       },
       {
