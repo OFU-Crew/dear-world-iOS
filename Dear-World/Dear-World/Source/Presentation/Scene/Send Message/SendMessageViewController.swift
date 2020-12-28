@@ -13,7 +13,10 @@ import RxSwift
 import UIKit
 import UITextView_Placeholder
 
-final class SendMessageViewController: UIViewController {
+final class SendMessageViewController: UIViewController, View {
+  
+  typealias Reactor = SendMessageReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let closeButton: UIButton = UIButton()
@@ -30,7 +33,7 @@ final class SendMessageViewController: UIViewController {
   private let messageCharacterStatusLabel: UILabel = UILabel()
   private let arrowImageViews: UIStackView = UIStackView()
   
-  private let disposeBag: DisposeBag = DisposeBag()
+  var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   init() {
@@ -43,6 +46,20 @@ final class SendMessageViewController: UIViewController {
     super.init(coder: coder)
     
     setupUI()
+  }
+  
+  // MARK: 🔗 Bind
+  func bind(reactor: Reactor) {
+    refreshButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapRefresh }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.emoji)
+      .distinctUntilChanged()
+      .bind(to: emojiLabel.rx.text)
+      .disposed(by: disposeBag)
   }
   
   // MARK: 📍 Setup

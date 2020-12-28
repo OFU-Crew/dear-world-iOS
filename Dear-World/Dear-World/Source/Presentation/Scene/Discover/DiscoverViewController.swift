@@ -45,6 +45,8 @@ final class DiscoverViewController: UIViewController, View {
       super.viewDidAppear(animated)
       
         let viewController = SendMessageViewController()
+        let reactor = SendMessageReactor()
+        viewController.reactor = reactor
         viewController.modalPresentationStyle = .fullScreen
       self.present(viewController, animated: true, completion: nil)
     }

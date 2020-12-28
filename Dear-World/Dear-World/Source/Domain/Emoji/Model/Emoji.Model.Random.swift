@@ -10,7 +10,7 @@ import Foundation
 extension Emoji.Model {
     
     struct Random: Decodable {
-        let emojiId: Int
+        let id: Int
         let unicode: String
     }
 }
