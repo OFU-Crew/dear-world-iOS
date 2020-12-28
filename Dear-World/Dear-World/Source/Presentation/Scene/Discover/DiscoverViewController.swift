@@ -40,6 +40,15 @@ final class DiscoverViewController: UIViewController, View {
         self.reactor = DiscoverReactor()
         startInitAnimation()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+      super.viewDidAppear(animated)
+      
+        let viewController = SendMessageViewController()
+        viewController.modalPresentationStyle = .fullScreen
+      self.present(viewController, animated: true, completion: nil)
+    }
+    
     private func startInitAnimation() {
         animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
         animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)
