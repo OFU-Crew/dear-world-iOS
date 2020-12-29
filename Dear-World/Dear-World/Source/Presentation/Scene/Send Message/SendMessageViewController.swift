@@ -5,6 +5,7 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import ReactorKit
 import RxCocoa
 import RxKeyboard
 import RxOptional
@@ -12,7 +13,10 @@ import RxSwift
 import UIKit
 import UITextView_Placeholder
 
-final class SendMessageViewController: UIViewController {
+final class SendMessageViewController: UIViewController, View {
+  
+  typealias Reactor = SendMessageReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let closeButton: UIButton = UIButton()
@@ -24,24 +28,94 @@ final class SendMessageViewController: UIViewController {
   private let nameTextField: UITextField = UITextField()
   private let nameCountLabel: UILabel = UILabel()
   private let messageTextView: TextView = TextView()
-  private let progressBar: UIProgressView = UIProgressView()
   private let bottomBar: UIView = UIView()
-  private let messageCharacterStatusLabel: UILabel = UILabel()
+  private let messageLimitGaugeBar: UIProgressView = UIProgressView()
+  private let messageStatusMessageLabel: UILabel = UILabel()
   private let arrowImageViews: UIStackView = UIStackView()
   
-  private let disposeBag: DisposeBag = DisposeBag()
+  var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   init() {
     super.init(nibName: nil, bundle: nil)
-    
-    setupUI()
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
     setupUI()
+  }
+  
+  // MARK: 🔗 Bind
+  func bind(reactor: Reactor) {
+    refreshButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapRefresh }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    nameTextField.rx.text
+      .filterNil()
+      .distinctUntilChanged()
+      .map { Action.typeName($0) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    messageTextView.rx.text
+      .filterNil()
+      .distinctUntilChanged()
+      .map { Action.typeMessage($0) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    sendButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapSendMessage }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.emoji)
+      .distinctUntilChanged()
+      .bind(to: emojiLabel.rx.text)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.canSendMessage)
+      .distinctUntilChanged()
+      .bind(to: sendButton.rx.isEnabled)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.name)
+      .filter { [weak self] name in
+        self?.nameTextField.text != name
+      }
+      .bind(to: nameTextField.rx.text)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.nameStatusMessage)
+      .distinctUntilChanged()
+      .bind(to: nameCountLabel.rx.attributedText)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.message)
+      .filter { [weak self] message in
+        self?.messageTextView.text != message
+      }
+      .bind(to: messageTextView.rx.text)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.messageLimitGauge)
+      .distinctUntilChanged()
+      .bind(to: messageLimitGaugeBar.rx.progress)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.messageStatusMessage)
+      .distinctUntilChanged()
+      .bind(to: messageStatusMessageLabel.rx.attributedText)
+      .disposed(by: disposeBag)
   }
   
   // MARK: 📍 Setup
@@ -70,6 +144,7 @@ final class SendMessageViewController: UIViewController {
     sendButton.do {
       $0.setTitle("Send", for: .normal)
       $0.setTitleColor(.livelyBlue, for: .normal)
+      $0.setTitleColor(.grayWhite, for: .disabled)
       $0.titleLabel?.font = .boldSystemFont(ofSize: 18)
     }
     sendButton.snp.makeConstraints {
@@ -108,7 +183,6 @@ final class SendMessageViewController: UIViewController {
     self.view.addSubview(emojiLabel)
     emojiLabel.do {
       $0.backgroundColor = .grayWhite
-      $0.text = "🎅"
       $0.font = .systemFont(ofSize: 40)
     }
     emojiLabel.snp.makeConstraints {
@@ -149,7 +223,6 @@ final class SendMessageViewController: UIViewController {
     nameCountLabel.do {
       $0.font = .boldSystemFont(ofSize: 18)
       $0.textColor = .grayWhite
-      $0.text = "0/15"
     }
     nameCountLabel.snp.makeConstraints {
       $0.leading.equalTo(nameTextField.snp.trailing).offset(5)
@@ -157,6 +230,7 @@ final class SendMessageViewController: UIViewController {
     }
     
     self.view.addSubview(messageTextView)
+    self.view.addSubview(bottomBar)
     messageTextView.do {
       $0.backgroundColor = .breathingWhite
       $0.placeholder = "Write down a message of cheering and encouragement to people or your story that you want to be comforted."
@@ -168,9 +242,9 @@ final class SendMessageViewController: UIViewController {
       $0.centerX.equalToSuperview()
       $0.leading.trailing.equalToSuperview().inset(18)
       $0.top.equalTo(nameTextField.snp.bottom).offset(20)
+      $0.bottom.equalTo(bottomBar.snp.top).offset(-16)
     }
     
-    self.view.addSubview(bottomBar)
     bottomBar.do {
       $0.backgroundColor = .breathingWhite
     }
@@ -180,25 +254,23 @@ final class SendMessageViewController: UIViewController {
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
     }
     
-    self.view.addSubview(progressBar)
-    progressBar.do {
+    self.view.addSubview(messageLimitGaugeBar)
+    messageLimitGaugeBar.do {
       $0.progressTintColor = .livelyBlue
       $0.tintColor = .grayWhite
-      $0.progress = 0.4
     }
-    progressBar.snp.makeConstraints {
+    messageLimitGaugeBar.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(1)
       $0.bottom.equalTo(bottomBar.snp.top)
     }
     
-    bottomBar.addSubview(messageCharacterStatusLabel)
-    messageCharacterStatusLabel.do {
-      $0.text = "0/300"
+    bottomBar.addSubview(messageStatusMessageLabel)
+    messageStatusMessageLabel.do {
       $0.textColor = .grayWhite
       $0.font = .systemFont(ofSize: 14)
     }
-    messageCharacterStatusLabel.snp.makeConstraints {
+    messageStatusMessageLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.leading.equalToSuperview().inset(20)
     }
@@ -244,6 +316,12 @@ final class SendMessageViewController: UIViewController {
       $0.centerY.equalTo(waitingLabel)
       $0.trailing.equalTo(waitingLabel.snp.leading).offset(-20)
     }
+    
+    self.view.rx.tapGesture()
+      .subscribe(onNext: { [weak self] _ in
+        self?.view.endEditing(true)
+      })
+      .disposed(by: disposeBag)
     
     RxKeyboard.instance.visibleHeight
       .drive(onNext: { [weak self] keyboardHeight in

@@ -11,7 +11,7 @@ struct NetworkError: LocalizedError {
   var errorDescription: String?
   
   init?(code: Int, message: String?) {
-    guard code == 0 else { return }
+    guard code == 0 else { return nil }
     errorDescription = message
   }
 }

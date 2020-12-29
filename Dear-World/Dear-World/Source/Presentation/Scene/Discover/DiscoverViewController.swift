@@ -40,6 +40,7 @@ final class DiscoverViewController: UIViewController, View {
         self.reactor = DiscoverReactor()
         startInitAnimation()
     }
+    
     private func startInitAnimation() {
         animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
         animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)

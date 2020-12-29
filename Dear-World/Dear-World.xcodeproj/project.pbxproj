@@ -37,6 +37,13 @@
 		39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */ = {isa = PBXBuildFile; productRef = 39672DBB2598E803001D7E69 /* UITextView+Placeholder */; };
 		39672DC12598E95A001D7E69 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DC02598E95A001D7E69 /* TextView.swift */; };
 		3971EB0C259A682C0084E6DC /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 3971EB0B259A682C0084E6DC /* RxKeyboard */; };
+		3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB17259A7BC10084E6DC /* Emoji.swift */; };
+		3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */; };
+		3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */; };
+		3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB28259A7D720084E6DC /* SendMessageReactor.swift */; };
+		3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */ = {isa = PBXBuildFile; productRef = 3971EB31259A8BC90084E6DC /* SwiftRichString */; };
+		3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */; };
+		3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -101,11 +108,17 @@
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DB22598D139001D7E69 /* SelectCountryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SelectCountryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DC02598E95A001D7E69 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		3971EB17259A7BC10084E6DC /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
+		3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Emoji.API.Random.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Emoji.Model.Random.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB28259A7D720084E6DC /* SendMessageReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C18A2598799200A7001F /* Network.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; tabWidth = 2; };
-		39F0C18F25987A2B00A7001F /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
+		39F0C18F25987A2B00A7001F /* ServiceAPI.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C19A2598860100A7001F /* ResponseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseWrapper.swift; sourceTree = "<group>"; };
 		39F0C19F2598877600A7001F /* NetworkError.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C1B62598927C00A7001F /* ErrorView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -126,6 +139,7 @@
 				39C8322C2597651F00236DDF /* RxCocoa in Frameworks */,
 				39F465CC2597919700621327 /* RxOptional in Frameworks */,
 				395826272596D225007325AB /* SnapKit in Frameworks */,
+				3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */,
 				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
 				3958261B2596D06C007325AB /* Then in Frameworks */,
 			);
@@ -178,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				128313ED2598A14E00BDF8A3 /* List.swift */,
+				3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -185,6 +200,7 @@
 		128313EC2598A12600BDF8A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,6 +315,7 @@
 		395825B125948E98007325AB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				3971EB16259A7BB10084E6DC /* Emoji */,
 				128313EA2598A0C800BDF8A3 /* Message */,
 			);
 			path = Domain;
@@ -362,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				3902F1122597049D00A3DF8C /* SendMessageViewController.swift */,
+				3971EB28259A7D720084E6DC /* SendMessageReactor.swift */,
 			);
 			path = "Send Message";
 			sourceTree = "<group>";
@@ -372,6 +390,32 @@
 				3902F117259704AF00A3DF8C /* AboutViewController.swift */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		3971EB16259A7BB10084E6DC /* Emoji */ = {
+			isa = PBXGroup;
+			children = (
+				3971EB1D259A7BDF0084E6DC /* API */,
+				3971EB1C259A7BDC0084E6DC /* Model */,
+				3971EB17259A7BC10084E6DC /* Emoji.swift */,
+			);
+			path = Emoji;
+			sourceTree = "<group>";
+		};
+		3971EB1C259A7BDC0084E6DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3971EB1D259A7BDF0084E6DC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		39F0C1802598684100A7001F /* Network */ = {
@@ -414,6 +458,7 @@
 				39F465CB2597919700621327 /* RxOptional */,
 				39672DBB2598E803001D7E69 /* UITextView+Placeholder */,
 				3971EB0B259A682C0084E6DC /* RxKeyboard */,
+				3971EB31259A8BC90084E6DC /* SwiftRichString */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -496,6 +541,7 @@
 				39F465CA2597919700621327 /* XCRemoteSwiftPackageReference "RxOptional" */,
 				39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */,
 				3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */,
+				3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -566,7 +612,9 @@
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
+				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
+				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
@@ -578,8 +626,12 @@
 				128313EE2598A14E00BDF8A3 /* List.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
+				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
+				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
+				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
+				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,
@@ -965,6 +1017,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftRichString";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.2;
+			};
+		};
 		39C832262597651F00236DDF /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1021,6 +1081,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		3971EB31259A8BC90084E6DC /* SwiftRichString */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */;
+			productName = SwiftRichString;
 		};
 		39C832272597651F00236DDF /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;
