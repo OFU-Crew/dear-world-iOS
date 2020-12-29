@@ -79,6 +79,7 @@ final class SendMessageReactor: Reactor {
       )
       return Network.request(api)
         .filterNil()
+        // TODO: 🔮 성공 후 화면 연동 필요함
         .map { _ in .setMessage("완료") }
     }
   }
