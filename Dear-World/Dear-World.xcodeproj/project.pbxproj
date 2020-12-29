@@ -33,6 +33,10 @@
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
 		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
 		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
+		39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F8C259AD9900050D180 /* SplashViewController.swift */; };
+		39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F91259AD9B70050D180 /* SplashReactor.swift */; };
+		39658F9B259ADB130050D180 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 39658F9A259ADB130050D180 /* Lottie */; };
+		39658FA0259ADE770050D180 /* splash_1x.json in Resources */ = {isa = PBXBuildFile; fileRef = 39658F9F259ADE770050D180 /* splash_1x.json */; };
 		39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DB22598D139001D7E69 /* SelectCountryView.swift */; };
 		39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */ = {isa = PBXBuildFile; productRef = 39672DBB2598E803001D7E69 /* UITextView+Placeholder */; };
 		39672DC12598E95A001D7E69 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DC02598E95A001D7E69 /* TextView.swift */; };
@@ -106,6 +110,9 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658F8C259AD9900050D180 /* SplashViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658F91259AD9B70050D180 /* SplashReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658F9F259ADE770050D180 /* splash_1x.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_1x.json; sourceTree = "<group>"; };
 		39672DB22598D139001D7E69 /* SelectCountryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SelectCountryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DC02598E95A001D7E69 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		3971EB17259A7BC10084E6DC /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
@@ -130,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39658F9B259ADB130050D180 /* Lottie in Frameworks */,
 				39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */,
 				3971EB0C259A682C0084E6DC /* RxKeyboard in Frameworks */,
 				39C8322A2597651F00236DDF /* RxSwift in Frameworks */,
@@ -288,6 +296,7 @@
 		395825AE25948E66007325AB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				39658F9F259ADE770050D180 /* splash_1x.json */,
 				395825B625948EE4007325AB /* Colors.xcassets */,
 				3958258325948E43007325AB /* Assets.xcassets */,
 				3958258525948E43007325AB /* LaunchScreen.storyboard */,
@@ -346,6 +355,7 @@
 		395825B525948ECE007325AB /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				39658F8B259AD9760050D180 /* Splash */,
 				3958260025962F77007325AB /* Discover */,
 				3958260125962F7E007325AB /* Cheering Map */,
 				3958260225962F94007325AB /* Send Message */,
@@ -390,6 +400,15 @@
 				3902F117259704AF00A3DF8C /* AboutViewController.swift */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		39658F8B259AD9760050D180 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				39658F8C259AD9900050D180 /* SplashViewController.swift */,
+				39658F91259AD9B70050D180 /* SplashReactor.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		3971EB16259A7BB10084E6DC /* Emoji */ = {
@@ -459,6 +478,7 @@
 				39672DBB2598E803001D7E69 /* UITextView+Placeholder */,
 				3971EB0B259A682C0084E6DC /* RxKeyboard */,
 				3971EB31259A8BC90084E6DC /* SwiftRichString */,
+				39658F9A259ADB130050D180 /* Lottie */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -542,6 +562,7 @@
 				39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */,
 				3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */,
+				39658F99259ADB130050D180 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -560,6 +581,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */,
+				39658FA0259ADE770050D180 /* splash_1x.json in Resources */,
 				395825B725948EE4007325AB /* Colors.xcassets in Resources */,
 				3958258425948E43007325AB /* Assets.xcassets in Resources */,
 			);
@@ -626,11 +648,13 @@
 				128313EE2598A14E00BDF8A3 /* List.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
+				39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
+				39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */,
 				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
@@ -1001,6 +1025,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		39658F99259ADB130050D180 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.9;
+			};
+		};
 		39672DBA2598E803001D7E69 /* XCRemoteSwiftPackageReference "UITextView-Placeholder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/UITextView-Placeholder";
@@ -1071,6 +1103,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 395826252596D225007325AB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		39658F9A259ADB130050D180 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39658F99259ADB130050D180 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		39672DBB2598E803001D7E69 /* UITextView+Placeholder */ = {
 			isa = XCSwiftPackageProductDependency;

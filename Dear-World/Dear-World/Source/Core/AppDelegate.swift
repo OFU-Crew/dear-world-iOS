@@ -15,13 +15,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    let tabBarController: UITabBarController = UITabBarController()
-    tabBarController.addChild(DiscoverViewController())
-    tabBarController.addChild(CheeringMapViewController())
+//    let tabBarController: UITabBarController = UITabBarController()
+//    tabBarController.addChild(DiscoverViewController())
+//    tabBarController.addChild(CheeringMapViewController())
+//    
     
     let mainWindow: UIWindow = UIWindow()
     window = mainWindow
-    mainWindow.rootViewController = tabBarController
+    mainWindow.rootViewController = SplashViewController()
     mainWindow.makeKeyAndVisible()
     return true
   }
