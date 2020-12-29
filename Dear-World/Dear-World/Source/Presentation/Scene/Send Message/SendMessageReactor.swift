@@ -16,6 +16,7 @@ final class SendMessageReactor: Reactor {
     case tapRefresh
     case typeName(String)
     case typeMessage(String)
+    case tapSendMessage
   }
   
   enum Mutation {
@@ -33,6 +34,7 @@ final class SendMessageReactor: Reactor {
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
     
+    fileprivate var emojiId: Int = 21
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
   }
@@ -65,8 +67,19 @@ final class SendMessageReactor: Reactor {
     case .typeName(let name):
       return .just(.setName(name))
       
-    case .typeMessage(let name):
-      return .just(.setMessage(name))
+    case .typeMessage(let message):
+      return .just(.setMessage(message))
+      
+    case .tapSendMessage:
+      let api = Message.API.SendMessage(
+        countryCode: "KR",
+        emojiId: currentState.emojiId,
+        name: currentState.name,
+        message: currentState.message
+      )
+      return Network.request(api)
+        .filterNil()
+        .map { _ in .setMessage("완료") }
     }
   }
   

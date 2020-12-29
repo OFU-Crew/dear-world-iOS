@@ -8,9 +8,8 @@
 import Foundation
 
 extension Emoji.Model {
-    
-    struct Random: Decodable {
-        let id: Int
-        let unicode: String
-    }
+  struct Random: Decodable {
+    let id: Int
+    let unicode: String
+  }
 }

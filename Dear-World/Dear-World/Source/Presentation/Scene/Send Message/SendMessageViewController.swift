@@ -72,6 +72,12 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
+    sendButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapSendMessage }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
     reactor.state.map(\.emoji)
       .distinctUntilChanged()
       .bind(to: emojiLabel.rx.text)

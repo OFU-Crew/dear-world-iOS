@@ -9,11 +9,10 @@ import Alamofire
 import Foundation
 
 extension Emoji.API {
+  struct Random: ServiceAPI {
+    typealias Response = Emoji.Model.Random
     
-    struct Random: ServiceAPI {
-        typealias Response = Emoji.Model.Random
-        
-        var method: HTTPMethod { .get }
-        var path: String { "emojis/random" }
-    }
+    var method: HTTPMethod { .get }
+    var path: String { "emojis/random" }
+  }
 }

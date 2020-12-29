@@ -42,6 +42,8 @@
 		3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */; };
 		3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB28259A7D720084E6DC /* SendMessageReactor.swift */; };
 		3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */ = {isa = PBXBuildFile; productRef = 3971EB31259A8BC90084E6DC /* SwiftRichString */; };
+		3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */; };
+		3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -107,14 +109,16 @@
 		39672DB22598D139001D7E69 /* SelectCountryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SelectCountryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DC02598E95A001D7E69 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		3971EB17259A7BC10084E6DC /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
-		3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.API.Random.swift; sourceTree = "<group>"; };
-		3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.Model.Random.swift; sourceTree = "<group>"; };
+		3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Emoji.API.Random.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB23259A7C420084E6DC /* Emoji.Model.Random.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Emoji.Model.Random.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB28259A7D720084E6DC /* SendMessageReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C18A2598799200A7001F /* Network.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; tabWidth = 2; };
-		39F0C18F25987A2B00A7001F /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
+		39F0C18F25987A2B00A7001F /* ServiceAPI.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C19A2598860100A7001F /* ResponseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseWrapper.swift; sourceTree = "<group>"; };
 		39F0C19F2598877600A7001F /* NetworkError.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C1B62598927C00A7001F /* ErrorView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -188,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				128313ED2598A14E00BDF8A3 /* List.swift */,
+				3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -195,6 +200,7 @@
 		128313EC2598A12600BDF8A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -606,6 +612,7 @@
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
+				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
@@ -621,6 +628,7 @@
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
+				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
