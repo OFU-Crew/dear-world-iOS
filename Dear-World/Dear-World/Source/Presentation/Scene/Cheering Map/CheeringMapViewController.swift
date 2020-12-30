@@ -50,10 +50,22 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     reactor.state
       .distinctUntilChanged(\.$rankers)
       .map { $0.rankers }
-      .bind(to: rankingTableView.rx.items(cellIdentifier: "RankerTableViewCell", cellType: RankerTableViewCell.self)) { (index, ranker, cell) in
+      .bind(to: rankingTableView.rx.items(cellIdentifier: "RankerTableViewCell", cellType: RankerTableViewCell.self)) {
+        [weak self] index, ranker, cell in
         cell.configure(with: ranker, ranking: index + 1)
-        cell.cheerUpButton.anchorView = self.view
+        cell.cheerUpButton.anchorView = self?.view
       }.disposed(by: disposeBag)
+    
+    rankingTableView.rx.didScroll
+      .map { [weak self] in self?.rankingTableView.contentOffset.y }
+      .filterNil()
+      .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [weak self] y in
+        guard let self = self else { return }
+        self.updateLayouts(y)
+      })
+      .disposed(by: disposeBag)
     
     reactor.action.onNext(.viewDidLoad)
   }
@@ -65,23 +77,6 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     self.view.addSubview(messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(60)
-    }
-    
-    let logoImageView: UIImageView = UIImageView().then {
-      $0.image = UIImage(named: "earth")
-    }
-    self.view.addSubview(logoImageView)
-    logoImageView.snp.makeConstraints {
-      $0.bottom.equalToSuperview()
-    }
-    
-    cheeringCountLabel.do {
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = 353_513.formatted
-    }
-    self.view.addSubview(cheeringCountLabel)
-    cheeringCountLabel.snp.makeConstraints {
-      $0.bottom.equalToSuperview()
     }
     
     titleLabel.do {
@@ -143,17 +138,9 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     }
     rankingTableView.snp.makeConstraints {
       $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+      $0.bottom.equalToSuperview()
       $0.top.equalTo(headerView.snp.bottom)
     }
-    rankingTableView.rx.contentOffset
-      .map { $0.y }
-      .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { [weak self] y in
-        guard let self = self else { return }
-        self.updateLayouts(y)
-      })
-      .disposed(by: disposeBag)
   }
   
   private func updateLayouts(_ tableViewOffsetY: CGFloat) {
@@ -171,18 +158,3 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     }
   }
 }
-//extension CheeringMapViewController: UITableViewDataSource {
-//  func tableView(
-//    _ tableView: UITableView,
-//    numberOfRowsInSection section: Int
-//  ) -> Int { 10 }
-//
-//  func tableView(
-//    _ tableView: UITableView,
-//    cellForRowAt indexPath: IndexPath
-//  ) -> UITableViewCell {
-//    let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell", for: indexPath) as! RankerTableViewCell
-//    cell.cheerUpButton.anchorView = self.view
-//    return cell
-//  }
-//}
