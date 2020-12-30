@@ -55,6 +55,7 @@
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
+		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39F0C1632597B34F00A7001F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1622597B34F00A7001F /* UIView+.swift */; };
 		39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C16A2597C7DF00A7001F /* UIImage+.swift */; };
 		39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C175259860D700A7001F /* UIControl+Rx.swift */; };
@@ -129,6 +130,7 @@
 		3971EB28259A7D720084E6DC /* SendMessageReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
+		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -434,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				39658FBA259AE55C0050D180 /* World.Model.Rank.swift */,
+				39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */,
 				39658FBF259AE58C0050D180 /* World.Model.Country.swift */,
 			);
 			path = Model;
@@ -673,6 +676,7 @@
 				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
+				39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
