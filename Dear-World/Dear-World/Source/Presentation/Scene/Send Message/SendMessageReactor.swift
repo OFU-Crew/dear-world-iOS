@@ -71,7 +71,7 @@ final class SendMessageReactor: Reactor {
       return .just(.setMessage(message))
       
     case .tapSendMessage:
-      let api = Message.API.SendMessage(
+      let api: Message.API.SendMessage = Message.API.SendMessage(
         countryCode: "KR",
         emojiId: currentState.emojiId,
         name: currentState.name,

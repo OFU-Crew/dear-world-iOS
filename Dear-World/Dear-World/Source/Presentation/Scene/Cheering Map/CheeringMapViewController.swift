@@ -50,16 +50,12 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     reactor.state
       .distinctUntilChanged(\.$rankers)
       .map { $0.rankers }
-      .bind(to: rankingTableView.rx.items) { (tableView, index, ranker) -> UITableViewCell in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell") as! RankerTableViewCell
-        cell.configure(with: ranker, ranking: index)
+      .bind(to: rankingTableView.rx.items(cellIdentifier: "RankerTableViewCell", cellType: RankerTableViewCell.self)) { (index, ranker, cell) in
+        cell.configure(with: ranker, ranking: index + 1)
         cell.cheerUpButton.anchorView = self.view
-        return cell
-      }
-      .disposed(by: disposeBag)
+      }.disposed(by: disposeBag)
     
     reactor.action.onNext(.viewDidLoad)
-    
   }
   
   // MARK: 📍 Setup
@@ -142,7 +138,6 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
       $0.register(RankerTableViewCell.self, forCellReuseIdentifier: "RankerTableViewCell")
       $0.rowHeight = UITableView.automaticDimension
       $0.estimatedRowHeight = 64
-      $0.dataSource = self
       $0.allowsSelection = false
       $0.separatorStyle = .none
     }
@@ -176,18 +171,18 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     }
   }
 }
-extension CheeringMapViewController: UITableViewDataSource {
-  func tableView(
-    _ tableView: UITableView,
-    numberOfRowsInSection section: Int
-  ) -> Int { 10 }
-  
-  func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath
-  ) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell", for: indexPath) as! RankerTableViewCell
-    cell.cheerUpButton.anchorView = self.view
-    return cell
-  }
-}
+//extension CheeringMapViewController: UITableViewDataSource {
+//  func tableView(
+//    _ tableView: UITableView,
+//    numberOfRowsInSection section: Int
+//  ) -> Int { 10 }
+//
+//  func tableView(
+//    _ tableView: UITableView,
+//    cellForRowAt indexPath: IndexPath
+//  ) -> UITableViewCell {
+//    let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell", for: indexPath) as! RankerTableViewCell
+//    cell.cheerUpButton.anchorView = self.view
+//    return cell
+//  }
+//}
