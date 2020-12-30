@@ -5,6 +5,7 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import ReactorKit
 import RxCocoa
 import RxGesture
 import RxOptional
@@ -13,7 +14,10 @@ import SnapKit
 import Then
 import UIKit
 
-final class CheeringMapViewController: UIViewController {
+final class CheeringMapViewController: UIViewController, ReactorKit.View {
+  
+  typealias Reactor = CheeringMapReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
@@ -27,7 +31,7 @@ final class CheeringMapViewController: UIViewController {
   private var worldMapHeight: CGFloat = 208
   private var canScrollTableView: Bool = false
   
-  private let disposeBag: DisposeBag = DisposeBag()
+  var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   init() {
@@ -40,6 +44,22 @@ final class CheeringMapViewController: UIViewController {
     super.init(coder: coder)
     
     setupUI()
+  }
+  
+  func bind(reactor: CheeringMapReactor) {
+    reactor.state
+      .distinctUntilChanged(\.$rankers)
+      .map { $0.rankers }
+      .bind(to: rankingTableView.rx.items) { (tableView, index, ranker) -> UITableViewCell in
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell") as! RankerTableViewCell
+        cell.configure(with: ranker, ranking: index)
+        cell.cheerUpButton.anchorView = self.view
+        return cell
+      }
+      .disposed(by: disposeBag)
+    
+    reactor.action.onNext(.viewDidLoad)
+    
   }
   
   // MARK: 📍 Setup

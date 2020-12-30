@@ -13,6 +13,6 @@ extension World.API {
     typealias Response = World.Model.Rank
     
     var method: HTTPMethod { .get }
-    var path: String { "countries/rank" }
+    var path: String { "api/v1/countries/rank" }
   }
 }
