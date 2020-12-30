@@ -31,16 +31,19 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
           .withRenderingMode(.alwaysOriginal)
         $0.tabBarItem.selectedImage = UIImage(named: "message")?
           .withRenderingMode(.alwaysOriginal)
+        $0.reactor = DiscoverReactor()
       })
       $0.addChild(SendMessageViewController().then {
         $0.tabBarItem.image = UIImage(named: "add")?
           .withRenderingMode(.alwaysOriginal)
+        $0.reactor = SendMessageReactor()
       })
       $0.addChild(CheeringMapViewController().then {
         $0.tabBarItem.image = UIImage(named: "earth_default")?
           .withRenderingMode(.alwaysOriginal)
         $0.tabBarItem.selectedImage = UIImage(named: "earth_icon")?
           .withRenderingMode(.alwaysOriginal)
+        $0.reactor = CheeringMapReactor()
       })
       $0.tabBar.barTintColor = .white
       $0.tabBar.layer.masksToBounds = true
@@ -56,6 +59,7 @@ extension AppDelegate: UITabBarControllerDelegate {
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
     if let _ = viewController as? SendMessageViewController {
       let vc = SendMessageViewController()
+      vc.reactor = SendMessageReactor()
       tabBarController.addChild(vc)
       tabBarController.view.addSubview(vc.view)
       vc.view.frame.origin.y = tabBarController.view.frame.height
