@@ -1,13 +1,13 @@
 //
-//  File.swift
+//  World.swift
 //  Dear-World
 //
-//  Created by rookie.w on 2020/12/27.
+//  Created by dongyoung.lee on 2020/12/29.
 //
 
 import Foundation
 
-enum Message {
+enum World {
   enum API {}
   enum Model {}
 }

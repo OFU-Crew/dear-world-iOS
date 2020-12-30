@@ -20,7 +20,7 @@
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
 		3902F12425970E5600A3DF8C /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Int+.swift */; };
-		3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* CountryTableViewCell.swift */; };
+		3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* RankerTableViewCell.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -37,6 +37,10 @@
 		39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F91259AD9B70050D180 /* SplashReactor.swift */; };
 		39658F9B259ADB130050D180 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 39658F9A259ADB130050D180 /* Lottie */; };
 		39658FA0259ADE770050D180 /* splash_1x.json in Resources */ = {isa = PBXBuildFile; fileRef = 39658F9F259ADE770050D180 /* splash_1x.json */; };
+		39658FAF259AE4E40050D180 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658FAE259AE4E40050D180 /* World.swift */; };
+		39658FB6259AE5250050D180 /* World.API.Rank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658FB5259AE5250050D180 /* World.API.Rank.swift */; };
+		39658FBB259AE55C0050D180 /* World.Model.Rank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658FBA259AE55C0050D180 /* World.Model.Rank.swift */; };
+		39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658FBF259AE58C0050D180 /* World.Model.Country.swift */; };
 		39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DB22598D139001D7E69 /* SelectCountryView.swift */; };
 		39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */ = {isa = PBXBuildFile; productRef = 39672DBB2598E803001D7E69 /* UITextView+Placeholder */; };
 		39672DC12598E95A001D7E69 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39672DC02598E95A001D7E69 /* TextView.swift */; };
@@ -51,6 +55,9 @@
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
+		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
+		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
+		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
 		39F0C1632597B34F00A7001F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1622597B34F00A7001F /* UIView+.swift */; };
 		39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C16A2597C7DF00A7001F /* UIImage+.swift */; };
 		39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C175259860D700A7001F /* UIControl+Rx.swift */; };
@@ -89,13 +96,13 @@
 		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
-		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; };
+		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; tabWidth = 2; };
-		3902F129259714D800A3DF8C /* CountryTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3902F129259714D800A3DF8C /* RankerTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RankerTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,6 +120,10 @@
 		39658F8C259AD9900050D180 /* SplashViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F91259AD9B70050D180 /* SplashReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F9F259ADE770050D180 /* splash_1x.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_1x.json; sourceTree = "<group>"; };
+		39658FAE259AE4E40050D180 /* World.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658FB5259AE5250050D180 /* World.API.Rank.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.API.Rank.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658FBA259AE55C0050D180 /* World.Model.Rank.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Rank.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39658FBF259AE58C0050D180 /* World.Model.Country.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Country.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DB22598D139001D7E69 /* SelectCountryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SelectCountryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39672DC02598E95A001D7E69 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		3971EB17259A7BC10084E6DC /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
@@ -121,6 +132,9 @@
 		3971EB28259A7D720084E6DC /* SendMessageReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
+		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
+		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C16A2597C7DF00A7001F /* UIImage+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		39F0C175259860D700A7001F /* UIControl+Rx.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIControl+Rx.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -174,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				3902F14F2597531600A3DF8C /* Extension */,
+				39EED240259D0227007452E1 /* Revision.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -216,7 +231,7 @@
 		3902F128259714AB00A3DF8C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				3902F129259714D800A3DF8C /* CountryTableViewCell.swift */,
+				3902F129259714D800A3DF8C /* RankerTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -324,6 +339,7 @@
 		395825B125948E98007325AB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				39658FAD259AE4D30050D180 /* World */,
 				3971EB16259A7BB10084E6DC /* Emoji */,
 				128313EA2598A0C800BDF8A3 /* Message */,
 			);
@@ -381,6 +397,7 @@
 			children = (
 				3902F128259714AB00A3DF8C /* Cell */,
 				3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */,
+				39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */,
 			);
 			path = "Cheering Map";
 			sourceTree = "<group>";
@@ -409,6 +426,34 @@
 				39658F91259AD9B70050D180 /* SplashReactor.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		39658FAD259AE4D30050D180 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				39658FB4259AE50C0050D180 /* API */,
+				39658FB3259AE5080050D180 /* Model */,
+				39658FAE259AE4E40050D180 /* World.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
+		39658FB3259AE5080050D180 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				39658FBA259AE55C0050D180 /* World.Model.Rank.swift */,
+				39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */,
+				39658FBF259AE58C0050D180 /* World.Model.Country.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		39658FB4259AE50C0050D180 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				39658FB5259AE5250050D180 /* World.API.Rank.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		3971EB16259A7BB10084E6DC /* Emoji */ = {
@@ -629,18 +674,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39EED241259D0227007452E1 /* Revision.swift in Sources */,
 				121BDB712597A5D60062B15A /* APIMock.swift in Sources */,
 				39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */,
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
+				39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
 				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
+				39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
-				3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */,
+				3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
@@ -648,10 +696,13 @@
 				128313EE2598A14E00BDF8A3 /* List.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
+				39658FBB259AE55C0050D180 /* World.Model.Rank.swift in Sources */,
+				39658FB6259AE5250050D180 /* World.API.Rank.swift in Sources */,
 				39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
+				39658FAF259AE4E40050D180 /* World.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */,
@@ -663,6 +714,7 @@
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
+				39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */,
 				121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */,
 				121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */,
 			);

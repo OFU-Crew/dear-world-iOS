@@ -22,7 +22,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let mainWindow: UIWindow = UIWindow()
     window = mainWindow
-    mainWindow.rootViewController = SplashViewController()
+    let viewController = CheeringMapViewController()
+    let reactor = CheeringMapReactor()
+    viewController.reactor = reactor
+    mainWindow.rootViewController = viewController
     mainWindow.makeKeyAndVisible()
     return true
   }

@@ -13,6 +13,6 @@ extension Emoji.API {
     typealias Response = Emoji.Model.Random
     
     var method: HTTPMethod { .get }
-    var path: String { "emojis/random" }
+    var path: String { "api/v1/emojis/random" }
   }
 }

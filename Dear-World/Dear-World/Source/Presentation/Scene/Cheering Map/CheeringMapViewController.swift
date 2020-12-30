@@ -5,6 +5,7 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import ReactorKit
 import RxCocoa
 import RxGesture
 import RxOptional
@@ -13,7 +14,10 @@ import SnapKit
 import Then
 import UIKit
 
-final class CheeringMapViewController: UIViewController {
+final class CheeringMapViewController: UIViewController, ReactorKit.View {
+  
+  typealias Reactor = CheeringMapReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
@@ -27,7 +31,7 @@ final class CheeringMapViewController: UIViewController {
   private var worldMapHeight: CGFloat = 208
   private var canScrollTableView: Bool = false
   
-  private let disposeBag: DisposeBag = DisposeBag()
+  var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
   init() {
@@ -42,6 +46,30 @@ final class CheeringMapViewController: UIViewController {
     setupUI()
   }
   
+  func bind(reactor: CheeringMapReactor) {
+    reactor.state
+      .distinctUntilChanged(\.$rankers)
+      .map { $0.rankers }
+      .bind(to: rankingTableView.rx.items(cellIdentifier: "RankerTableViewCell", cellType: RankerTableViewCell.self)) {
+        [weak self] index, ranker, cell in
+        cell.configure(with: ranker, ranking: index + 1)
+        cell.cheerUpButton.anchorView = self?.view
+      }.disposed(by: disposeBag)
+    
+    rankingTableView.rx.didScroll
+      .map { [weak self] in self?.rankingTableView.contentOffset.y }
+      .filterNil()
+      .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [weak self] y in
+        guard let self = self else { return }
+        self.updateLayouts(y)
+      })
+      .disposed(by: disposeBag)
+    
+    reactor.action.onNext(.viewDidLoad)
+  }
+  
   // MARK: 📍 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
@@ -49,23 +77,6 @@ final class CheeringMapViewController: UIViewController {
     self.view.addSubview(messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(60)
-    }
-    
-    let logoImageView: UIImageView = UIImageView().then {
-      $0.image = UIImage(named: "earth")
-    }
-    self.view.addSubview(logoImageView)
-    logoImageView.snp.makeConstraints {
-      $0.bottom.equalToSuperview()
-    }
-    
-    cheeringCountLabel.do {
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = 353_513.formatted
-    }
-    self.view.addSubview(cheeringCountLabel)
-    cheeringCountLabel.snp.makeConstraints {
-      $0.bottom.equalToSuperview()
     }
     
     titleLabel.do {
@@ -119,26 +130,17 @@ final class CheeringMapViewController: UIViewController {
     rankingTableView.do {
       $0.backgroundColor = .white
       $0.showsVerticalScrollIndicator = false
-      $0.register(CountryTableViewCell.self, forCellReuseIdentifier: "CountryTableViewCell")
+      $0.register(RankerTableViewCell.self, forCellReuseIdentifier: "RankerTableViewCell")
       $0.rowHeight = UITableView.automaticDimension
       $0.estimatedRowHeight = 64
-      $0.dataSource = self
       $0.allowsSelection = false
       $0.separatorStyle = .none
     }
     rankingTableView.snp.makeConstraints {
       $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+      $0.bottom.equalToSuperview()
       $0.top.equalTo(headerView.snp.bottom)
     }
-    rankingTableView.rx.contentOffset
-      .map { $0.y }
-      .throttle(.milliseconds(40), scheduler: MainScheduler.instance)
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { [weak self] y in
-        guard let self = self else { return }
-        self.updateLayouts(y)
-      })
-      .disposed(by: disposeBag)
   }
   
   private func updateLayouts(_ tableViewOffsetY: CGFloat) {
@@ -154,20 +156,5 @@ final class CheeringMapViewController: UIViewController {
     titleLabel.snp.updateConstraints {
       $0.height.equalTo(titleHeight)
     }
-  }
-}
-extension CheeringMapViewController: UITableViewDataSource {
-  func tableView(
-    _ tableView: UITableView,
-    numberOfRowsInSection section: Int
-  ) -> Int { 10 }
-  
-  func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath
-  ) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell", for: indexPath) as! CountryTableViewCell
-    cell.cheerUpButton.anchorView = self.view
-    return cell
   }
 }

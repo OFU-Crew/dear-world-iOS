@@ -8,10 +8,22 @@
 import RxCocoa
 import RxSwift
 import SnapKit
+import SwiftRichString
 import Then
 import UIKit
 
-final class CountryTableViewCell: UITableViewCell {
+final class RankerTableViewCell: UITableViewCell {
+  
+  enum Styles {
+    static let topOf3 = Style {
+      $0.font = UIFont.boldSystemFont(ofSize: 12)
+      $0.color = UIColor.livelyBlue
+    }
+    static let normal = Style {
+        $0.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.color = UIColor.warmBlue
+    }
+  }
   
   // MARK: 🖼 UI
   let rankLabel: UILabel = UILabel()
@@ -108,9 +120,20 @@ final class CountryTableViewCell: UITableViewCell {
   }
   
   // MARK: 🔩 Configuration
-  func configure() {
+  func configure(with ranker: World.Model.Ranker, ranking: Int) {
     // FIXME: 🔮 더미 데이터 변경
-    countryFlagLabel.text = "🇰🇷"
-    messageCountLabel.text = 952_682_252.formatted
+    rankLabel.attributedText = formatRank(ranking)
+    countryNameLabel.text = ranker.country.name
+    countryFlagLabel.text = ranker.country.emoji
+    messageCountLabel.text = ranker.messageCount.formatted
+  }
+  
+  private func formatRank(_ rank: Int) -> NSAttributedString {
+    switch rank {
+    case 1: return "\(rank)st".set(style: Styles.topOf3)
+    case 2: return "\(rank)nd".set(style: Styles.topOf3)
+    case 3: return "\(rank)rd".set(style: Styles.topOf3)
+    default: return "\(rank)th".set(style: Styles.normal)
+    }
   }
 }

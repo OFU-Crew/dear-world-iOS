@@ -18,7 +18,7 @@ extension Message.API {
     private let message: String
     
     var method: HTTPMethod { .post }
-    var path: String { "messages" }
+    var path: String { "api/v1/messages" }
     var parameters: [String: Any]? {
       ["countryCode": countryCode,
        "emojiId": emojiId.description,
