@@ -11,7 +11,7 @@ import SnapKit
 import Then
 import UIKit
 
-final class CountryTableViewCell: UITableViewCell {
+final class RankerTableViewCell: UITableViewCell {
   
   // MARK: 🖼 UI
   let rankLabel: UILabel = UILabel()
@@ -108,9 +108,11 @@ final class CountryTableViewCell: UITableViewCell {
   }
   
   // MARK: 🔩 Configuration
-  func configure() {
+  func configure(with ranker: World.Model.Ranker, ranking: Int) {
     // FIXME: 🔮 더미 데이터 변경
-    countryFlagLabel.text = "🇰🇷"
-    messageCountLabel.text = 952_682_252.formatted
+    rankLabel.text = ranking.formatted
+    countryNameLabel.text = ranker.country.name
+    countryFlagLabel.text = ranker.country.emoji
+    messageCountLabel.text = ranker.messageCount.formatted
   }
 }

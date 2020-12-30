@@ -119,7 +119,7 @@ final class CheeringMapViewController: UIViewController {
     rankingTableView.do {
       $0.backgroundColor = .white
       $0.showsVerticalScrollIndicator = false
-      $0.register(CountryTableViewCell.self, forCellReuseIdentifier: "CountryTableViewCell")
+      $0.register(RankerTableViewCell.self, forCellReuseIdentifier: "RankerTableViewCell")
       $0.rowHeight = UITableView.automaticDimension
       $0.estimatedRowHeight = 64
       $0.dataSource = self
@@ -166,7 +166,7 @@ extension CheeringMapViewController: UITableViewDataSource {
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath
   ) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell", for: indexPath) as! CountryTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "RankerTableViewCell", for: indexPath) as! RankerTableViewCell
     cell.cheerUpButton.anchorView = self.view
     return cell
   }

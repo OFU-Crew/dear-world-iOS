@@ -20,7 +20,7 @@
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
 		3902F12425970E5600A3DF8C /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Int+.swift */; };
-		3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* CountryTableViewCell.swift */; };
+		3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* RankerTableViewCell.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -100,7 +100,7 @@
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; tabWidth = 2; };
-		3902F129259714D800A3DF8C /* CountryTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
+		3902F129259714D800A3DF8C /* RankerTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RankerTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 		3902F128259714AB00A3DF8C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				3902F129259714D800A3DF8C /* CountryTableViewCell.swift */,
+				3902F129259714D800A3DF8C /* RankerTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -680,7 +680,7 @@
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
-				3902F12A259714D800A3DF8C /* CountryTableViewCell.swift in Sources */,
+				3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
