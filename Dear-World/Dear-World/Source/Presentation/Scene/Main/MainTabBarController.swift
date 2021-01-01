@@ -9,11 +9,29 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
   
+  private var isFirstLaunch: Bool = true
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     setupTabBar()
     self.delegate = self
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    if isFirstLaunch {
+      isFirstLaunch = false
+      presentSplashViewController()
+    }
+  }
+  
+  private func presentSplashViewController() {
+    let splashViewController: UIViewController = SplashViewController().then {
+      $0.modalPresentationStyle = .fullScreen
+    }
+    self.present(splashViewController, animated: false, completion: nil)
   }
   
   private func setupTabBar() {
