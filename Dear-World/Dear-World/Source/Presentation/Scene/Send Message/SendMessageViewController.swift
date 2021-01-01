@@ -52,6 +52,12 @@ final class SendMessageViewController: UIViewController, View {
   
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
+    closeButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapClose }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
     refreshButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Action.tapRefresh }
@@ -76,6 +82,14 @@ final class SendMessageViewController: UIViewController, View {
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Action.tapSendMessage }
       .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    reactor.state.map(\.isPresented)
+      .map { !$0 }
+      .subscribe(onNext: { [weak self] willDismiss in
+        guard willDismiss else { return }
+        self?.dismiss(animated: true, completion: nil)
+      })
       .disposed(by: disposeBag)
     
     reactor.state.map(\.emoji)

@@ -14,12 +14,13 @@ import UIKit
 
 final class RankerTableViewCell: UITableViewCell {
   
+  // MARK: 🎨 Style
   enum Styles {
-    static let topOf3 = Style {
+    static let topOf3: Style = Style {
       $0.font = UIFont.boldSystemFont(ofSize: 12)
       $0.color = UIColor.livelyBlue
     }
-    static let normal = Style {
+    static let normal: Style = Style {
         $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.color = UIColor.warmBlue
     }
@@ -51,11 +52,8 @@ final class RankerTableViewCell: UITableViewCell {
   private func setupUI() {
     self.contentView.addSubview(rankLabel)
     self.contentView.addSubview(countryFlagLabel)
-    // FIXME: 🔮 더미 데이터 변경
     rankLabel.do {
       $0.font = .boldSystemFont(ofSize: 12)
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = "1st"
     }
     rankLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -64,8 +62,6 @@ final class RankerTableViewCell: UITableViewCell {
     
     countryFlagLabel.do {
       $0.font = .boldSystemFont(ofSize: 14)
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = ["🇰🇷", "🇯🇵", "🇨🇦", "🇨🇮"].randomElement()!
     }
     countryFlagLabel.snp.makeConstraints {
       $0.top.equalToSuperview().inset(14)
@@ -75,8 +71,6 @@ final class RankerTableViewCell: UITableViewCell {
     self.contentView.addSubview(countryNameLabel)
     countryNameLabel.do {
       $0.font = .boldSystemFont(ofSize: 14)
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = "South Korea"
       $0.textColor = .warmBlue
     }
     countryNameLabel.snp.makeConstraints {
@@ -96,8 +90,6 @@ final class RankerTableViewCell: UITableViewCell {
     self.contentView.addSubview(messageCountLabel)
     messageCountLabel.do {
       $0.font = .systemFont(ofSize: 14)
-      // FIXME: 🔮 더미 데이터 변경
-      $0.text = 952_682_252.formatted
     }
     messageCountLabel.snp.makeConstraints {
       $0.top.equalTo(countryNameLabel.snp.bottom).offset(5)
@@ -110,7 +102,6 @@ final class RankerTableViewCell: UITableViewCell {
     cheerUpButton.do {
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 16
-      // FIXME: 🔮 더미 데이터 변경
     }
     cheerUpButton.snp.makeConstraints {
       $0.centerY.equalToSuperview()
@@ -121,7 +112,6 @@ final class RankerTableViewCell: UITableViewCell {
   
   // MARK: 🔩 Configuration
   func configure(with ranker: World.Model.Ranker, ranking: Int) {
-    // FIXME: 🔮 더미 데이터 변경
     rankLabel.attributedText = formatRank(ranking)
     countryNameLabel.text = ranker.country.name
     countryFlagLabel.text = ranker.country.emoji

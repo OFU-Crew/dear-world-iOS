@@ -13,6 +13,7 @@ import Then
 final class SendMessageReactor: Reactor {
   
   enum Action {
+    case tapClose
     case tapRefresh
     case typeName(String)
     case typeMessage(String)
@@ -23,9 +24,11 @@ final class SendMessageReactor: Reactor {
     case setEmoji(String)
     case setName(String)
     case setMessage(String)
+    case setPresent(Bool)
   }
   
   struct State: Then {
+    var isPresented: Bool = true
     var emoji: String = "👽"
     var canSendMessage: Bool = false
     var name: String = ""
@@ -33,13 +36,12 @@ final class SendMessageReactor: Reactor {
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
-    
     fileprivate var emojiId: Int = 21
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
   }
   
-  // MARK: Constants
+  // MARK: 🎨 Style
   enum Styles {
     static let empty: Style = Style {
       $0.color = Color.grayWhite
@@ -59,6 +61,9 @@ final class SendMessageReactor: Reactor {
   
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .tapClose:
+      return .just(.setPresent(false))
+    
     case .tapRefresh:
       return Network.request(Emoji.API.Random())
           .filterNil()
@@ -79,7 +84,6 @@ final class SendMessageReactor: Reactor {
       )
       return Network.request(api)
         .filterNil()
-        // TODO: 🔮 성공 후 화면 연동 필요함
         .map { _ in .setMessage("완료") }
     }
   }
@@ -87,6 +91,11 @@ final class SendMessageReactor: Reactor {
   func reduce(state: State, mutation: Mutation) -> State {
     var newState: State
     switch mutation {
+    case .setPresent(let isPresented):
+      newState = state.with {
+        $0.isPresented = isPresented
+      }
+    
     case .setEmoji(let emoji):
       newState = state.with {
         $0.emoji = emoji

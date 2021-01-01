@@ -23,7 +23,7 @@ final class CheeringMapReactor: Reactor {
   }
   
   struct State {
-    var messageCount: Int = -1
+    var messageCount: Int = 100_000
     @Revision var rankers: [Model.Ranker] = []
     @Revision var selectedCountries: [Model.Country] = []
   }

@@ -95,26 +95,6 @@ final class DiscoverViewController: UIViewController, View {
             }
             .disposed(by: self.disposeBag)
         
-//
-//            .map{!$0}
-//            .bind(to: self.outerScrollView.rx.isScrollEnabled)
-//            .disposed(by: self.disposeBag)
-//        self.outerScrollView
-//            .rx.contentOffset
-//            .map{ $0.y > 227 }
-//            .bind(to: self.messageCollectionView.rx.isScrollEnabled)
-//            .disposed(by: self.disposeBag)
-            
-//        reactor.state
-//            .map(\.isAnimating)
-//            .filter { $0 }
-//            .bind { _ in
-//                self.messageCollectionView
-//                    .visibleCells
-//                    .forEach { self.initAnimation(view: $0, alpha: 0.3, length: 100, duration: 0.5) }
-//            }
-//            .disposed(by: self.disposeBag)
-        
         self.countryLabel
             .rx.observe(String.self, "text")
             .filter { $0 != nil }
@@ -195,7 +175,6 @@ final class DiscoverViewController: UIViewController, View {
         }
         
         messageCollectionView.do {
-//            $0.showsVerticalScrollIndicator = false
             $0.backgroundColor = .breathingWhite
             $0.isScrollEnabled = false
         }
@@ -211,18 +190,23 @@ final class DiscoverViewController: UIViewController, View {
         self.messageCollectionView.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "messageCell")
         self.messageCollectionView.delegate = self
         self.messageCollectionView.dataSource = self
-//        self.messageCollectionView.refreshControl = UIRefreshControl()
         
         let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 20
     }
 }
 extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int
+    ) -> Int {
         return self.messages.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "messageCell", for: indexPath) as? MessageTableViewCell else {return UICollectionViewCell()}
         cell.nameLabel.text = self.messages[indexPath.row].name
         cell.emojiLabel.text = self.messages[indexPath.row].emoji
@@ -235,7 +219,11 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         }
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 192)
     }
     
@@ -253,9 +241,6 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
 extension DiscoverViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let flag = scrollView.contentOffset.y <= 225
-//        print(flag)
-//        print("@@@\(self.scrollOuter)")
-//        print(self.scrollRecentConvertTime.timeIntervalSinceNow)
         if flag != self.scrollOuter && self.scrollRecentConvertTime.timeIntervalSinceNow < -5 {
             print(flag)
             self.outerScrollView.isScrollEnabled = flag

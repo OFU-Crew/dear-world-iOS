@@ -20,13 +20,10 @@ class DiscoverReactor: Reactor {
         case setRefreshing(Bool)
         case addMessages(result: [MessageMock], page: Int)
         case setCountry(country: String)
-//        case animateCell
         case setLoading(Bool)
-//        case setPage(page: Int)
     }
     struct State {
         var messageCount: Int = 0
-        //TODO: country는 String이 아니라 다른 값으로 저장
         var country: String = "Whole World"
         var messages: [MessageMock] = []
         var isRefreshing: Bool = false
@@ -62,8 +59,6 @@ class DiscoverReactor: Reactor {
                 APIMock().getMessages(page: 2, country: currentState.country)
                     .map { Mutation.addMessages(result: $0, page: 2) }
             ])
-//        case .countryTouched:
-//            return
         }
     }
     
