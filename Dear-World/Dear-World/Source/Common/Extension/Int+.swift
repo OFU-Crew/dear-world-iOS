@@ -9,9 +9,22 @@ import Foundation
 
 extension Int {
   var formatted: String? {
-    let numberFormatter: NumberFormatter = NumberFormatter().then {
-      $0.numberStyle = .decimal
+    if self > 1_000_000 {
+      return self.kFormat
+    } else {
+      return self.decimalFormat
     }
-    return numberFormatter.string(from: NSNumber(value: self))
+  }
+  
+  var kFormat: String? {
+    guard let number = (self / 1_000).decimalFormat else { return nil }
+    return "\(number)K"
+  }
+  
+  var decimalFormat: String? {
+      let numberFormatter: NumberFormatter = NumberFormatter().then {
+        $0.numberStyle = .decimal
+      }
+      return numberFormatter.string(from: NSNumber(value: self))
   }
 }

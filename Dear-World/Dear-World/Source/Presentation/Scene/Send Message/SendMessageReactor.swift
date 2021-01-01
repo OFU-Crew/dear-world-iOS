@@ -41,7 +41,7 @@ final class SendMessageReactor: Reactor {
     fileprivate let messageCountLimit: Int = 300
   }
   
-  // MARK: Constants
+  // MARK: 🎨 Style
   enum Styles {
     static let empty: Style = Style {
       $0.color = Color.grayWhite
@@ -84,7 +84,6 @@ final class SendMessageReactor: Reactor {
       )
       return Network.request(api)
         .filterNil()
-        // TODO: 🔮 성공 후 화면 연동 필요함
         .map { _ in .setMessage("완료") }
     }
   }

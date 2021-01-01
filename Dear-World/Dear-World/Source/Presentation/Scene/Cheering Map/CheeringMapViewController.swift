@@ -93,7 +93,6 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     
     self.view.addSubview(worldMapView)
     worldMapView.do {
-      // FIXME: 🔮 셋업하고 변경
       $0.image = UIImage(named: "world_map")
     }
     worldMapView.snp.makeConstraints {
