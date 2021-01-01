@@ -12,6 +12,7 @@ extension Message.API {
   struct SendMessage: ServiceAPI {
     typealias Response = Message.Model.SendMessage
     
+    // MARK: Parameters
     private let countryCode: String
     private let emojiId: Int
     private let name: String

@@ -12,6 +12,10 @@ extension Message.API {
   struct Messages: ServiceAPI {
     typealias Response = Message.Model.Messages
     
+    // MARK: Parameters
+    private let countryId: Int
+    private let lastMsgId: Int
+    
     var method: HTTPMethod { .get }
     var path: String { "/api/v1/messages" }
     var parameters: [String : Any]? {
@@ -19,9 +23,10 @@ extension Message.API {
        "lastId": lastMsgId]
     }
     
-    // MARK: Parameters
-    private let countryId: Int
-    private let lastMsgId: Int
+    init(countryId: Int, lastMsgId: Int) {
+      self.countryId = countryId
+      self.lastMsgId = lastMsgId
+    }
   }
 }
 
