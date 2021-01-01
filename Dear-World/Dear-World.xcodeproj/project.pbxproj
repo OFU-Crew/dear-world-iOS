@@ -16,7 +16,6 @@
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
 		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
 		128313EE2598A14E00BDF8A3 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* List.swift */; };
-		128313F42598CDA900BDF8A3 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313F32598CDA900BDF8A3 /* MainTabBarController.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -34,6 +33,8 @@
 		395826212596D0B0007325AB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 395826202596D0B0007325AB /* Alamofire */; };
 		395826272596D225007325AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 395826262596D225007325AB /* SnapKit */; };
 		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
+		395A4172259DF9A600F10531 /* MenuTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395A4171259DF9A600F10531 /* MenuTabBar.swift */; };
+		395A4177259DF9F900F10531 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395A4176259DF9F900F10531 /* MainTabBarController.swift */; };
 		39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F8C259AD9900050D180 /* SplashViewController.swift */; };
 		39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F91259AD9B70050D180 /* SplashReactor.swift */; };
 		39658F9B259ADB130050D180 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 39658F9A259ADB130050D180 /* Lottie */; };
@@ -99,7 +100,6 @@
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
-		128313F32598CDA900BDF8A3 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +119,8 @@
 		395825B625948EE4007325AB /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		395826112596322B007325AB /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; tabWidth = 2; };
+		395A4171259DF9A600F10531 /* MenuTabBar.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MenuTabBar.swift; sourceTree = "<group>"; tabWidth = 2; };
+		395A4176259DF9F900F10531 /* MainTabBarController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F8C259AD9900050D180 /* SplashViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F91259AD9B70050D180 /* SplashReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F9F259ADE770050D180 /* splash_1x.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_1x.json; sourceTree = "<group>"; };
@@ -228,14 +230,6 @@
 				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		128313F22598CD6800BDF8A3 /* Container */ = {
-			isa = PBXGroup;
-			children = (
-				128313F32598CDA900BDF8A3 /* MainTabBarController.swift */,
-			);
-			path = Container;
 			sourceTree = "<group>";
 		};
 		3902F128259714AB00A3DF8C /* Cell */ = {
@@ -381,7 +375,7 @@
 		395825B525948ECE007325AB /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				128313F22598CD6800BDF8A3 /* Container */,
+				395A4170259DF99300F10531 /* Main */,
 				39658F8B259AD9760050D180 /* Splash */,
 				3958260025962F77007325AB /* Discover */,
 				3958260125962F7E007325AB /* Cheering Map */,
@@ -428,6 +422,15 @@
 				3902F117259704AF00A3DF8C /* AboutViewController.swift */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		395A4170259DF99300F10531 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				395A4171259DF9A600F10531 /* MenuTabBar.swift */,
+				395A4176259DF9F900F10531 /* MainTabBarController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		39658F8B259AD9760050D180 /* Splash */ = {
@@ -694,6 +697,7 @@
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
 				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
+				395A4177259DF9F900F10531 /* MainTabBarController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
 				39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
@@ -706,6 +710,7 @@
 				39F465822597811900621327 /* CheerButton.swift in Sources */,
 				128313EE2598A14E00BDF8A3 /* List.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
+				395A4172259DF9A600F10531 /* MenuTabBar.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				39658FBB259AE55C0050D180 /* World.Model.Rank.swift in Sources */,
 				39658FB6259AE5250050D180 /* World.API.Rank.swift in Sources */,
@@ -722,7 +727,6 @@
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
-				128313F42598CDA900BDF8A3 /* MainTabBarController.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
