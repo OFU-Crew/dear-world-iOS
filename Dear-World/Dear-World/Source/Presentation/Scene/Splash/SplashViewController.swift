@@ -34,6 +34,8 @@ final class SplashViewController: UIViewController {
       $0.edges.equalToSuperview()
       $0.center.equalToSuperview()
     }
-    animationView.play()
+    animationView.play { [weak self] _ in
+      self?.dismiss(animated: false, completion: nil)
+    }
   }
 }

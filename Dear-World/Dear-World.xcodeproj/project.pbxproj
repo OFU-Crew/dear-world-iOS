@@ -35,7 +35,6 @@
 		395826332596E693007325AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395826322596E693007325AB /* Logger.swift */; };
 		395A4177259DF9F900F10531 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395A4176259DF9F900F10531 /* MainTabBarController.swift */; };
 		39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F8C259AD9900050D180 /* SplashViewController.swift */; };
-		39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658F91259AD9B70050D180 /* SplashReactor.swift */; };
 		39658F9B259ADB130050D180 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 39658F9A259ADB130050D180 /* Lottie */; };
 		39658FA0259ADE770050D180 /* splash_1x.json in Resources */ = {isa = PBXBuildFile; fileRef = 39658F9F259ADE770050D180 /* splash_1x.json */; };
 		39658FAF259AE4E40050D180 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39658FAE259AE4E40050D180 /* World.swift */; };
@@ -120,7 +119,6 @@
 		395826322596E693007325AB /* Logger.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; tabWidth = 2; };
 		395A4176259DF9F900F10531 /* MainTabBarController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F8C259AD9900050D180 /* SplashViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
-		39658F91259AD9B70050D180 /* SplashReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658F9F259ADE770050D180 /* splash_1x.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_1x.json; sourceTree = "<group>"; };
 		39658FAE259AE4E40050D180 /* World.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39658FB5259AE5250050D180 /* World.API.Rank.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.API.Rank.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -434,7 +432,6 @@
 			isa = PBXGroup;
 			children = (
 				39658F8C259AD9900050D180 /* SplashViewController.swift */,
-				39658F91259AD9B70050D180 /* SplashReactor.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -717,7 +714,6 @@
 				39658FAF259AE4E40050D180 /* World.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
-				39658F92259AD9B70050D180 /* SplashReactor.swift in Sources */,
 				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
