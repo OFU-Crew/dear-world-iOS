@@ -8,7 +8,6 @@
 import UIKit
 
 final class MainTabBarController: UITabBarController {
-  private let centerButton: UIButton = UIButton()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,15 +40,10 @@ final class MainTabBarController: UITabBarController {
     self.addChild(sendMessageViewController)
     self.addChild(cheeringMapViewController)
   }
-  
-  private func presentSendMessageViewController() {
-    let sendMessageViewController: UIViewController = SendMessageViewController().then {
-      $0.reactor = SendMessageReactor()
-      $0.modalPresentationStyle = .fullScreen
-    }
-    self.present(sendMessageViewController, animated: true, completion: nil)
-  }
 }
+
+// MARK: - UITabBarControllerDelegate
+
 extension MainTabBarController: UITabBarControllerDelegate {
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
     if viewController.isKind(of: SendMessageViewController.self) {
@@ -57,5 +51,13 @@ extension MainTabBarController: UITabBarControllerDelegate {
       return false
     }
     return true
+  }
+  
+  private func presentSendMessageViewController() {
+    let sendMessageViewController: UIViewController = SendMessageViewController().then {
+      $0.reactor = SendMessageReactor()
+      $0.modalPresentationStyle = .fullScreen
+    }
+    self.present(sendMessageViewController, animated: true, completion: nil)
   }
 }
