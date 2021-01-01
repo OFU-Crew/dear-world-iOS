@@ -19,7 +19,7 @@
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
-		3902F12425970E5600A3DF8C /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Int+.swift */; };
+		3902F12425970E5600A3DF8C /* Number+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Number+.swift */; };
 		3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* RankerTableViewCell.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
@@ -90,7 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		121BDB292597259E0062B15A /* MessageCountBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCountBadgeView.swift; path = "Dear-World.xcodeproj/MessageCountBadgeView.swift"; sourceTree = SOURCE_ROOT; };
+		121BDB292597259E0062B15A /* MessageCountBadgeView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = MessageCountBadgeView.swift; path = "Dear-World.xcodeproj/MessageCountBadgeView.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		121BDB662597982F0062B15A /* DiscoverReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverReactor.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		3902F12325970E5600A3DF8C /* Int+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		3902F12325970E5600A3DF8C /* Number+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Number+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		3902F129259714D800A3DF8C /* RankerTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RankerTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -241,7 +241,7 @@
 		3902F14F2597531600A3DF8C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				3902F12325970E5600A3DF8C /* Int+.swift */,
+				3902F12325970E5600A3DF8C /* Number+.swift */,
 				121BDB43259735200062B15A /* UIColor+.swift */,
 				39F0C1622597B34F00A7001F /* UIView+.swift */,
 				39F0C16A2597C7DF00A7001F /* UIImage+.swift */,
@@ -689,7 +689,7 @@
 				121BDB712597A5D60062B15A /* APIMock.swift in Sources */,
 				39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */,
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
-				3902F12425970E5600A3DF8C /* Int+.swift in Sources */,
+				3902F12425970E5600A3DF8C /* Number+.swift in Sources */,
 				39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
 				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,

@@ -47,6 +47,15 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
   }
   
   func bind(reactor: CheeringMapReactor) {
+    
+    reactor.state
+      .map { $0.messageCount }
+      .distinctUntilChanged()
+      .subscribe(onNext: { [weak self] in
+        self?.messageCountBadgeView.count = $0
+      })
+      .disposed(by: disposeBag)
+    
     reactor.state
       .distinctUntilChanged(\.$rankers)
       .map { $0.rankers }
