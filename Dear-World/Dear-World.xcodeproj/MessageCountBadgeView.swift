@@ -5,11 +5,11 @@
 //  Created by rookie.w on 2020/12/26.
 //
 
-import UIKit
-import SnapKit
 import Then
+import SnapKit
+import UIKit
 
-public final class MessageCountBadgeView: UIView {
+final class MessageCountBadgeView: UIView {
   private var totalCount: UILabel = UILabel()
   
   public var count: Int? {

@@ -27,7 +27,7 @@ final class SelectCountryView: UIView {
     setupUI()
   }
   
-  // MARK: 📍 Setup
+  // MARK: 🎛 Setup
   private func setupUI() {
     self.backgroundColor = .grayWhite
     self.layer.cornerRadius = 7

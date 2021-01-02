@@ -36,10 +36,12 @@ final class DiscoverReactor: Reactor {
   
   var initialState: State
   
+  // MARK: 🏁 Initialize
   init() {
     self.initialState = State()
   }
   
+  // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case let .countryDidChanged(country):
@@ -50,6 +52,7 @@ final class DiscoverReactor: Reactor {
           .map { .setMessages(result: $0) },
         .just(.setLoading(false))
       )
+      
     case .refresh:
       return .concat([
         .just(Mutation.setRefreshing(true)),
@@ -57,6 +60,7 @@ final class DiscoverReactor: Reactor {
           .map { .setMessages(result: $0) },
         .just(Mutation.setRefreshing(false))
       ])
+      
     case .loadMore:
       return Observable<Mutation>.concat([
         APIMock().getMessages(page: 2, country: currentState.country)
@@ -65,6 +69,7 @@ final class DiscoverReactor: Reactor {
     }
   }
   
+  // MARK: ⚡️ Reduce
   func reduce(state: State, mutation: Mutation) -> State {
     var newState: State = state
     switch mutation {
