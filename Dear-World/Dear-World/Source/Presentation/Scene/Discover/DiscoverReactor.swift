@@ -52,6 +52,7 @@ final class DiscoverReactor: Reactor {
           .map { .setMessages(result: $0) },
         .just(.setLoading(false))
       )
+      
     case .refresh:
       return .concat([
         .just(Mutation.setRefreshing(true)),
@@ -59,6 +60,7 @@ final class DiscoverReactor: Reactor {
           .map { .setMessages(result: $0) },
         .just(Mutation.setRefreshing(false))
       ])
+      
     case .loadMore:
       return Observable<Mutation>.concat([
         APIMock().getMessages(page: 2, country: currentState.country)
