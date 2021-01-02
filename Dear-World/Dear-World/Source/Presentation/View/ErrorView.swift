@@ -33,7 +33,7 @@ final class ErrorView: UIView {
     setupUI()
   }
   
-  // MARK: 📍 Setup
+  // MARK: 🎛 Setup
   private func setupUI(with: ErrorReason? = nil) {
     backgroundColor = .breathingWhite
     guard let errorReason = errorReason else { return }

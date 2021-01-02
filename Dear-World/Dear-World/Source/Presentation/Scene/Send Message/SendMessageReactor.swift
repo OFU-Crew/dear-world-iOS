@@ -59,6 +59,7 @@ final class SendMessageReactor: Reactor {
   
   let initialState: State = State()
   
+  // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .tapClose:
@@ -88,6 +89,7 @@ final class SendMessageReactor: Reactor {
     }
   }
   
+  // MARK: ⚡️ Reduce
   func reduce(state: State, mutation: Mutation) -> State {
     var newState: State
     switch mutation {
@@ -131,6 +133,7 @@ final class SendMessageReactor: Reactor {
     return newState
   }
   
+  // MARK: 📐 Formatting
   private func percent(current: Int, total: Int) -> Float {
     return Float(current) / Float(total)
   }

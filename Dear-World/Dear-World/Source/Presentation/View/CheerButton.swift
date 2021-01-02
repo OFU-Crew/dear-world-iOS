@@ -10,8 +10,6 @@ import RxSwift
 import UIKit
 
 final class CheerUpButton: UIButton {
-  
-  // MARK: 🦴 State
   enum Active {
     static let image: UIImage = UIImage(named: "heart_liked")!
     static let backgroundImage: UIImage = .from(color: .refreshingWhite)
@@ -21,6 +19,7 @@ final class CheerUpButton: UIButton {
     static let backgroundImage: UIImage = .from(color: .white)
   }
   
+  // MARK: 🖼 UI
   var emitter: CAEmitterLayer? = CAEmitterLayer()
   weak var anchorView: UIView?
   private let disposeBag: DisposeBag = DisposeBag()

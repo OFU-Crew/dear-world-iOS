@@ -9,7 +9,6 @@ import Foundation
 import ReactorKit
 
 final class CheeringMapReactor: Reactor {
-  
   typealias API = World.API
   typealias Model = World.Model
   
@@ -29,6 +28,8 @@ final class CheeringMapReactor: Reactor {
   }
   
   var initialState: State = State()
+  
+  // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
@@ -42,6 +43,7 @@ final class CheeringMapReactor: Reactor {
     }
   }
   
+  // MARK: ⚡️ Reduce
   func reduce(state: State, mutation: Mutation) -> State {
     var newState = currentState
     switch mutation {
