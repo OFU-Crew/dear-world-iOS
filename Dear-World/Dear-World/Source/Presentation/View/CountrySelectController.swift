@@ -15,9 +15,9 @@ public final class CountrySelectController: UIViewController {
   
   // MARK: 🖼 UI
   private var countryTableView: UITableView = UITableView()
-  private let countries: [String] = ["korea", "japan", "China", "USA", "asdf", "USA", "asdf", "USA", "asdf", "USA", "asdf"]
+  private let countries: [Message.Model.Country] = AllCountries.shared.countries
   private let exitButton: UIButton = UIButton()
-  private var selectedCountry: String? = nil
+  private var selectedCountry: Message.Model.Country? = nil
   let disposeBag: DisposeBag = DisposeBag()
   
   override public func viewDidLoad() {
@@ -67,9 +67,9 @@ public final class CountrySelectController: UIViewController {
       .disposed(by: self.disposeBag)
     
     Observable.just(self.countries)
-      .bind(to: self.countryTableView.rx.items) {(tableView, row, item) -> UITableViewCell in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: IndexPath(row: row, section: 0))
-        cell.textLabel?.text = item
+      .bind(to: self.countryTableView.rx.items) { (tableView, row, item) -> UITableViewCell in
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: IndexPath(row: row, section: 0))
+        cell.textLabel?.text = item.fullName
         cell.textLabel?.font = .systemFont(ofSize: 14)
         cell.textLabel?.textColor = .warmBlue
         //TODO: CheckMark 달기
@@ -90,8 +90,8 @@ public final class CountrySelectController: UIViewController {
 
 // present 함수
 extension CountrySelectController {
-  public static func selectCountry(presenting: UIViewController, disposeBag: DisposeBag) -> Observable<String> {
-    return Observable<String>.create { observer in
+  static func selectCountry(presenting: UIViewController, disposeBag: DisposeBag) -> Observable<Message.Model.Country> {
+    return Observable<Message.Model.Country>.create { observer in
       guard let base = presenting.tabBarController else {
         observer.onError(NSError())
         return Disposables.create()
@@ -105,19 +105,19 @@ extension CountrySelectController {
       UIView.animate(withDuration: 0.3) {
         presenting.view.alpha = 0.6
         presented.view.frame.origin.y = base.view.frame.height - 500
-      } completion: { (_) in
+      } completion: { _ in
         presented.didMove(toParent: base)
       }
       
       presented.rx.methodInvoked(#selector(UIViewController.willMove(toParent:)))
         .bind { _ in
-          if let country: String = presented.selectedCountry {
+          if let country: Message.Model.Country = presented.selectedCountry {
             observer.onNext(country)
           }
           UIView.animate(withDuration: 0.3) {
             presenting.view.alpha = 1
             presented.view.frame.origin.y = base.view.frame.height
-          } completion: { (_) in
+          } completion: { _ in
             presenting.view.isUserInteractionEnabled = true
             presented.view.removeFromSuperview()
             presented.removeFromParent()
@@ -127,5 +127,17 @@ extension CountrySelectController {
       
       return Disposables.create()
     }
+  }
+}
+
+public class AllCountries {
+  static let shared: AllCountries = AllCountries()
+  var countries: [Message.Model.Country] = []
+  private init() {
+    _ = Network.request(Message.API.Countries())
+      .filterNil()
+      .bind { response in
+        self.countries = response.countries
+      }
   }
 }

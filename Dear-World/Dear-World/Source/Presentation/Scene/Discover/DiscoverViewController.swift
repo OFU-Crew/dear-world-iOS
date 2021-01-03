@@ -20,7 +20,7 @@ final class DiscoverViewController: UIViewController, View {
   private let countryLabel: UILabel = UILabel()
   private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
   private let aboutButton: UIButton = UIButton()
-  private var messages: [MessageMock] = []
+  private var messages: [Message.Model.Message] = []
   private let outerScrollView: UIScrollView = UIScrollView()
   private var scrollOuter: Bool = true
   private var scrollRecentConvertTime: Date = Date()
@@ -131,6 +131,9 @@ final class DiscoverViewController: UIViewController, View {
   
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
+    _ = AllCountries.shared
+    reactor.action.onNext(.countryDidChanged(country: .init(code: "whole world", fullName: "whole world", emojiUnicode: "🇰🇷")))
+    
     reactor.state
       .map(\.messageCount)
       .subscribe { [weak self] count in
@@ -140,9 +143,9 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .map(\.messages)
-      .distinctUntilChanged()
+//      .distinctUntilChanged{$0.}
       .subscribe(onNext: {[weak self] mess in
-        self?.messages = mess
+        self?.messages = mess.messages
         self?.messageCollectionView.reloadData()
       })
       .disposed(by: self.disposeBag)
@@ -157,14 +160,15 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     reactor.state
-      .map(\.country)
-      .distinctUntilChanged()
+      .map(\.selectedCountry)
+//      .distinctUntilChanged()
+      .map{$0.fullName}
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
     reactor.state
-      .map(\.country)
-      .distinctUntilChanged()
+      .map(\.selectedCountry)
+//      .distinctUntilChanged()
       .bind { _ in
         self.messageCollectionView.setContentOffset(.zero, animated: false)
       }
@@ -186,8 +190,8 @@ final class DiscoverViewController: UIViewController, View {
     self.filterContainerView
       .rx.tapGesture()
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<String> in
-        guard let self = self else { return Observable.just("") }
+      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
+        guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
         return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
       }
       .map { Reactor.Action.countryDidChanged(country: $0) }
@@ -227,11 +231,11 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
   ) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UICollectionViewCell() }
     cell.do {
-      $0.nameLabel.text = self.messages[indexPath.row].name
-      $0.emojiLabel.text = self.messages[indexPath.row].emoji
-      $0.detailTextView.text = self.messages[indexPath.row].detail
-      $0.likeCountLabel.text = self.messages[indexPath.row].likes.formatted
-      $0.countryLabel.text = self.messages[indexPath.row].countryName
+      $0.nameLabel.text = self.messages[indexPath.row].user.nickname
+      $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
+      $0.detailTextView.text = self.messages[indexPath.row].content
+      $0.likeCountLabel.text = "\(self.messages[indexPath.row].likeCount)"
+      $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
     }
     bindShareButton(button: cell.shareButton)
     if reactor?.currentState.currentPage == 1 {

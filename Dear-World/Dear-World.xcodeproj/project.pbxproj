@@ -14,6 +14,8 @@
 		121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB6B2597A49B0062B15A /* MessageMock.swift */; };
 		121BDB712597A5D60062B15A /* APIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB702597A5D60062B15A /* APIMock.swift */; };
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
+		1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09625A1C87400E3F121 /* Message.API.Countries.swift */; };
+		1263E09C25A1C8DD00E3F121 /* Message.Model.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */; };
 		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
 		128313EE2598A14E00BDF8A3 /* Message.API.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
@@ -102,6 +104,8 @@
 		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
+		1263E09625A1C87400E3F121 /* Message.API.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Countries.swift; sourceTree = "<group>"; };
+		1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.Countries.swift; sourceTree = "<group>"; };
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Messages.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -228,6 +232,7 @@
 			children = (
 				128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */,
 				3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */,
+				1263E09625A1C87400E3F121 /* Message.API.Countries.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 			children = (
 				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 				3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */,
+				1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -745,6 +751,7 @@
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
 				3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
+				1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */,
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				39F465822597811900621327 /* CheerButton.swift in Sources */,
@@ -766,6 +773,7 @@
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,
+				1263E09C25A1C8DD00E3F121 /* Message.Model.Countries.swift in Sources */,
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
