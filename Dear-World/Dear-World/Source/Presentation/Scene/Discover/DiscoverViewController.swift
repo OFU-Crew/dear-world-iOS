@@ -85,7 +85,6 @@ final class DiscoverViewController: UIViewController, View {
       $0.centerX.equalTo(view.snp.centerX)
       $0.top.equalToSuperview().inset(16)
     }
-    
     headerView.addSubview(self.filterContainerView)
     self.filterContainerView.snp.makeConstraints {
       $0.leading.equalTo(self.view.snp.leading).offset(20)
@@ -95,7 +94,7 @@ final class DiscoverViewController: UIViewController, View {
     }
     
     countryLabel.do {
-      $0.font = .boldSystemFont(ofSize: 22)
+      $0.font = .boldSystemFont(ofSize: 16)
       $0.textColor = .warmBlue
       $0.text = "Whole world"
     }

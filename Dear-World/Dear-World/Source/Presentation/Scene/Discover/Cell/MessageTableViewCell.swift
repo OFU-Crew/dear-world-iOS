@@ -51,7 +51,8 @@ final class MessageTableViewCell: UITableViewCell {
     self.addSubview(mainView)
     mainView.snp.makeConstraints {
       $0.top.equalTo(headerView.snp.bottom)
-      $0.leading.trailing.bottom.equalToSuperview()
+      $0.leading.trailing.equalToSuperview().inset(20)
+      $0.bottom.equalToSuperview()
     }
     
     let emojiView: UIImageView = UIImageView().then {
