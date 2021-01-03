@@ -17,7 +17,7 @@ final class AboutViewController: UIViewController, View {
   private let stackView: UIStackView = UIStackView()
   private let crewInfoView: UIView = UIView()
   private let noticeInfoView: UIView = UIView()
-  private let noticeCountLabel: UILabel = UILabel()
+  private let noticeBadge: NoticeBadge = NoticeBadge()
   private let versionInfoView: UIView = UIView()
   
   var disposeBag: DisposeBag = DisposeBag()
@@ -48,7 +48,7 @@ final class AboutViewController: UIViewController, View {
       $0.addArrangedSubview(versionInfoView)
     }
     stackView.snp.makeConstraints {
-      $0.top.leading.trailing.equalToSuperview().inset(20)
+      $0.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
     
     let crewInfoTitleLabel: UILabel = UILabel().then {
@@ -82,24 +82,20 @@ final class AboutViewController: UIViewController, View {
       $0.font = .systemFont(ofSize: 14)
       $0.textColor = .warmBlue
     }
-    noticeCountLabel.do {
+    noticeBadge.do {
       $0.text = "1"
-      $0.backgroundColor = .warmBlue
-      $0.textColor = .illuminatingYellow
-      $0.layer.cornerRadius = 5
-      $0.layer.masksToBounds = true
     }
     noticeInfoView.do {
       $0.backgroundColor = .grayWhite
       $0.addSubview(noticeInfoTitleLabel)
-      $0.addSubview(noticeCountLabel)
+      $0.addSubview(noticeBadge)
       $0.layer.cornerRadius = 10
     }
     noticeInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
       $0.centerY.equalToSuperview()
     }
-    noticeCountLabel.snp.makeConstraints {
+    noticeBadge.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(20)
       $0.centerY.equalToSuperview()
     }
@@ -163,7 +159,7 @@ final class AboutViewController: UIViewController, View {
       .distinctUntilChanged()
       .filterNil()
       .map { "\($0)" }
-      .bind(to: noticeCountLabel.rx.text)
+      .bind(to: noticeBadge.rx.text)
       .disposed(by: disposeBag)
     
     reactor.state

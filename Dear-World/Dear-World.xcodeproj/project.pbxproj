@@ -57,6 +57,8 @@
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
 		39E9F7D025A1738F00BC2CC2 /* AboutReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */; };
+		39E9F7DB25A1BBED00BC2CC2 /* PixelWorldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */; };
+		39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */; };
 		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
 		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
@@ -136,6 +138,8 @@
 		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutReactor.swift; sourceTree = "<group>"; };
+		39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelWorldMapView.swift; sourceTree = "<group>"; };
+		39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBadge.swift; sourceTree = "<group>"; };
 		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
@@ -371,6 +375,8 @@
 				39672DB22598D139001D7E69 /* SelectCountryView.swift */,
 				39672DC02598E95A001D7E69 /* TextView.swift */,
 				39F0C1B62598927C00A7001F /* ErrorView.swift */,
+				39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */,
+				39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -693,6 +699,7 @@
 				39EED241259D0227007452E1 /* Revision.swift in Sources */,
 				121BDB712597A5D60062B15A /* APIMock.swift in Sources */,
 				39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */,
+				39E9F7DB25A1BBED00BC2CC2 /* PixelWorldMapView.swift in Sources */,
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Number+.swift in Sources */,
 				39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */,
@@ -731,6 +738,7 @@
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
+				39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
 				39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */,
 				121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */,

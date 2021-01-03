@@ -198,6 +198,19 @@ final class DiscoverViewController: UIViewController, View {
       .map { Reactor.Action.tapAbout }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$isPresentAboutPage)
+      .map { $0.isPresentAboutPage }
+      .subscribe(onNext: { [weak self] in
+        let viewController = AboutViewController().then {
+          $0.reactor = AboutReactor()
+        }
+        let naviController = UINavigationController(rootViewController: viewController).then {
+          $0.modalPresentationStyle = .fullScreen
+        }
+        self?.present(naviController, animated: false, completion: nil)
+      })
+      .disposed(by: self.disposeBag)
   }
 }
 extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
