@@ -9,8 +9,8 @@ import Foundation
 
 extension Message.Model {
   struct Messages: Decodable {
-    let firstMsgId: Int
-    let lastMsgId: Int
+    let firstMsgId: Int?
+    let lastMsgId: Int?
     let messageCount: Int
     let messages: [Message]
     
@@ -23,19 +23,36 @@ extension Message.Model {
   }
   
   struct Message: Decodable {
-    let id: String
-    // TODO: 🔮 anonymousUser 모델 구현
+    let id: Int
+    let user: User
     let isLiked: Bool
     let likeCount: Int
     let content: String
-    let createAt: Date
+    let createdAt: String
     
-    enum CodingKeys: String, CodingKey{
-      case id = "uuid"
+    enum CodingKeys: String, CodingKey {
+      case id
+      case user = "anonymousUser"
       case isLiked = "like"
       case likeCount
       case content
-      case createAt
+      case createdAt
     }
+  }
+  
+  struct User: Decodable {
+    let id: Int
+    let country: Country
+    let nickname: String
+    let emoji: Emoji
+    struct Emoji: Decodable {
+      let unicode: String
+    }
+  }
+  
+  struct Country: Decodable {
+    let code: String?
+    let fullName: String
+    let emojiUnicode: String
   }
 }

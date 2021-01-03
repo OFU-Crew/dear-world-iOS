@@ -15,9 +15,10 @@ public final class CountrySelectController: UIViewController {
   
   // MARK: 🖼 UI
   private var countryTableView: UITableView = UITableView()
-  private let countries: [String] = ["korea", "japan", "China", "USA", "asdf", "USA", "asdf", "USA", "asdf", "USA", "asdf"]
+  private let countries: [Message.Model.Country] = AllCountries.shared.countries
   private let exitButton: UIButton = UIButton()
-  private var selectedCountry: String? = nil
+  private var selectedCountry: Message.Model.Country? = nil
+  private let wholeWorldButton: UIButton = UIButton()
   let disposeBag: DisposeBag = DisposeBag()
   
   override public func viewDidLoad() {
@@ -43,18 +44,46 @@ public final class CountrySelectController: UIViewController {
       $0.size.equalTo(12)
       $0.top.trailing.equalToSuperview().inset(20)
     }
+    self.wholeWorldButton.do {
+      if selectedCountry?.code == nil {
+        $0.backgroundColor = .breathingWhite
+        addCheck(base: $0)
+      } else {
+        $0.backgroundColor = .white
+      }
+    }
+    self.view.addSubview(wholeWorldButton)
+    let wholeWorldLabel = UILabel().then {
+      $0.text = "Whole world"
+      $0.font = .systemFont(ofSize: 14)
+      if selectedCountry?.code == nil {
+        $0.textColor = .livelyBlue
+      } else {
+        $0.textColor = .warmBlue
+      }
+    }
+    self.wholeWorldButton.addSubview(wholeWorldLabel)
+    wholeWorldLabel.snp.makeConstraints {
+      $0.bottom.top.leading.equalToSuperview().inset(20)
+    }
+    self.wholeWorldButton.snp.makeConstraints {
+      $0.top.equalTo(exitButton.snp.bottom).offset(10)
+      $0.trailing.leading.equalToSuperview()
+      $0.height.equalTo(56)
+    }
     self.countryTableView.do {
       $0.backgroundColor = .white
     }
     self.view.addSubview(self.countryTableView)
     self.countryTableView.snp.makeConstraints {
-      $0.top.equalTo(exitButton.snp.bottom).offset(10)
+      $0.top.equalTo(wholeWorldButton.snp.bottom)
       $0.trailing.leading.bottom.equalToSuperview()
     }
   }
   private func setupTableView() {
     self.countryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "countryCell")
     self.countryTableView.rowHeight = 56
+    self.countryTableView.separatorStyle = .none
   }
   
   // MARK: 🔗 Bind
@@ -67,13 +96,37 @@ public final class CountrySelectController: UIViewController {
       .disposed(by: self.disposeBag)
     
     Observable.just(self.countries)
-      .bind(to: self.countryTableView.rx.items) {(tableView, row, item) -> UITableViewCell in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: IndexPath(row: row, section: 0))
-        cell.textLabel?.text = item
-        cell.textLabel?.font = .systemFont(ofSize: 14)
+      .bind(to: self.countryTableView.rx.items) { [weak self] (tableView, row, item) -> UITableViewCell in
+        guard let self = self else { return UITableViewCell()}
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: IndexPath(row: row, section: 0))
+        cell.textLabel?.text = item.fullName
         cell.textLabel?.textColor = .warmBlue
+        cell.backgroundColor = .white
+        if cell.subviews.count < 2 {
+          self.addCheck(base: cell)
+        }
+        cell.subviews.last?.isHidden = true
+        if self.selectedCountry?.code == item.code {
+          cell.textLabel?.textColor = .livelyBlue
+          cell.backgroundColor = .breathingWhite
+          cell.subviews.last?.isHidden = false
+        }
+        cell.textLabel?.font = .systemFont(ofSize: 14)
+        let cellBackgroudView = UIView()
+        cellBackgroudView.backgroundColor = .breathingWhite
+        cell.selectedBackgroundView = cellBackgroudView
         //TODO: CheckMark 달기
         return cell
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.wholeWorldButton
+      .rx.tap
+      .bind{ [weak self] in
+        //TODO: WHoleWorld의 코드는?
+        self?.wholeWorldButton.backgroundColor = .warmBlue
+        self?.selectedCountry = .init(code: nil, fullName: "Whole world", emojiUnicode: "🍎")
+        self?.willMove(toParent: nil)
       }
       .disposed(by: self.disposeBag)
     
@@ -86,18 +139,31 @@ public final class CountrySelectController: UIViewController {
       }
       .disposed(by: self.disposeBag)
   }
+  func addCheck(base: UIView) {
+    let checkImage: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "check")
+    }
+    base.addSubview(checkImage)
+    checkImage.snp.makeConstraints {
+      $0.trailing.equalToSuperview().inset(20)
+      $0.width.equalTo(12)
+      $0.height.equalTo(10)
+      $0.centerY.equalToSuperview()
+    }
+  }
 }
 
 // present 함수
 extension CountrySelectController {
-  public static func selectCountry(presenting: UIViewController, disposeBag: DisposeBag) -> Observable<String> {
-    return Observable<String>.create { observer in
+  static func selectCountry(presenting: UIViewController, disposeBag: DisposeBag, selected: Message.Model.Country?) -> Observable<Message.Model.Country> {
+    return Observable<Message.Model.Country>.create { observer in
       guard let base = presenting.tabBarController else {
         observer.onError(NSError())
         return Disposables.create()
       }
       presenting.view.isUserInteractionEnabled = false
       let presented: CountrySelectController = CountrySelectController()
+      presented.selectedCountry = selected
       presented.loadViewIfNeeded()
       base.addChild(presented)
       base.view.addSubview(presented.view)
@@ -105,19 +171,19 @@ extension CountrySelectController {
       UIView.animate(withDuration: 0.3) {
         presenting.view.alpha = 0.6
         presented.view.frame.origin.y = base.view.frame.height - 500
-      } completion: { (_) in
+      } completion: { _ in
         presented.didMove(toParent: base)
       }
       
       presented.rx.methodInvoked(#selector(UIViewController.willMove(toParent:)))
         .bind { _ in
-          if let country: String = presented.selectedCountry {
+          if let country: Message.Model.Country = presented.selectedCountry {
             observer.onNext(country)
           }
           UIView.animate(withDuration: 0.3) {
             presenting.view.alpha = 1
             presented.view.frame.origin.y = base.view.frame.height
-          } completion: { (_) in
+          } completion: { _ in
             presenting.view.isUserInteractionEnabled = true
             presented.view.removeFromSuperview()
             presented.removeFromParent()
@@ -129,3 +195,16 @@ extension CountrySelectController {
     }
   }
 }
+
+public class AllCountries {
+  static let shared: AllCountries = AllCountries()
+  var countries: [Message.Model.Country] = []
+  private init() {
+    _ = Network.request(Message.API.Countries())
+      .filterNil()
+      .bind { response in
+        self.countries = response.countries
+      }
+  }
+}
+

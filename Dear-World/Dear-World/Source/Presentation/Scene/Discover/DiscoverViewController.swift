@@ -18,10 +18,10 @@ final class DiscoverViewController: UIViewController, View {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let filterContainerView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
-  private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+  private let messageTableView: UITableView = UITableView()
   private let aboutButton: UIButton = UIButton()
-  private var messages: [MessageMock] = []
-  private let outerScrollView: UIScrollView = UIScrollView()
+  private var messages: [Message.Model.Message] = []
+//  private let outerScrollView: UIScrollView = UIScrollView()
   private var scrollOuter: Bool = true
   private var scrollRecentConvertTime: Date = Date()
   
@@ -31,7 +31,7 @@ final class DiscoverViewController: UIViewController, View {
     super.viewDidLoad()
     
     setupUI()
-    setupCollectionView()
+    setupTableView()
     startInitAnimation()
   }
   
@@ -52,33 +52,52 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
-    
-    self.outerScrollView.do {
-      $0.isScrollEnabled = true
-      $0.showsVerticalScrollIndicator = false
-      $0.contentSize.height = self.view.frame.height + 264
-      $0.delegate = self
+//    self.outerScrollView.do {
+//      $0.isScrollEnabled = true
+//      $0.showsVerticalScrollIndicator = false
+//      $0.contentSize.height = self.view.frame.height + 264
+//      $0.delegate = self
+//    }
+//    self.view.addSubview(outerScrollView)
+//    self.outerScrollView.snp.makeConstraints {
+//      $0.top.bottom.leading.trailing.equalToSuperview()
+//    }
+    messageTableView.do {
+      $0.backgroundColor = .breathingWhite
+    }
+    self.view.addSubview(self.messageTableView)
+    self.messageTableView.snp.makeConstraints {
+//      $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
+//      $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+//      $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
+      $0.top.bottom.trailing.leading.equalToSuperview()
     }
     
-    self.view.addSubview(outerScrollView)
-    self.outerScrollView.snp.makeConstraints {
-      $0.top.bottom.leading.trailing.equalToSuperview()
+    let headerView: UIView = UIView().then {
+      $0.backgroundColor = .red
     }
-    
-    self.outerScrollView.addSubview(self.messageCountBadgeView)
-    self.outerScrollView.addSubview(self.filterContainerView)
+    self.messageTableView.tableHeaderView = headerView
+    headerView.snp.makeConstraints {
+      $0.height.equalTo(100 + 44)
+    }
+    headerView.addSubview(self.messageCountBadgeView)
+    messageCountBadgeView.snp.makeConstraints {
+      $0.centerX.equalTo(view.snp.centerX)
+      $0.top.equalToSuperview().inset(16)
+    }
+    headerView.addSubview(self.filterContainerView)
     self.filterContainerView.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
+      $0.leading.equalTo(self.view.snp.leading).offset(20)
+      $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
+//      $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
       $0.height.equalTo(26)
     }
     
     countryLabel.do {
-      $0.font = .boldSystemFont(ofSize: 22)
+      $0.font = .boldSystemFont(ofSize: 16)
       $0.textColor = .warmBlue
       $0.text = "Whole world"
     }
-    
     filterContainerView.addSubview(countryLabel)
     countryLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
@@ -97,40 +116,42 @@ final class DiscoverViewController: UIViewController, View {
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
     
-    messageCollectionView.do {
-      $0.backgroundColor = .breathingWhite
-      $0.isScrollEnabled = false
-    }
-    self.outerScrollView.addSubview(self.messageCollectionView)
-    self.messageCollectionView.snp.makeConstraints {
-      $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
-      $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-      $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
-    }
-    
-    self.view.addSubview(aboutButton)
+    headerView.addSubview(aboutButton)
     aboutButton.do {
-      $0.backgroundColor = .red
+      $0.setImage(UIImage(named: "about"), for: .normal)
     }
     aboutButton.snp.makeConstraints {
-      $0.center.equalToSuperview()
+      $0.size.equalTo(20)
+      $0.top.equalToSuperview().inset(20)
+      $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
   }
   
-  private func setupCollectionView() {
-    self.messageCollectionView.do {
-      $0.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "MessageCell")
+  private func setupTableView() {
+    self.messageTableView.do {
+      $0.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
       $0.delegate = self
       $0.dataSource = self
+      $0.showsVerticalScrollIndicator = false
+      $0.separatorStyle = .none
+      $0.estimatedRowHeight = 200
+      $0.rowHeight = UITableView.automaticDimension
     }
     
-    if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-      layout.minimumLineSpacing = 20
-    }
+//    if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//      layout.minimumLineSpacing = 20
+//    }
   }
   
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
+    _ = AllCountries.shared
+    reactor.action.onNext(.countryDidChanged(country: Message.Model.Country(
+                                              code: nil,
+                                              fullName: "Whole World",
+                                              emojiUnicode: "🍎"
+    )))
+    
     reactor.state
       .map(\.messageCount)
       .subscribe { [weak self] count in
@@ -139,11 +160,11 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$messages)
       .map(\.messages)
-      .distinctUntilChanged()
       .subscribe(onNext: {[weak self] mess in
-        self?.messages = mess
-        self?.messageCollectionView.reloadData()
+        self?.messages = mess.messages
+        self?.messageTableView.reloadData()
       })
       .disposed(by: self.disposeBag)
     
@@ -152,32 +173,33 @@ final class DiscoverViewController: UIViewController, View {
       .distinctUntilChanged()
       .filter { !$0 }
       .bind {[weak self] _ in
-        self?.messageCollectionView.refreshControl?.endRefreshing()
+        self?.messageTableView.refreshControl?.endRefreshing()
       }
       .disposed(by: self.disposeBag)
     
     reactor.state
-      .map(\.country)
-      .distinctUntilChanged()
+      .distinctUntilChanged(\.$selectedCountry)
+      .map(\.selectedCountry)
+      .map{$0?.fullName}
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
     reactor.state
-      .map(\.country)
-      .distinctUntilChanged()
+      .distinctUntilChanged(\.$selectedCountry)
+      .map(\.selectedCountry)
       .bind { _ in
-        self.messageCollectionView.setContentOffset(.zero, animated: false)
+        self.messageTableView.setContentOffset(.zero, animated: false)
       }
       .disposed(by: self.disposeBag)
     
-    self.messageCollectionView
+    self.messageTableView
       .refreshControl?.rx
       .controlEvent(.valueChanged)
       .map { Reactor.Action.refresh }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    self.messageCollectionView
+    self.messageTableView
       .rx.isReachedBottom
       .map { Reactor.Action.loadMore }
       .bind(to: reactor.action)
@@ -186,9 +208,9 @@ final class DiscoverViewController: UIViewController, View {
     self.filterContainerView
       .rx.tapGesture()
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<String> in
-        guard let self = self else { return Observable.just("") }
-        return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
+      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
+        guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
+        return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedCountry)
       }
       .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
@@ -199,7 +221,8 @@ final class DiscoverViewController: UIViewController, View {
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    reactor.state.distinctUntilChanged(\.$isPresentAboutPage)
+    reactor.state
+      .distinctUntilChanged(\.$isPresentAboutPage)
       .map { $0.isPresentAboutPage }
       .subscribe(onNext: { [weak self] in
         let viewController = AboutViewController().then {
@@ -213,25 +236,19 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
   }
 }
-extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-  func collectionView(
-    _ collectionView: UICollectionView,
-    numberOfItemsInSection section: Int
-  ) -> Int {
-    return self.messages.count
+extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    self.messages.count
   }
   
-  func collectionView(
-    _ collectionView: UICollectionView,
-    cellForItemAt indexPath: IndexPath
-  ) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UICollectionViewCell() }
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
     cell.do {
-      $0.nameLabel.text = self.messages[indexPath.row].name
-      $0.emojiLabel.text = self.messages[indexPath.row].emoji
-      $0.detailTextView.text = self.messages[indexPath.row].detail
-      $0.likeCountLabel.text = self.messages[indexPath.row].likes.formatted
-      $0.countryLabel.text = self.messages[indexPath.row].countryName
+      $0.nameLabel.text = self.messages[indexPath.row].user.nickname
+      $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
+      $0.detailTextView.text = self.messages[indexPath.row].content
+      $0.likeCountLabel.text = "\(self.messages[indexPath.row].likeCount)"
+      $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
     }
     bindShareButton(button: cell.shareButton)
     if reactor?.currentState.currentPage == 1 {
@@ -246,13 +263,14 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
     return cell
   }
   
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAt indexPath: IndexPath
-  ) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 192)
-  }
+  
+//  func collectionView(
+//    _ collectionView: UICollectionView,
+//    layout collectionViewLayout: UICollectionViewLayout,
+//    sizeForItemAt indexPath: IndexPath
+//  ) -> CGSize {
+//    return CGSize(width: collectionView.frame.width, height: 192)
+//  }
   
   private func bindShareButton(button: UIButton) {
     button
@@ -263,17 +281,6 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
         self.present(activityVC, animated: true)
       }
       .disposed(by: self.disposeBag)
-  }
-}
-extension DiscoverViewController: UIScrollViewDelegate {
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    let flag = scrollView.contentOffset.y <= 225
-    if flag != self.scrollOuter && self.scrollRecentConvertTime.timeIntervalSinceNow < -5 {
-      self.outerScrollView.isScrollEnabled = flag
-      self.messageCollectionView.isScrollEnabled = !flag
-      self.scrollOuter.toggle()
-      self.scrollRecentConvertTime = Date()
-    }
   }
 }
 

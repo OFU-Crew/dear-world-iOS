@@ -20,7 +20,7 @@ extension Message.API {
     
     var method: HTTPMethod { .post }
     var path: String { "api/v1/messages" }
-    var parameters: [String: Any]? {
+    var parameters: [String: Any?]? {
       ["countryCode": countryCode,
        "emojiId": emojiId.description,
        "nickname": name,
