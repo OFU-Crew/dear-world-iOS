@@ -314,10 +314,10 @@
 		395825AD25948E5B007325AB /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				395825B125948E98007325AB /* Domain */,
 				39F0C1802598684100A7001F /* Network */,
 				121BDB42259734FE0062B15A /* Common */,
 				395825B025948E8E007325AB /* Core */,
-				395825B125948E98007325AB /* Domain */,
 				395825B225948E9F007325AB /* Presentation */,
 			);
 			path = Source;
