@@ -16,6 +16,8 @@ final class PixelMapView: UIView {
   }
   
   func drawCountries(_ countries: [Model.Country]) {
+    layoutIfNeeded()
+    self.layer.sublayers?.removeAll()
     countries.forEach { drawCountry($0) }
   }
   
@@ -55,7 +57,7 @@ final class PixelMapView: UIView {
     )
     let path: UIBezierPath = UIBezierPath(
       arcCenter: center,
-      radius: locationSize.width,
+      radius: locationSize.width/2,
       startAngle: CGFloat(0),
       endAngle: CGFloat(Double.pi * 2),
       clockwise: true

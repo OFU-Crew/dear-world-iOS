@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 extension World.API {
-  struct MAP: ServiceAPI {
+  struct Map: ServiceAPI {
     typealias Response = World.Model.Map
     
     var method: HTTPMethod { .get }

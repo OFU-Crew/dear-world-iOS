@@ -46,6 +46,7 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     setupUI()
   }
   
+  // MARK: 🔗 Bind
   func bind(reactor: CheeringMapReactor) {
     reactor.state
       .map { $0.messageCount }
@@ -64,6 +65,14 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
         cell.cheerUpButton.anchorView = self?.view
       }.disposed(by: disposeBag)
     
+    reactor.state
+      .distinctUntilChanged(\.$countries)
+      .map { $0.countries }
+      .subscribe(onNext: { [weak self] in
+        self?.worldMapView.drawCountries($0)
+      })
+      .disposed(by: disposeBag)
+
     rankingTableView.rx.didScroll
       .map { [weak self] in self?.rankingTableView.contentOffset.y }
       .filterNil()
@@ -72,6 +81,9 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
       .subscribe(onNext: { [weak self] y in
         guard let self = self else { return }
         self.updateLayouts(y)
+        if let countries = self.reactor?.currentState.countries {
+          self.worldMapView.drawCountries(countries)
+        }
       })
       .disposed(by: disposeBag)
     

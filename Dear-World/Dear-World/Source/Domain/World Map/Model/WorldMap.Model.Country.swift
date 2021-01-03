@@ -105,7 +105,7 @@ extension WorldMap.Model {
       Location(x: 20, y: 26),
       Location(x: 20, y: 27),
       Location(x: 20, y: 28),
-      Location(x: 21, y: 26),
+      Location(x: 21, y: 26)
     ]
   )
   static let CA: Country = Country(
@@ -1155,7 +1155,7 @@ extension WorldMap.Model {
       Location(x: 40, y: 21),
       Location(x: 41, y: 16),
       Location(x: 41, y: 17),
-      Location(x: 41, y: 18),
+      Location(x: 41, y: 18)
     ]
   )
   static let FI: Country = Country(
@@ -1170,7 +1170,7 @@ extension WorldMap.Model {
       Location(x: 43, y: 16),
       Location(x: 43, y: 17),
       Location(x: 43, y: 18),
-      Location(x: 43, y: 19),
+      Location(x: 43, y: 19)
     ]
   )
   static let EE: Country = Country(
@@ -1582,7 +1582,7 @@ extension WorldMap.Model {
       Location(x: 51, y: 31),
       Location(x: 52, y: 29),
       Location(x: 52, y: 30),
-      Location(x: 52, y: 31),
+      Location(x: 52, y: 31)
     ]
   )
   static let AF: Country = Country(
@@ -1678,7 +1678,7 @@ extension WorldMap.Model {
       Location(x: 60, y: 25),
       Location(x: 60, y: 26),
       Location(x: 61, y: 25),
-      Location(x: 62, y: 25),
+      Location(x: 62, y: 25)
     ]
   )
   static let KP: Country = Country(
@@ -1737,7 +1737,7 @@ extension WorldMap.Model {
     name: "Vietnam",
     locations: [
       Location(x: 60, y: 33),
-      Location(x: 60, y: 34),
+      Location(x: 60, y: 34)
     ]
   )
   static let TW: Country = Country(
@@ -1746,7 +1746,7 @@ extension WorldMap.Model {
     locations: [
       Location(x: 58, y: 33),
       Location(x: 58, y: 34),
-      Location(x: 59, y: 33),
+      Location(x: 59, y: 33)
     ]
   )
   static let MY: Country = Country(
@@ -1761,7 +1761,7 @@ extension WorldMap.Model {
     name: "Nepal",
     locations: [
       Location(x: 54, y: 30),
-      Location(x: 55, y: 30),
+      Location(x: 55, y: 30)
     ]
   )
   static let LK: Country = Country(
