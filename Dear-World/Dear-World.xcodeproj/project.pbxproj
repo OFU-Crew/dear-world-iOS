@@ -56,6 +56,7 @@
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
+		39E9F7D025A1738F00BC2CC2 /* AboutReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */; };
 		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
 		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
@@ -134,6 +135,7 @@
 		3971EB28259A7D720084E6DC /* SendMessageReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Message.API.SendMessage.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.SendMessage.swift; path = "Dear-World/Source/Domain/Message/API/Message.Model.SendMessage.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
+		39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutReactor.swift; sourceTree = "<group>"; };
 		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				3902F117259704AF00A3DF8C /* AboutViewController.swift */,
+				39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				39F465822597811900621327 /* CheerButton.swift in Sources */,
 				128313EE2598A14E00BDF8A3 /* Message.API.Messages.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
+				39E9F7D025A1738F00BC2CC2 /* AboutReactor.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				39658FBB259AE55C0050D180 /* World.Model.Rank.swift in Sources */,
 				39658FB6259AE5250050D180 /* World.API.Rank.swift in Sources */,
