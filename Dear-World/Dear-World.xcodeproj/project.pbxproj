@@ -59,6 +59,8 @@
 		39E9F7D025A1738F00BC2CC2 /* AboutReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */; };
 		39E9F7DB25A1BBED00BC2CC2 /* PixelWorldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */; };
 		39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */; };
+		39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */; };
+		39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */; };
 		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
 		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
@@ -140,6 +142,8 @@
 		39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutReactor.swift; sourceTree = "<group>"; };
 		39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelWorldMapView.swift; sourceTree = "<group>"; };
 		39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBadge.swift; sourceTree = "<group>"; };
+		39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.swift; sourceTree = "<group>"; };
+		39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.Model.Country.swift; sourceTree = "<group>"; };
 		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
@@ -351,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				39658FAD259AE4D30050D180 /* World */,
+				39E9F7E425A1C78900BC2CC2 /* World Map */,
 				3971EB16259A7BB10084E6DC /* Emoji */,
 				128313EA2598A0C800BDF8A3 /* Message */,
 			);
@@ -502,6 +507,31 @@
 				3971EB1E259A7C0E0084E6DC /* Emoji.API.Random.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		39E9F7E425A1C78900BC2CC2 /* World Map */ = {
+			isa = PBXGroup;
+			children = (
+				39E9F7EB25A1C83500BC2CC2 /* Model */,
+				39E9F7EA25A1C83100BC2CC2 /* API */,
+				39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */,
+			);
+			path = "World Map";
+			sourceTree = "<group>";
+		};
+		39E9F7EA25A1C83100BC2CC2 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		39E9F7EB25A1C83500BC2CC2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		39F0C1802598684100A7001F /* Network */ = {
@@ -727,6 +757,7 @@
 				39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
+				39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */,
 				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
 				39658FAF259AE4E40050D180 /* World.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
@@ -739,6 +770,7 @@
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 				39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */,
+				39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
 				39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */,
 				121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */,

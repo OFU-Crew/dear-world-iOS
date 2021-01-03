@@ -11,5 +11,4 @@ extension World.Model {
   struct Rank: Decodable {
     let ranking: [Ranker]
   }
-  
 }

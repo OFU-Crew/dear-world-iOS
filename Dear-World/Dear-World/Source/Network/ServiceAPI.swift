@@ -18,7 +18,7 @@ protocol ServiceAPI: URLRequestConvertible {
 }
 extension ServiceAPI {
   var baseURL: URL {
-    URL(string: "http://52.79.222.79/")!
+    URL(string: "http://api.dear-world.live")!
   }
   
   var parameters: [String: Any]? { nil }
