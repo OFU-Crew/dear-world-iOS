@@ -132,7 +132,7 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: .init(code: "whole world", fullName: "whole world", emojiUnicode: "🇰🇷")))
+    reactor.action.onNext(.countryDidChanged(country: .init(code: "WW", fullName: "whole world", emojiUnicode: "🇰🇷")))
     
     reactor.state
       .map(\.messageCount)
@@ -192,7 +192,7 @@ final class DiscoverViewController: UIViewController, View {
       .skip(1)
       .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
         guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
-        return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
+        return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedCountry)
       }
       .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)

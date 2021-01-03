@@ -19,7 +19,7 @@ final class DiscoverReactor: Reactor {
   enum Mutation {
     case setMessages(result: Message.Model.Messages)
     case setRefreshing(Bool)
-    case addMessages(result: Message.Model.Messages, page: Int)
+    case addMessages(result: Message.Model.Messages)
     case setCountry(country: Message.Model.Country)
     case setLoading(Bool)
     case setPresentAboutPage
@@ -27,7 +27,7 @@ final class DiscoverReactor: Reactor {
   
   struct State {
     var messageCount: Int = 0
-    var selectedCountry: Message.Model.Country = .init(code: "whole world", fullName: "Whole world", emojiUnicode: "a")
+    var selectedCountry: Message.Model.Country = .init(code: "WW", fullName: "Whole world", emojiUnicode: "a")
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
@@ -52,7 +52,7 @@ final class DiscoverReactor: Reactor {
         .just(.setLoading(true)),
         Network.request(Message.API.Messages(countryCode: country.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
           .filterNil()
-          .map{Mutation.setMessages(result: $0)},
+          .map{ Mutation.setMessages(result: $0) },
         .just(.setLoading(false))
       )
       
@@ -66,6 +66,9 @@ final class DiscoverReactor: Reactor {
       
     case .loadMore:
       return Observable<Mutation>.concat([
+        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
+          .filterNil()
+          .map{ Mutation.addMessages(result: $0) }
 //        APIMock().getMessages(page: 2, country: currentState.country)
 //          .map { Mutation.addMessages(result: $0, page: 2) }
       ])
@@ -86,14 +89,13 @@ final class DiscoverReactor: Reactor {
     case let .setRefreshing(flag):
       newState.isRefreshing = flag
     
-    case let .addMessages(result: results, page: page):
+    case let .addMessages(result: results):
       newState.messages = Message.Model.Messages(firstMsgId: state.messages.firstMsgId, lastMsgId: results.lastMsgId, messageCount: state.messageCount + results.messageCount, messages: currentState.messages.messages + results.messages)
-      newState.currentPage = page
     
     case let .setCountry(country: country):
       newState.selectedCountry = country
     
-    case let .setLoading(flag):
+    case let .setLoading(flag): 
       newState.isLoading = flag
       
     case .setPresentAboutPage:
