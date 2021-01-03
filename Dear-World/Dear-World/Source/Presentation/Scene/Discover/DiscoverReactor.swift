@@ -28,7 +28,7 @@ final class DiscoverReactor: Reactor {
   
   struct State {
     var messageCount: Int = 0
-    var selectedCountry: Message.Model.Country?
+    @Revision var selectedCountry: Message.Model.Country?
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
@@ -57,8 +57,8 @@ final class DiscoverReactor: Reactor {
           .just(.setLoading(true)),
             Network.request(
               Message.API.Messages(
-                countryCode: currentState.selectedCountry?.code,
-                lastMsgId: currentState.messages.lastMsgId,
+                countryCode: country?.code,
+                lastMsgId: nil,
                 type: .recent)
             )
             .filterNil()

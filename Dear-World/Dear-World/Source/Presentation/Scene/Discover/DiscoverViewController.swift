@@ -124,6 +124,7 @@ final class DiscoverViewController: UIViewController, View {
       $0.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "MessageCell")
       $0.delegate = self
       $0.dataSource = self
+      $0.showsVerticalScrollIndicator = false
     }
     
     if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -148,8 +149,8 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$messages)
       .map(\.messages)
-//      .distinctUntilChanged{$0.}
       .subscribe(onNext: {[weak self] mess in
         self?.messages = mess.messages
         self?.messageCollectionView.reloadData()
@@ -166,15 +167,15 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-//      .distinctUntilChanged()
       .map{$0?.fullName}
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-//      .distinctUntilChanged()
       .bind { _ in
         self.messageCollectionView.setContentOffset(.zero, animated: false)
       }
@@ -209,7 +210,8 @@ final class DiscoverViewController: UIViewController, View {
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    reactor.state.distinctUntilChanged(\.$isPresentAboutPage)
+    reactor.state
+      .distinctUntilChanged(\.$isPresentAboutPage)
       .map { $0.isPresentAboutPage }
       .subscribe(onNext: { [weak self] in
         let viewController = AboutViewController().then {

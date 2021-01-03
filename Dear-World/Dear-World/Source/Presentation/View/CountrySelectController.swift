@@ -45,7 +45,7 @@ public final class CountrySelectController: UIViewController {
       $0.top.trailing.equalToSuperview().inset(20)
     }
     self.wholeWorldButton.do {
-      if selectedCountry?.code == "Whole" {
+      if selectedCountry?.code == nil {
         $0.backgroundColor = .breathingWhite
         addCheck(base: $0)
       } else {
@@ -56,7 +56,7 @@ public final class CountrySelectController: UIViewController {
     let wholeWorldLabel = UILabel().then {
       $0.text = "Whole world"
       $0.font = .systemFont(ofSize: 14)
-      if selectedCountry?.code == "Whole" {
+      if selectedCountry?.code == nil {
         $0.textColor = .livelyBlue
       } else {
         $0.textColor = .warmBlue
