@@ -11,6 +11,7 @@ import ReactorKit
 final class DiscoverReactor: Reactor {
   
   enum Action {
+    case tapAbout
     case countryDidChanged(country: String)
     case refresh
     case loadMore
@@ -22,6 +23,7 @@ final class DiscoverReactor: Reactor {
     case addMessages(result: [MessageMock], page: Int)
     case setCountry(country: String)
     case setLoading(Bool)
+    case setPresentAboutPage
   }
   
   struct State {
@@ -32,6 +34,7 @@ final class DiscoverReactor: Reactor {
     var isLoading: Bool = false
     var isAnimating: Bool = false
     var currentPage: Int = 1
+    @Revision var isPresentAboutPage: Void?
   }
   
   var initialState: State
@@ -66,6 +69,9 @@ final class DiscoverReactor: Reactor {
         APIMock().getMessages(page: 2, country: currentState.country)
           .map { Mutation.addMessages(result: $0, page: 2) }
       ])
+      
+    case .tapAbout:
+      return .just(.setPresentAboutPage)
     }
   }
   
@@ -89,6 +95,9 @@ final class DiscoverReactor: Reactor {
     
     case let .setLoading(flag):
       newState.isLoading = flag
+      
+    case .setPresentAboutPage:
+      newState.isPresentAboutPage = Void()
     }
     return newState
   }

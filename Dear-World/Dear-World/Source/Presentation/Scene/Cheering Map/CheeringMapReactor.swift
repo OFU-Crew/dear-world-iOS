@@ -49,6 +49,7 @@ final class CheeringMapReactor: Reactor {
     switch mutation {
     case .setRankers(let rankers):
       newState.rankers = rankers
+      
     default:
       ()
     }

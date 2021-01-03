@@ -9,7 +9,7 @@ import Foundation
 
 extension Int {
   var formatted: String? {
-    if self >= 100_000 {
+    if self >= 10_000 {
       return self.kFormat
     } else {
       return self.decimalFormat

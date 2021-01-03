@@ -19,6 +19,7 @@ final class DiscoverViewController: UIViewController, View {
   private let filterContainerView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
   private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+  private let aboutButton: UIButton = UIButton()
   private var messages: [MessageMock] = []
   private let outerScrollView: UIScrollView = UIScrollView()
   private var scrollOuter: Bool = true
@@ -106,6 +107,14 @@ final class DiscoverViewController: UIViewController, View {
       $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
       $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
     }
+    
+    self.view.addSubview(aboutButton)
+    aboutButton.do {
+      $0.backgroundColor = .red
+    }
+    aboutButton.snp.makeConstraints {
+      $0.center.equalToSuperview()
+    }
   }
   
   private func setupCollectionView() {
@@ -182,6 +191,11 @@ final class DiscoverViewController: UIViewController, View {
         return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag)
       }
       .map { Reactor.Action.countryDidChanged(country: $0) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    self.aboutButton.rx.tap
+      .map { Reactor.Action.tapAbout }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
   }
