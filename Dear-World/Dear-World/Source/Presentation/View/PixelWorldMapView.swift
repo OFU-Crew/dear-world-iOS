@@ -7,3 +7,7 @@
 
 import UIKit
 
+final class PixelWorldMapView: UIView {
+  private let collectionView: UICollectionView = UICollectionView()
+  
+}
