@@ -27,7 +27,7 @@ final class DiscoverReactor: Reactor {
   
   struct State {
     var messageCount: Int = 0
-    var selectedCountry: Message.Model.Country = .init(code: "WW", fullName: "Whole world", emojiUnicode: "a")
+    var selectedCountry: Message.Model.Country = .init(code: "Whole", fullName: "Whole world", emojiUnicode: "a")
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false

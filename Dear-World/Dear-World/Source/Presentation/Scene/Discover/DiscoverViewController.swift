@@ -108,12 +108,14 @@ final class DiscoverViewController: UIViewController, View {
       $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
     }
     
-    self.view.addSubview(aboutButton)
+    self.outerScrollView.addSubview(aboutButton)
     aboutButton.do {
-      $0.backgroundColor = .red
+      $0.setImage(UIImage(named: "about"), for: .normal)
     }
     aboutButton.snp.makeConstraints {
-      $0.center.equalToSuperview()
+      $0.size.equalTo(20)
+      $0.top.equalToSuperview().inset(20)
+      $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
   }
   
@@ -132,7 +134,7 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: .init(code: "WW", fullName: "whole world", emojiUnicode: "🇰🇷")))
+    reactor.action.onNext(.countryDidChanged(country: .init(code: "Whole", fullName: "Whole world", emojiUnicode: "🇰🇷")))
     
     reactor.state
       .map(\.messageCount)

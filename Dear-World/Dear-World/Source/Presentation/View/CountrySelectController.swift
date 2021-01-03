@@ -45,7 +45,7 @@ public final class CountrySelectController: UIViewController {
       $0.top.trailing.equalToSuperview().inset(20)
     }
     self.wholeWorldButton.do {
-      if selectedCountry?.code == "WW" {
+      if selectedCountry?.code == "Whole" {
         $0.backgroundColor = .breathingWhite
         addCheck(base: $0)
       } else {
@@ -56,7 +56,7 @@ public final class CountrySelectController: UIViewController {
     let wholeWorldLabel = UILabel().then {
       $0.text = "Whole world"
       $0.font = .systemFont(ofSize: 14)
-      if selectedCountry?.code == "WW" {
+      if selectedCountry?.code == "Whole" {
         $0.textColor = .livelyBlue
       } else {
         $0.textColor = .warmBlue
@@ -125,7 +125,7 @@ public final class CountrySelectController: UIViewController {
       .bind{ [weak self] in
         //TODO: WHoleWorld의 코드는?
         self?.wholeWorldButton.backgroundColor = .warmBlue
-        self?.selectedCountry = .init(code: "WW", fullName: "Whole world", emojiUnicode: "🍎")
+        self?.selectedCountry = .init(code: "Whole", fullName: "Whole world", emojiUnicode: "🍎")
         self?.willMove(toParent: nil)
       }
       .disposed(by: self.disposeBag)
