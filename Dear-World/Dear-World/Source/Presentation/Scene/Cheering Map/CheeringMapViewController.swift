@@ -25,6 +25,7 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
   private let titleLabel: UILabel = UILabel()
   private let worldMapView: PixelMapView = PixelMapView()
   private let headerView: UIView = UIView()
+  private let aboutButton: UIButton = UIButton()
   private let rankingTableView: UITableView = UITableView()
   
   private var titleHeight: CGFloat = 26
@@ -73,6 +74,21 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
       })
       .disposed(by: disposeBag)
 
+    reactor.state
+      .distinctUntilChanged(\.$isPresentAboutPage)
+      .map { $0.isPresentAboutPage }
+      .subscribe(onNext: { [weak self] in
+        let viewController = AboutViewController().then {
+          $0.reactor = AboutReactor()
+        }
+        let naviController = UINavigationController(rootViewController: viewController).then {
+          $0.modalPresentationStyle = .fullScreen
+        }
+        self?.present(naviController, animated: false, completion: nil)
+      })
+      .disposed(by: self.disposeBag)
+    
+    
     rankingTableView.rx.didScroll
       .map { [weak self] in self?.rankingTableView.contentOffset.y }
       .filterNil()
@@ -96,7 +112,8 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     
     self.view.addSubview(messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
-      $0.top.equalToSuperview().inset(60)
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+      $0.centerX.equalToSuperview()
     }
     
     titleLabel.do {
@@ -117,6 +134,15 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
       $0.height.equalTo(208.0)
       $0.width.equalTo(worldMapView.snp.height).multipliedBy(78.0 / 53.0)
       $0.centerX.equalToSuperview()
+    }
+    
+    self.view.addSubview(aboutButton)
+    aboutButton.do {
+      $0.setImage(UIImage(named: "about"), for: .normal)
+    }
+    aboutButton.snp.makeConstraints {
+      $0.size.equalTo(20)
+      $0.top.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
     
     let headerTitleLabel: UILabel = UILabel().then {

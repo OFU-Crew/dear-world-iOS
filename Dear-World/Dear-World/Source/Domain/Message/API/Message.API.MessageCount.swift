@@ -22,7 +22,7 @@ extension Message.API {
         "countryCode": countryCode
       ]
     }
-    init(countryCode: String?) {
+    init(countryCode: String? = nil) {
       self.countryCode = countryCode
     }
   }

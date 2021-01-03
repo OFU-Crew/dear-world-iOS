@@ -21,7 +21,6 @@ final class DiscoverViewController: UIViewController, View {
   private let messageTableView: UITableView = UITableView()
   private let aboutButton: UIButton = UIButton()
   private var messages: [Message.Model.Message] = []
-//  private let outerScrollView: UIScrollView = UIScrollView()
   private var scrollOuter: Bool = true
   private var scrollRecentConvertTime: Date = Date()
   
@@ -52,24 +51,12 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
-//    self.outerScrollView.do {
-//      $0.isScrollEnabled = true
-//      $0.showsVerticalScrollIndicator = false
-//      $0.contentSize.height = self.view.frame.height + 264
-//      $0.delegate = self
-//    }
-//    self.view.addSubview(outerScrollView)
-//    self.outerScrollView.snp.makeConstraints {
-//      $0.top.bottom.leading.trailing.equalToSuperview()
-//    }
+    
     messageTableView.do {
       $0.backgroundColor = .breathingWhite
     }
     self.view.addSubview(self.messageTableView)
     self.messageTableView.snp.makeConstraints {
-//      $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
-//      $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-//      $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
       $0.top.bottom.trailing.leading.equalToSuperview()
     }
     
@@ -89,7 +76,6 @@ final class DiscoverViewController: UIViewController, View {
     self.filterContainerView.snp.makeConstraints {
       $0.leading.equalTo(self.view.snp.leading).offset(20)
       $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
-//      $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
       $0.height.equalTo(26)
     }
     
@@ -137,10 +123,6 @@ final class DiscoverViewController: UIViewController, View {
       $0.estimatedRowHeight = 200
       $0.rowHeight = UITableView.automaticDimension
     }
-    
-//    if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-//      layout.minimumLineSpacing = 20
-//    }
   }
   
   // MARK: 🔗 Bind

@@ -14,5 +14,6 @@ extension World.API {
     
     var method: HTTPMethod { .get }
     var path: String { "api/v1/countries/count" }
+    var parameters: [String : Any?]? { nil }
   }
 }

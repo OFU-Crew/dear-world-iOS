@@ -22,7 +22,7 @@ final class DiscoverReactor: Reactor {
     case addMessages(result: Message.Model.Messages)
     case setCountry(country: Message.Model.Country?)
     case setLoading(Bool)
-    case setPresentAboutPage
+    case setPresentAboutPage(Bool)
     case setMessageCount(Int)
   }
   
@@ -34,7 +34,7 @@ final class DiscoverReactor: Reactor {
     var isLoading: Bool = false
     var isAnimating: Bool = false
     var currentPage: Int = 1
-    @Revision var isPresentAboutPage: Void?
+    @Revision var isPresentAboutPage: Bool = false
   }
   
   var initialState: State
@@ -70,8 +70,6 @@ final class DiscoverReactor: Reactor {
     case .refresh:
       return .concat([
         .just(Mutation.setRefreshing(true)),
-//        APIMock().getMessages(page: 1, country: currentState.country)
-//          .map { .setMessages(result: $0) },
         .just(Mutation.setRefreshing(false))
       ])
       
@@ -83,7 +81,7 @@ final class DiscoverReactor: Reactor {
       ])
       
     case .tapAbout:
-      return .just(.setPresentAboutPage)
+      return .just(.setPresentAboutPage(true))
     }
   }
   
@@ -107,8 +105,9 @@ final class DiscoverReactor: Reactor {
     case let .setLoading(flag): 
       newState.isLoading = flag
       
-    case .setPresentAboutPage:
-      newState.isPresentAboutPage = Void()
+    case .setPresentAboutPage(let isPresentAboutPage):
+      newState.isPresentAboutPage = isPresentAboutPage
+      
     case let .setMessageCount(count):
       newState.messageCount = count
     }
