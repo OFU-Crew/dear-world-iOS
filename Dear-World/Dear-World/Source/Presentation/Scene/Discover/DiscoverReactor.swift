@@ -11,7 +11,7 @@ import ReactorKit
 final class DiscoverReactor: Reactor {
   enum Action {
     case tapAbout
-    case countryDidChanged(country: Message.Model.Country)
+    case countryDidChanged(country: Message.Model.Country?)
     case refresh
     case loadMore
   }
@@ -20,14 +20,15 @@ final class DiscoverReactor: Reactor {
     case setMessages(result: Message.Model.Messages)
     case setRefreshing(Bool)
     case addMessages(result: Message.Model.Messages)
-    case setCountry(country: Message.Model.Country)
+    case setCountry(country: Message.Model.Country?)
     case setLoading(Bool)
     case setPresentAboutPage
+    case setMessageCount(Int)
   }
   
   struct State {
     var messageCount: Int = 0
-    var selectedCountry: Message.Model.Country = .init(code: "Whole", fullName: "Whole world", emojiUnicode: "a")
+    var selectedCountry: Message.Model.Country? = nil
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
@@ -47,13 +48,16 @@ final class DiscoverReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case let .countryDidChanged(country):
-      return .concat(
-        .just(Mutation.setCountry(country: country)),
-        .just(.setLoading(true)),
-        Network.request(Message.API.Messages(countryCode: country.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
-          .filterNil()
-          .map{ Mutation.setMessages(result: $0) },
-        .just(.setLoading(false))
+      return .merge(
+        Network.request(Message.API.MessageCount(countryCode: country?.code)).filterNil().map{ Mutation.setMessageCount($0.messageCount)},
+          .concat(
+          .just(Mutation.setCountry(country: country)),
+          .just(.setLoading(true)),
+            Network.request(Message.API.Messages(countryCode: country?.code, lastMsgId: currentState.messages.lastMsgId, type: .recent))
+            .filterNil()
+            .map{ Mutation.setMessages(result: $0) },
+          .just(.setLoading(false))
+        )
       )
       
     case .refresh:
@@ -66,7 +70,7 @@ final class DiscoverReactor: Reactor {
       
     case .loadMore:
       return Observable<Mutation>.concat([
-        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
+        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
           .filterNil()
           .map{ Mutation.addMessages(result: $0) }
 //        APIMock().getMessages(page: 2, country: currentState.country)
@@ -100,6 +104,8 @@ final class DiscoverReactor: Reactor {
       
     case .setPresentAboutPage:
       newState.isPresentAboutPage = Void()
+    case let .setMessageCount(count):
+      newState.messageCount = count
     }
     return newState
   }

@@ -134,7 +134,7 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: .init(code: "Whole", fullName: "Whole world", emojiUnicode: "🇰🇷")))
+    reactor.action.onNext(.countryDidChanged(country: nil))
     
     reactor.state
       .map(\.messageCount)
@@ -164,7 +164,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .map(\.selectedCountry)
 //      .distinctUntilChanged()
-      .map{$0.fullName}
+      .map{$0?.fullName}
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     

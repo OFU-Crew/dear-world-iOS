@@ -16,6 +16,8 @@
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
 		1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09625A1C87400E3F121 /* Message.API.Countries.swift */; };
 		1263E09C25A1C8DD00E3F121 /* Message.Model.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */; };
+		1263E0CF25A1F5ED00E3F121 /* Message.Model.MessageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */; };
+		1263E0D425A1F5F800E3F121 /* Message.API.MessageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E0D325A1F5F800E3F121 /* Message.API.MessageCount.swift */; };
 		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
 		128313EE2598A14E00BDF8A3 /* Message.API.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
@@ -106,6 +108,8 @@
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
 		1263E09625A1C87400E3F121 /* Message.API.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Countries.swift; sourceTree = "<group>"; };
 		1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.Countries.swift; sourceTree = "<group>"; };
+		1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.MessageCount.swift; sourceTree = "<group>"; };
+		1263E0D325A1F5F800E3F121 /* Message.API.MessageCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.MessageCount.swift; sourceTree = "<group>"; };
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Messages.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -233,6 +237,7 @@
 				128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */,
 				3971EB36259A9C550084E6DC /* Message.API.SendMessage.swift */,
 				1263E09625A1C87400E3F121 /* Message.API.Countries.swift */,
+				1263E0D325A1F5F800E3F121 /* Message.API.MessageCount.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 				3971EB3B259A9C860084E6DC /* Message.Model.SendMessage.swift */,
 				3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */,
 				1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */,
+				1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -758,11 +764,13 @@
 				128313EE2598A14E00BDF8A3 /* Message.API.Messages.swift in Sources */,
 				128313E32598A08700BDF8A3 /* Message.swift in Sources */,
 				39E9F7D025A1738F00BC2CC2 /* AboutReactor.swift in Sources */,
+				1263E0CF25A1F5ED00E3F121 /* Message.Model.MessageCount.swift in Sources */,
 				121BDB44259735200062B15A /* UIColor+.swift in Sources */,
 				39658FBB259AE55C0050D180 /* World.Model.Rank.swift in Sources */,
 				39658FB6259AE5250050D180 /* World.API.Rank.swift in Sources */,
 				39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
+				1263E0D425A1F5F800E3F121 /* Message.API.MessageCount.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */,
 				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,

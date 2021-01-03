@@ -17,8 +17,8 @@ extension Message.API {
     typealias Response = Message.Model.Messages
     
     // MARK: Parameters
-    private let countryCode: String
-    private let lastMsgId: Int
+    private let countryCode: String?
+    private let lastMsgId: Int?
     private let type: ListType
     
     var method: HTTPMethod { .get }
@@ -31,7 +31,7 @@ extension Message.API {
       ]
     }
     
-    init(countryCode: String, lastMsgId: Int, type: ListType) {
+    init(countryCode: String?, lastMsgId: Int?, type: ListType) {
       self.countryCode = countryCode
       self.lastMsgId = lastMsgId
       self.type = type

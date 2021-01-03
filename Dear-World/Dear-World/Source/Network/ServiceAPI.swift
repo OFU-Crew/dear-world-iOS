@@ -18,7 +18,7 @@ protocol ServiceAPI: URLRequestConvertible {
 }
 extension ServiceAPI {
   var baseURL: URL {
-    URL(string: "http://ec2-52-79-222-79.ap-northeast-2.compute.amazonaws.com")!
+    URL(string: "https://api.dear-world.live")!
   }
   
   var parameters: [String: Any]? { nil }
@@ -27,9 +27,12 @@ extension ServiceAPI {
     let url: URL = baseURL.appendingPathComponent(path)
     var request: URLRequest = URLRequest(url: url)
     request.httpMethod = method.rawValue
+    let parameters = self.parameters?.compactMapValues{$0}
     switch method {
     case .post:
       request = try JSONEncoding.default.encode(request, with: parameters)
+    case .get:
+      request = try URLEncoding.default.encode(request, with: parameters)
     default: ()
     }
     return request
