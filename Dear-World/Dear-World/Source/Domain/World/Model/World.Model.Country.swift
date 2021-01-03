@@ -24,7 +24,7 @@ extension World.Model {
     }
   }
 }
-extension World.Model {
+extension World.Model.Country {
   struct Status: Decodable {
     let id: Int
     let messageCount: Int
