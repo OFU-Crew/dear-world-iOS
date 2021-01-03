@@ -19,6 +19,13 @@ final class AboutViewController: UIViewController, View {
   private let noticeInfoView: UIView = UIView()
   private let noticeBadge: NoticeBadge = NoticeBadge()
   private let versionInfoView: UIView = UIView()
+  private let versionLabel: UILabel = UILabel()
+  private let backButton: UIBarButtonItem = UIBarButtonItem(
+    image: UIImage(named: "back")!,
+    style: .plain,
+    target: nil,
+    action: nil
+  )
   
   var disposeBag: DisposeBag = DisposeBag()
   
@@ -38,6 +45,9 @@ final class AboutViewController: UIViewController, View {
   // MARK: 🎛 Setup
   private func setupUI() {
     view.backgroundColor = .breathingWhite
+    backButton.tintColor = .warmBlue
+    navigationItem.leftBarButtonItem = backButton
+    navigationItem.title = "About"
     
     view.addSubview(stackView)
     stackView.do {
@@ -108,7 +118,7 @@ final class AboutViewController: UIViewController, View {
       $0.font = .systemFont(ofSize: 14)
       $0.textColor = .warmBlue
     }
-    let versionLabel: UILabel = UILabel().then {
+    versionLabel.do {
       $0.text = "New Version"
       $0.textColor = .livelyBlue
     }
@@ -137,6 +147,12 @@ final class AboutViewController: UIViewController, View {
       .when(.recognized)
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { _ in Action.tapCrewInfo }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    backButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Action.tapClose }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
@@ -187,6 +203,20 @@ final class AboutViewController: UIViewController, View {
       .subscribe(onNext: { _ in
         print("isPresentAppStore")
       })
+      .disposed(by: disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$willDismiss)
+      .map { $0.willDismiss }
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        self?.dismiss(animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    reactor.state.map { $0.currentVersion }
+      .distinctUntilChanged()
+      .bind(to: versionLabel.rx.text)
       .disposed(by: disposeBag)
   }
 }

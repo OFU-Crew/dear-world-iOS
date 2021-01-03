@@ -151,6 +151,20 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$isPresentAboutPage)
+      .map { $0.isPresentAboutPage }
+      .subscribe(onNext: { [weak self] in
+        let viewController = AboutViewController().then {
+          $0.reactor = AboutReactor()
+        }
+        let naviController = UINavigationController(rootViewController: viewController).then {
+          $0.modalPresentationStyle = .fullScreen
+        }
+        self?.present(naviController, animated: false, completion: nil)
+      })
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
       .map(\.isRefreshing)
       .distinctUntilChanged()
       .filter { !$0 }
@@ -199,22 +213,9 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
     
     self.aboutButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Reactor.Action.tapAbout }
       .bind(to: reactor.action)
-      .disposed(by: self.disposeBag)
-    
-    reactor.state
-      .distinctUntilChanged(\.$isPresentAboutPage)
-      .map { $0.isPresentAboutPage }
-      .subscribe(onNext: { [weak self] in
-        let viewController = AboutViewController().then {
-          $0.reactor = AboutReactor()
-        }
-        let naviController = UINavigationController(rootViewController: viewController).then {
-          $0.modalPresentationStyle = .fullScreen
-        }
-        self?.present(naviController, animated: false, completion: nil)
-      })
       .disposed(by: self.disposeBag)
   }
 }

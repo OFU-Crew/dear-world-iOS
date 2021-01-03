@@ -88,6 +88,10 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
       })
       .disposed(by: self.disposeBag)
     
+    aboutButton.rx.tap
+      .map { Action.tapAbout }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
     
     rankingTableView.rx.didScroll
       .map { [weak self] in self?.rankingTableView.contentOffset.y }

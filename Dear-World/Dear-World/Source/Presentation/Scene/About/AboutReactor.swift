@@ -12,6 +12,7 @@ final class AboutReactor: Reactor {
   
   enum Action {
     case initalize
+    case tapClose
     case tapCrewInfo
     case tapNotice
     case tapVersion
@@ -21,6 +22,7 @@ final class AboutReactor: Reactor {
     case setPresentCrewInfo(Bool)
     case setPresentNotice(Bool)
     case setPresentAppStore(Bool)
+    case setWillDismiss(Bool)
     case setNoticeCount(Int)
     case setCurrentVersion(String)
   }
@@ -29,6 +31,7 @@ final class AboutReactor: Reactor {
     @Revision var isPresentCrewInfo: Bool = false
     @Revision var isPresentNotice: Bool = false
     @Revision var isPresentAppStore: Bool = false
+    @Revision var willDismiss: Bool = false
     var noticeCount: Int?
     var currentVersion: String? = "10.1.1"
   }
@@ -53,6 +56,9 @@ final class AboutReactor: Reactor {
       
     case .tapVersion:
       return .just(.setPresentAppStore(true))
+      
+    case .tapClose:
+      return .just(.setWillDismiss(true))
     }
   }
   
@@ -74,6 +80,9 @@ final class AboutReactor: Reactor {
       
     case .setCurrentVersion(let version):
       newState.currentVersion = version
+      
+    case .setWillDismiss(let willDismiss):
+      newState.willDismiss = willDismiss
     }
     
     return newState
