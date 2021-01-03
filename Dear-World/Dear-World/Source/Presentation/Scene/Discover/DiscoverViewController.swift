@@ -134,7 +134,11 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: nil))
+    reactor.action.onNext(.countryDidChanged(country: Message.Model.Country(
+                                              code: nil,
+                                              fullName: "Whole World",
+                                              emojiUnicode: "🍎"
+    )))
     
     reactor.state
       .map(\.messageCount)

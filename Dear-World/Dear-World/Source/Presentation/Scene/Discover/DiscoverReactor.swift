@@ -28,7 +28,7 @@ final class DiscoverReactor: Reactor {
   
   struct State {
     var messageCount: Int = 0
-    var selectedCountry: Message.Model.Country? = nil
+    var selectedCountry: Message.Model.Country?
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
@@ -49,11 +49,18 @@ final class DiscoverReactor: Reactor {
     switch action {
     case let .countryDidChanged(country):
       return .merge(
-        Network.request(Message.API.MessageCount(countryCode: country?.code)).filterNil().map{ Mutation.setMessageCount($0.messageCount)},
+        Network.request(Message.API.MessageCount(countryCode: country?.code))
+          .filterNil()
+          .map { Mutation.setMessageCount($0.messageCount) },
           .concat(
           .just(Mutation.setCountry(country: country)),
           .just(.setLoading(true)),
-            Network.request(Message.API.Messages(countryCode: country?.code, lastMsgId: currentState.messages.lastMsgId, type: .recent))
+            Network.request(
+              Message.API.Messages(
+                countryCode: currentState.selectedCountry?.code,
+                lastMsgId: currentState.messages.lastMsgId,
+                type: .recent)
+            )
             .filterNil()
             .map{ Mutation.setMessages(result: $0) },
           .just(.setLoading(false))

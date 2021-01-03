@@ -125,7 +125,7 @@ public final class CountrySelectController: UIViewController {
       .bind{ [weak self] in
         //TODO: WHoleWorld의 코드는?
         self?.wholeWorldButton.backgroundColor = .warmBlue
-        self?.selectedCountry = .init(code: "Whole", fullName: "Whole world", emojiUnicode: "🍎")
+        self?.selectedCountry = .init(code: nil, fullName: "Whole world", emojiUnicode: "🍎")
         self?.willMove(toParent: nil)
       }
       .disposed(by: self.disposeBag)

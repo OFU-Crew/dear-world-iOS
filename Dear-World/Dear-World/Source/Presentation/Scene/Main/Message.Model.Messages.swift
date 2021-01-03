@@ -51,7 +51,7 @@ extension Message.Model {
   }
   
   struct Country: Decodable {
-    let code: String
+    let code: String?
     let fullName: String
     let emojiUnicode: String
   }

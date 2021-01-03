@@ -23,7 +23,7 @@ extension Message.API {
     
     var method: HTTPMethod { .get }
     var path: String { "/api/v1/messages" }
-    var parameters: [String: Any]? {
+    var parameters: [String: Any?]? {
       [
         "countryCode": countryCode,
         "type": type,
