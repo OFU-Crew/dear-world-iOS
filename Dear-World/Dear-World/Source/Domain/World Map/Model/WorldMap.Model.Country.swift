@@ -8,13 +8,14 @@
 import UIKit
 
 extension WorldMap.Model {
-  struct Country: Hashable {
+  struct Country: Equatable, Hashable {
     let code: String
     let name: String
     let locations: [Location]
   }
-  
-  struct Location {
+}
+extension WorldMap.Model {
+  struct Location: Equatable, Hashable {
     let x: Int
     let y: Int
   }

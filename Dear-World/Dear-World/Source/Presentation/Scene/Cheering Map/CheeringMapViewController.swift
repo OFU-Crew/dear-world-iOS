@@ -23,7 +23,7 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let cheeringCountLabel: UILabel = UILabel()
   private let titleLabel: UILabel = UILabel()
-  private let worldMapView: UIImageView = UIImageView()
+  private let worldMapView: PixelMapView = PixelMapView()
   private let headerView: UIView = UIView()
   private let rankingTableView: UITableView = UITableView()
   
@@ -47,7 +47,6 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
   }
   
   func bind(reactor: CheeringMapReactor) {
-    
     reactor.state
       .map { $0.messageCount }
       .distinctUntilChanged()
@@ -101,13 +100,10 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     }
     
     self.view.addSubview(worldMapView)
-    worldMapView.do {
-      $0.image = UIImage(named: "world_map")
-    }
     worldMapView.snp.makeConstraints {
       $0.top.equalTo(titleLabel.snp.bottom).offset(50)
       $0.height.equalTo(208.0)
-      $0.width.equalTo(worldMapView.snp.height).multipliedBy(335.0 / 208.0)
+      $0.width.equalTo(worldMapView.snp.height).multipliedBy(78.0 / 53.0)
       $0.centerX.equalToSuperview()
     }
     
