@@ -77,11 +77,9 @@ final class DiscoverReactor: Reactor {
       
     case .loadMore:
       return Observable<Mutation>.concat([
-        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId ?? 0, type: .recent))
+        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId, type: .recent))
           .filterNil()
           .map{ Mutation.addMessages(result: $0) }
-//        APIMock().getMessages(page: 2, country: currentState.country)
-//          .map { Mutation.addMessages(result: $0, page: 2) }
       ])
       
     case .tapAbout:

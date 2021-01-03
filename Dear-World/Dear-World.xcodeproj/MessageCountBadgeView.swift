@@ -24,13 +24,13 @@ final class MessageCountBadgeView: UIView {
     setupSubviews()
   }
   
-  override public func didMoveToSuperview() {
-    self.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalToSuperview().inset(60)
-    }
-  }
-  
+//  override public func didMoveToSuperview() {
+//    self.snp.makeConstraints {
+//      $0.centerX.equalToSuperview()
+//      $0.top.equalToSuperview().inset(60)
+//    }
+//  }
+//  
   private func setupUI() {
     self.snp.makeConstraints {
       $0.width.equalTo(88)

@@ -21,7 +21,7 @@ final class DiscoverViewController: UIViewController, View {
   private let messageTableView: UITableView = UITableView()
   private let aboutButton: UIButton = UIButton()
   private var messages: [Message.Model.Message] = []
-  private let outerScrollView: UIScrollView = UIScrollView()
+//  private let outerScrollView: UIScrollView = UIScrollView()
   private var scrollOuter: Bool = true
   private var scrollRecentConvertTime: Date = Date()
   
@@ -52,24 +52,45 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
-    
-    self.outerScrollView.do {
-      $0.isScrollEnabled = true
-      $0.showsVerticalScrollIndicator = false
-      $0.contentSize.height = self.view.frame.height + 264
-      $0.delegate = self
+//    self.outerScrollView.do {
+//      $0.isScrollEnabled = true
+//      $0.showsVerticalScrollIndicator = false
+//      $0.contentSize.height = self.view.frame.height + 264
+//      $0.delegate = self
+//    }
+//    self.view.addSubview(outerScrollView)
+//    self.outerScrollView.snp.makeConstraints {
+//      $0.top.bottom.leading.trailing.equalToSuperview()
+//    }
+    messageTableView.do {
+      $0.backgroundColor = .breathingWhite
+    }
+    self.view.addSubview(self.messageTableView)
+    self.messageTableView.snp.makeConstraints {
+//      $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
+//      $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+//      $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
+      $0.top.bottom.trailing.leading.equalToSuperview()
     }
     
-    self.view.addSubview(outerScrollView)
-    self.outerScrollView.snp.makeConstraints {
-      $0.top.bottom.leading.trailing.equalToSuperview()
+    let headerView: UIView = UIView().then {
+      $0.backgroundColor = .red
+    }
+    self.messageTableView.tableHeaderView = headerView
+    headerView.snp.makeConstraints {
+      $0.height.equalTo(100 + 44)
+    }
+    headerView.addSubview(self.messageCountBadgeView)
+    messageCountBadgeView.snp.makeConstraints {
+      $0.centerX.equalTo(view.snp.centerX)
+      $0.top.equalToSuperview().inset(16)
     }
     
-    self.outerScrollView.addSubview(self.messageCountBadgeView)
-    self.outerScrollView.addSubview(self.filterContainerView)
+    headerView.addSubview(self.filterContainerView)
     self.filterContainerView.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
+      $0.leading.equalTo(self.view.snp.leading).offset(20)
+      $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
+//      $0.top.equalTo(self.messageCountBadgeView.snp.bottom).offset(30)
       $0.height.equalTo(26)
     }
     
@@ -78,7 +99,6 @@ final class DiscoverViewController: UIViewController, View {
       $0.textColor = .warmBlue
       $0.text = "Whole world"
     }
-    
     filterContainerView.addSubview(countryLabel)
     countryLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
@@ -97,18 +117,7 @@ final class DiscoverViewController: UIViewController, View {
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
     
-    messageTableView.do {
-      $0.backgroundColor = .breathingWhite
-      $0.isScrollEnabled = false
-    }
-    self.outerScrollView.addSubview(self.messageTableView)
-    self.messageTableView.snp.makeConstraints {
-      $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
-      $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-      $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
-    }
-    
-    self.outerScrollView.addSubview(aboutButton)
+    headerView.addSubview(aboutButton)
     aboutButton.do {
       $0.setImage(UIImage(named: "about"), for: .normal)
     }
@@ -273,17 +282,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         self.present(activityVC, animated: true)
       }
       .disposed(by: self.disposeBag)
-  }
-}
-extension DiscoverViewController: UIScrollViewDelegate {
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    let flag = scrollView.contentOffset.y <= 225
-    if flag != self.scrollOuter && self.scrollRecentConvertTime.timeIntervalSinceNow < -5 {
-      self.outerScrollView.isScrollEnabled = flag
-      self.messageTableView.isScrollEnabled = !flag
-      self.scrollOuter.toggle()
-      self.scrollRecentConvertTime = Date()
-    }
   }
 }
 
