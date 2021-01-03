@@ -111,11 +111,11 @@ final class RankerTableViewCell: UITableViewCell {
   }
   
   // MARK: 🔩 Configuration
-  func configure(with ranker: World.Model.Ranker, ranking: Int) {
+  func configure(with country: World.Model.Country, ranking: Int) {
     rankLabel.attributedText = formatRank(ranking)
-    countryNameLabel.text = ranker.country.name
-    countryFlagLabel.text = ranker.country.emoji
-    messageCountLabel.text = ranker.messageCount.formatted
+    countryNameLabel.text = country.name
+    countryFlagLabel.text = country.emoji
+    messageCountLabel.text = country.status?.messageCount.formatted
   }
   
   private func formatRank(_ rank: Int) -> NSAttributedString {

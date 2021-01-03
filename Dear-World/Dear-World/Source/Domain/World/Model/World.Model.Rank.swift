@@ -9,6 +9,6 @@ import Foundation
 
 extension World.Model {
   struct Rank: Decodable {
-    let ranking: [Ranker]
+    let ranking: [Country]
   }
 }

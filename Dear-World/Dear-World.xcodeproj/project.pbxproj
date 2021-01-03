@@ -22,6 +22,8 @@
 		3902F12425970E5600A3DF8C /* Number+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Number+.swift */; };
 		3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* RankerTableViewCell.swift */; };
 		3914D9E6259F3FA1009765B0 /* Message.Model.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */; };
+		393E0D4025A23A12000DB3B9 /* World.Model.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */; };
+		393E0D4525A23A7B000DB3B9 /* World.API.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -61,7 +63,6 @@
 		39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */; };
 		39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */; };
 		39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */; };
-		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
 		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
 		39F0C1632597B34F00A7001F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1622597B34F00A7001F /* UIView+.swift */; };
@@ -110,6 +111,8 @@
 		3902F12325970E5600A3DF8C /* Number+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "Number+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		3902F129259714D800A3DF8C /* RankerTableViewCell.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RankerTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.Messages.swift; path = "Dear-World/Source/Presentation/Scene/Main/Message.Model.Messages.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
+		393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.Model.Map.swift; sourceTree = "<group>"; };
+		393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.API.Map.swift; sourceTree = "<group>"; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,7 +147,6 @@
 		39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBadge.swift; sourceTree = "<group>"; };
 		39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.swift; sourceTree = "<group>"; };
 		39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.Model.Country.swift; sourceTree = "<group>"; };
-		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -469,8 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				39658FBA259AE55C0050D180 /* World.Model.Rank.swift */,
-				39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */,
 				39658FBF259AE58C0050D180 /* World.Model.Country.swift */,
+				393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -479,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				39658FB5259AE5250050D180 /* World.API.Rank.swift */,
+				393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -733,12 +736,12 @@
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
 				3902F12425970E5600A3DF8C /* Number+.swift in Sources */,
 				39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */,
+				393E0D4525A23A7B000DB3B9 /* World.API.Map.swift in Sources */,
 				39F0C18B2598799200A7001F /* Network.swift in Sources */,
 				3971EB37259A9C550084E6DC /* Message.API.SendMessage.swift in Sources */,
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				395A4177259DF9F900F10531 /* MainTabBarController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
-				39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				3914D9E6259F3FA1009765B0 /* Message.Model.Messages.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
@@ -763,6 +766,7 @@
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
 				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
+				393E0D4025A23A12000DB3B9 /* World.Model.Map.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,
 				39F0C1B72598927C00A7001F /* ErrorView.swift in Sources */,
 				39672DC12598E95A001D7E69 /* TextView.swift in Sources */,

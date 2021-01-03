@@ -18,12 +18,14 @@ final class CheeringMapReactor: Reactor {
   }
   
   enum Mutation {
-    case setRankers([Model.Ranker])
+    case setRankers([Model.Country])
+    case setCountries([Model.Country])
   }
   
   struct State {
     var messageCount: Int = 100_000
-    @Revision var rankers: [Model.Ranker] = []
+    @Revision var rankers: [Model.Country] = []
+    @Revision var countries: [Model.Country] = []
     @Revision var selectedCountries: [Model.Country] = []
   }
   
@@ -33,10 +35,16 @@ final class CheeringMapReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
-      return Network.request(API.Rank())
-        .map { $0?.ranking }
-        .filterNil()
-        .map { .setRankers($0) }
+      return .merge(
+        Network.request(API.Map())
+          .map { $0?.countries }
+          .filterNil()
+          .map { .setCountries($0) },
+        Network.request(API.Rank())
+          .map { $0?.ranking }
+          .filterNil()
+          .map { .setRankers($0) }
+      )
       
     case .tapLikeAt(let index):
       return .empty()
@@ -47,8 +55,11 @@ final class CheeringMapReactor: Reactor {
   func reduce(state: State, mutation: Mutation) -> State {
     var newState = currentState
     switch mutation {
-    case .setRankers(let rankers):
-      newState.rankers = rankers
+    case .setRankers(let countries):
+      newState.rankers = countries
+      
+    case .setCountries(let countries):
+      newState.countries = countries
       
     default:
       ()
