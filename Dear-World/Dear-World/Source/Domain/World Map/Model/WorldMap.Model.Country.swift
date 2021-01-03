@@ -2729,4 +2729,5 @@ extension WorldMap.Model {
     "SC": SC,
     "MV": MV,
     "MW": MW
-]
+  ]
+}
