@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MessageTableViewCell: UICollectionViewCell {
+final class MessageTableViewCell: UITableViewCell {
   
   // MARK: 🖼 UI
   let emojiLabel: UILabel = UILabel()
@@ -19,16 +19,14 @@ final class MessageTableViewCell: UICollectionViewCell {
   let shareButton: UIButton = UIButton()
   
   // MARK: 🏁 Initialize
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupUI()
     bind()
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    
     setupUI()
     bind()
   }
@@ -36,15 +34,30 @@ final class MessageTableViewCell: UICollectionViewCell {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.do {
+      $0.selectionStyle = .none
+      $0.backgroundColor = .breathingWhite
+    }
+    let headerView: UIView = UIView()
+    self.addSubview(headerView)
+    headerView.snp.makeConstraints {
+      $0.height.equalTo(20)
+      $0.top.trailing.leading.equalToSuperview()
+    }
+    let mainView: UIView = UIView().then {
       $0.backgroundColor = .white
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 20
+    }
+    self.addSubview(mainView)
+    mainView.snp.makeConstraints {
+      $0.top.equalTo(headerView.snp.bottom)
+      $0.leading.trailing.bottom.equalToSuperview()
     }
     
     let emojiView: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "emojiBox")
     }
-    self.addSubview(emojiView)
+    mainView.addSubview(emojiView)
     emojiView.snp.makeConstraints {
       $0.top.leading.equalToSuperview().inset(30)
       $0.height.width.equalTo(40)
@@ -52,11 +65,10 @@ final class MessageTableViewCell: UICollectionViewCell {
     
     self.emojiLabel.do {
       $0.text = "🎅🏻"
-      // FIXME : 14처럼 고정된 값 없이 최대로 꽉차게 할 수 없는가?
       $0.font = .systemFont(ofSize: 14)
       $0.textAlignment = .center
     }
-    self.addSubview(self.emojiLabel)
+    mainView.addSubview(self.emojiLabel)
     self.emojiLabel.snp.makeConstraints {
       $0.size.equalTo(20)
       $0.center.equalTo(emojiView)
@@ -67,7 +79,7 @@ final class MessageTableViewCell: UICollectionViewCell {
       $0.font = .boldSystemFont(ofSize: 16)
       $0.textColor = .warmBlue
     }
-    self.addSubview(self.nameLabel)
+    mainView.addSubview(self.nameLabel)
     self.nameLabel.snp.makeConstraints {
       $0.top.equalTo(emojiView.snp.top)
       $0.leading.equalTo(emojiView.snp.trailing).offset(10)
@@ -79,7 +91,7 @@ final class MessageTableViewCell: UICollectionViewCell {
       $0.font = .boldSystemFont(ofSize: 12)
       $0.textColor = .grayWhite
     }
-    self.addSubview(self.countryLabel)
+    mainView.addSubview(self.countryLabel)
     self.countryLabel.snp.makeConstraints {
       $0.bottom.equalTo(emojiView.snp.bottom)
       $0.leading.equalTo(emojiView.snp.trailing).offset(10)
@@ -94,20 +106,20 @@ final class MessageTableViewCell: UICollectionViewCell {
       $0.isScrollEnabled = false
       $0.isEditable = false
     }
-    self.addSubview(self.detailTextView)
+    mainView.addSubview(self.detailTextView)
     self.detailTextView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(30)
       $0.top.equalTo(emojiView.snp.bottom).offset(10)
-      $0.height.equalTo(43)
     }
     
     self.likeView.do {
       $0.image = UIImage(named: "heart")
     }
-    self.addSubview(likeView)
+    mainView.addSubview(likeView)
     self.likeView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(30)
-      $0.bottom.equalToSuperview().inset(29)
+      $0.top.equalTo(detailTextView.snp.bottom).offset(19)
+      $0.bottom.equalToSuperview().inset(24)
       $0.height.equalTo(17)
       $0.width.equalTo(20)
     }
@@ -117,7 +129,7 @@ final class MessageTableViewCell: UICollectionViewCell {
       $0.textColor = .grayWhite
       $0.text = "32"
     }
-    self.addSubview(self.likeCountLabel)
+    mainView.addSubview(self.likeCountLabel)
     self.likeCountLabel.snp.makeConstraints {
       $0.centerY.equalTo(likeView.snp.centerY)
       $0.width.equalTo(16)
@@ -133,7 +145,7 @@ final class MessageTableViewCell: UICollectionViewCell {
       $0.setImage(UIImage(named: "share_press"), for: .highlighted)
       $0.tintColor = .warmBlue
     }
-    self.addSubview(shareButton)
+    mainView.addSubview(shareButton)
     shareButton.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(30)
       $0.bottom.equalToSuperview().inset(25)

@@ -18,7 +18,7 @@ final class DiscoverViewController: UIViewController, View {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let filterContainerView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
-  private let messageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+  private let messageTableView: UITableView = UITableView()
   private let aboutButton: UIButton = UIButton()
   private var messages: [Message.Model.Message] = []
   private let outerScrollView: UIScrollView = UIScrollView()
@@ -31,7 +31,7 @@ final class DiscoverViewController: UIViewController, View {
     super.viewDidLoad()
     
     setupUI()
-    setupCollectionView()
+    setupTableView()
     startInitAnimation()
   }
   
@@ -97,12 +97,12 @@ final class DiscoverViewController: UIViewController, View {
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
     
-    messageCollectionView.do {
+    messageTableView.do {
       $0.backgroundColor = .breathingWhite
       $0.isScrollEnabled = false
     }
-    self.outerScrollView.addSubview(self.messageCollectionView)
-    self.messageCollectionView.snp.makeConstraints {
+    self.outerScrollView.addSubview(self.messageTableView)
+    self.messageTableView.snp.makeConstraints {
       $0.top.equalTo(filterContainerView.snp.bottom).offset(30)
       $0.trailing.leading.equalTo(self.view.safeAreaLayoutGuide).inset(20)
       $0.bottom.equalTo(self.outerScrollView.frameLayoutGuide.snp.bottom)
@@ -119,17 +119,20 @@ final class DiscoverViewController: UIViewController, View {
     }
   }
   
-  private func setupCollectionView() {
-    self.messageCollectionView.do {
-      $0.register(MessageTableViewCell.self, forCellWithReuseIdentifier: "MessageCell")
+  private func setupTableView() {
+    self.messageTableView.do {
+      $0.register(MessageTableViewCell.self, forCellReuseIdentifier: "MessageCell")
       $0.delegate = self
       $0.dataSource = self
       $0.showsVerticalScrollIndicator = false
+      $0.separatorStyle = .none
+      $0.estimatedRowHeight = 200
+      $0.rowHeight = UITableView.automaticDimension
     }
     
-    if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-      layout.minimumLineSpacing = 20
-    }
+//    if let layout: UICollectionViewFlowLayout = self.messageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//      layout.minimumLineSpacing = 20
+//    }
   }
   
   // MARK: 🔗 Bind
@@ -153,7 +156,7 @@ final class DiscoverViewController: UIViewController, View {
       .map(\.messages)
       .subscribe(onNext: {[weak self] mess in
         self?.messages = mess.messages
-        self?.messageCollectionView.reloadData()
+        self?.messageTableView.reloadData()
       })
       .disposed(by: self.disposeBag)
     
@@ -162,7 +165,7 @@ final class DiscoverViewController: UIViewController, View {
       .distinctUntilChanged()
       .filter { !$0 }
       .bind {[weak self] _ in
-        self?.messageCollectionView.refreshControl?.endRefreshing()
+        self?.messageTableView.refreshControl?.endRefreshing()
       }
       .disposed(by: self.disposeBag)
     
@@ -177,18 +180,18 @@ final class DiscoverViewController: UIViewController, View {
       .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
       .bind { _ in
-        self.messageCollectionView.setContentOffset(.zero, animated: false)
+        self.messageTableView.setContentOffset(.zero, animated: false)
       }
       .disposed(by: self.disposeBag)
     
-    self.messageCollectionView
+    self.messageTableView
       .refreshControl?.rx
       .controlEvent(.valueChanged)
       .map { Reactor.Action.refresh }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    self.messageCollectionView
+    self.messageTableView
       .rx.isReachedBottom
       .map { Reactor.Action.loadMore }
       .bind(to: reactor.action)
@@ -225,19 +228,13 @@ final class DiscoverViewController: UIViewController, View {
       .disposed(by: self.disposeBag)
   }
 }
-extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-  func collectionView(
-    _ collectionView: UICollectionView,
-    numberOfItemsInSection section: Int
-  ) -> Int {
-    return self.messages.count
+extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    self.messages.count
   }
   
-  func collectionView(
-    _ collectionView: UICollectionView,
-    cellForItemAt indexPath: IndexPath
-  ) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UICollectionViewCell() }
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
     cell.do {
       $0.nameLabel.text = self.messages[indexPath.row].user.nickname
       $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
@@ -258,13 +255,14 @@ extension DiscoverViewController: UICollectionViewDelegate, UICollectionViewData
     return cell
   }
   
-  func collectionView(
-    _ collectionView: UICollectionView,
-    layout collectionViewLayout: UICollectionViewLayout,
-    sizeForItemAt indexPath: IndexPath
-  ) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 192)
-  }
+  
+//  func collectionView(
+//    _ collectionView: UICollectionView,
+//    layout collectionViewLayout: UICollectionViewLayout,
+//    sizeForItemAt indexPath: IndexPath
+//  ) -> CGSize {
+//    return CGSize(width: collectionView.frame.width, height: 192)
+//  }
   
   private func bindShareButton(button: UIButton) {
     button
@@ -282,7 +280,7 @@ extension DiscoverViewController: UIScrollViewDelegate {
     let flag = scrollView.contentOffset.y <= 225
     if flag != self.scrollOuter && self.scrollRecentConvertTime.timeIntervalSinceNow < -5 {
       self.outerScrollView.isScrollEnabled = flag
-      self.messageCollectionView.isScrollEnabled = !flag
+      self.messageTableView.isScrollEnabled = !flag
       self.scrollOuter.toggle()
       self.scrollRecentConvertTime = Date()
     }
