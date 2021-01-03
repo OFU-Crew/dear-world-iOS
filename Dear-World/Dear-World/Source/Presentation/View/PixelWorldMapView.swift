@@ -57,7 +57,7 @@ final class PixelMapView: UIView {
     )
     let path: UIBezierPath = UIBezierPath(
       arcCenter: center,
-      radius: locationSize.width/2,
+      radius: locationSize.width / 2,
       startAngle: CGFloat(0),
       endAngle: CGFloat(Double.pi * 2),
       clockwise: true

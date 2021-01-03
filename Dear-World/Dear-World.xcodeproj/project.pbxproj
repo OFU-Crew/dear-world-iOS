@@ -63,7 +63,6 @@
 		39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */; };
 		39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */; };
 		39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */; };
-		39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */; };
 		39EED23C259D00F8007452E1 /* CheeringMapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */; };
 		39EED241259D0227007452E1 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EED240259D0227007452E1 /* Revision.swift */; };
 		39F0C1632597B34F00A7001F /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F0C1622597B34F00A7001F /* UIView+.swift */; };
@@ -148,7 +147,6 @@
 		39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBadge.swift; sourceTree = "<group>"; };
 		39E9F7E525A1C80300BC2CC2 /* WorldMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.swift; sourceTree = "<group>"; };
 		39E9F7EC25A1C84900BC2CC2 /* WorldMap.Model.Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMap.Model.Country.swift; sourceTree = "<group>"; };
-		39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = World.Model.Ranker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED23B259D00F8007452E1 /* CheeringMapReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
 		39EED240259D0227007452E1 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
 		39F0C1622597B34F00A7001F /* UIView+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -473,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				39658FBA259AE55C0050D180 /* World.Model.Rank.swift */,
-				39EED22D259CFEB8007452E1 /* World.Model.Ranker.swift */,
 				39658FBF259AE58C0050D180 /* World.Model.Country.swift */,
 				393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */,
 			);
@@ -745,7 +742,6 @@
 				395826122596322B007325AB /* DiscoverViewController.swift in Sources */,
 				395A4177259DF9F900F10531 /* MainTabBarController.swift in Sources */,
 				3971EB18259A7BC10084E6DC /* Emoji.swift in Sources */,
-				39EED22E259CFEB8007452E1 /* World.Model.Ranker.swift in Sources */,
 				3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */,
 				3914D9E6259F3FA1009765B0 /* Message.Model.Messages.swift in Sources */,
 				39F0C1A02598877600A7001F /* NetworkError.swift in Sources */,
