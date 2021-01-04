@@ -30,6 +30,8 @@
 		3914D9E6259F3FA1009765B0 /* Message.Model.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */; };
 		393E0D4025A23A12000DB3B9 /* World.Model.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */; };
 		393E0D4525A23A7B000DB3B9 /* World.API.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */; };
+		393E0D5725A2BE3C000DB3B9 /* AboutTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */; };
+		393E0D5F25A2CEB6000DB3B9 /* AboutTeamReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -125,6 +127,8 @@
 		3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.Model.Messages.swift; path = "Dear-World/Source/Presentation/Scene/Main/Message.Model.Messages.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.Model.Map.swift; sourceTree = "<group>"; };
 		393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.API.Map.swift; sourceTree = "<group>"; };
+		393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamViewController.swift; sourceTree = "<group>"; };
+		393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamReactor.swift; sourceTree = "<group>"; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -278,6 +282,15 @@
 				39F0C175259860D700A7001F /* UIControl+Rx.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		393E0D5525A2BE18000DB3B9 /* AboutTeam */ = {
+			isa = PBXGroup;
+			children = (
+				393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */,
+				393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */,
+			);
+			path = AboutTeam;
 			sourceTree = "<group>";
 		};
 		3958256E25948E41007325AB = {
@@ -453,6 +466,7 @@
 		3958260325962FAE007325AB /* About */ = {
 			isa = PBXGroup;
 			children = (
+				393E0D5525A2BE18000DB3B9 /* AboutTeam */,
 				3902F117259704AF00A3DF8C /* AboutViewController.swift */,
 				39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */,
 			);
@@ -766,6 +780,7 @@
 				121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */,
 				3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */,
 				395826332596E693007325AB /* Logger.swift in Sources */,
+				393E0D5F25A2CEB6000DB3B9 /* AboutTeamReactor.swift in Sources */,
 				1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */,
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
 				12A05EFF25A353700089EF1C /* Message.API.Like.swift in Sources */,
@@ -796,6 +811,7 @@
 				39F0C176259860D700A7001F /* UIControl+Rx.swift in Sources */,
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
+				393E0D5725A2BE3C000DB3B9 /* AboutTeamViewController.swift in Sources */,
 				39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */,
 				12257E1825A622750007E65E /* SortTypeSelectController.swift in Sources */,
 				39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */,
