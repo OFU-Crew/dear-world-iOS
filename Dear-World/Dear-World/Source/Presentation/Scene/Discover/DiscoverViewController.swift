@@ -26,7 +26,6 @@ final class DiscoverViewController: UIViewController, View {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     setupUI()
     setupTableView()
     startInitAnimation()
@@ -228,8 +227,11 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.nameLabel.text = self.messages[indexPath.row].user.nickname
       $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
       $0.detailTextView.text = self.messages[indexPath.row].content
-      $0.likeCountLabel.text = "\(self.messages[indexPath.row].likeCount)"
+      $0.likeCount = self.messages[indexPath.row].likeCount
+//      $0.likeCountLabel.text = "\(self.messages[indexPath.row].likeCount)"
       $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
+      $0.likeCountLabel.text = "\(self.messages[indexPath.row].likeCount)"
+      $0.messageId = self.messages[indexPath.row].id
     }
     bindShareButton(button: cell.shareButton)
     return cell

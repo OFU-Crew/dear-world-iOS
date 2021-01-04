@@ -13,13 +13,13 @@ extension Message.API {
     typealias Response = Message.Model.Like
     
     // MARK: Parameters
-    private let messageId: String
+    private let messageId: Int
     
     var method: HTTPMethod { .post }
     var path: String { "api/v1/messages/\(messageId)/like" }
     var parameters: [String: Any?]? { nil }
     
-    init(messageId: String) {
+    init(messageId: Int) {
       self.messageId = messageId
     }
   }

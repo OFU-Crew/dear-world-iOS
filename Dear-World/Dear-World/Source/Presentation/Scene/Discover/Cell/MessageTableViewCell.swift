@@ -5,10 +5,12 @@
 //  Created by rookie.w on 2020/12/26.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 final class MessageTableViewCell: UITableViewCell {
-  
+  let disposeBag: DisposeBag = DisposeBag()
   // MARK: 🖼 UI
   let emojiLabel: UILabel = UILabel()
   let nameLabel: UILabel = UILabel()
@@ -17,6 +19,12 @@ final class MessageTableViewCell: UITableViewCell {
   let likeView: UIImageView = UIImageView()
   let likeCountLabel: UILabel = UILabel()
   let shareButton: UIButton = UIButton()
+  var likeCount: Int = 0 {
+    didSet {
+      self.likeCountLabel.text = "\(likeCount)"
+    }
+  }
+  var messageId: Int?
   
   // MARK: 🏁 Initialize
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -128,12 +136,10 @@ final class MessageTableViewCell: UITableViewCell {
     self.likeCountLabel.do {
       $0.font = .boldSystemFont(ofSize: 12)
       $0.textColor = .grayWhite
-      $0.text = "32"
     }
     mainView.addSubview(self.likeCountLabel)
     self.likeCountLabel.snp.makeConstraints {
       $0.centerY.equalTo(likeView.snp.centerY)
-      $0.width.equalTo(16)
       $0.height.equalTo(14)
       $0.leading.equalTo(likeView.snp.trailing).offset(5)
     }
@@ -157,6 +163,26 @@ final class MessageTableViewCell: UITableViewCell {
   
   // MARK: 🔗 Bind
   func bind() {
+    self.shareButton
+      .rx.tap
+      .bind{ _ in print("!") }
     
+    self.likeView
+      .rx.tapGesture()
+      .flatMap {[weak self] _ -> Observable<Bool?> in
+        guard let id = self?.messageId else {
+          return Observable.just(false)
+        }
+        return Network.request(Message.API.Like(messageId: id))
+          .map {$0?.like}
+      }
+      .filter {$0 == true}
+      .bind {[weak self] _ in
+        self?.likeView.image = UIImage(named: "heart")
+        self?.likeCount += 1
+      }
+      .disposed(by: self.disposeBag)
+//      .bind(to: self.likeCountLabel.rx.text)
+//      .disposed(by: self.disposeBag)
   }
 }
