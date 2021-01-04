@@ -18,11 +18,9 @@ final class DiscoverViewController: UIViewController, View {
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
   private let filterContainerView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
-  private let messageTableView: UITableView = UITableView()
+  private let messageTableView: UITableView = UITableView(frame: .null, style: .grouped)
   private let aboutButton: UIButton = UIButton()
   private var messages: [Message.Model.Message] = []
-  private var scrollOuter: Bool = true
-  private var scrollRecentConvertTime: Date = Date()
   
   var disposeBag: DisposeBag = DisposeBag()
   
@@ -59,58 +57,6 @@ final class DiscoverViewController: UIViewController, View {
     self.messageTableView.snp.makeConstraints {
       $0.top.bottom.trailing.leading.equalToSuperview()
     }
-    
-    let headerView: UIView = UIView().then {
-      $0.backgroundColor = .red
-    }
-    self.messageTableView.tableHeaderView = headerView
-    headerView.snp.makeConstraints {
-      $0.height.equalTo(100 + 44)
-    }
-    headerView.addSubview(self.messageCountBadgeView)
-    messageCountBadgeView.snp.makeConstraints {
-      $0.centerX.equalTo(view.snp.centerX)
-      $0.top.equalToSuperview().inset(16)
-    }
-    headerView.addSubview(self.filterContainerView)
-    self.filterContainerView.snp.makeConstraints {
-      $0.leading.equalTo(self.view.snp.leading).offset(20)
-      $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
-      $0.height.equalTo(26)
-    }
-    
-    countryLabel.do {
-      $0.font = .boldSystemFont(ofSize: 16)
-      $0.textColor = .warmBlue
-      $0.text = "Whole world"
-    }
-    filterContainerView.addSubview(countryLabel)
-    countryLabel.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
-      $0.leading.equalTo(filterContainerView.snp.leading)
-    }
-    
-    let select: UIImageView = UIImageView().then {
-      $0.image = UIImage(named: "select")
-    }
-    filterContainerView.addSubview(select)
-    select.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
-      $0.width.equalTo(14)
-      $0.height.equalTo(8)
-      $0.trailing.equalTo(filterContainerView.snp.trailing)
-      $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
-    }
-    
-    headerView.addSubview(aboutButton)
-    aboutButton.do {
-      $0.setImage(UIImage(named: "about"), for: .normal)
-    }
-    aboutButton.snp.makeConstraints {
-      $0.size.equalTo(20)
-      $0.top.equalToSuperview().inset(20)
-      $0.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
-    }
   }
   
   private func setupTableView() {
@@ -122,6 +68,8 @@ final class DiscoverViewController: UIViewController, View {
       $0.separatorStyle = .none
       $0.estimatedRowHeight = 200
       $0.rowHeight = UITableView.automaticDimension
+      $0.sectionHeaderHeight = 150
+      $0.tableHeaderView = nil
     }
   }
   
@@ -211,7 +159,7 @@ final class DiscoverViewController: UIViewController, View {
       .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
-    
+
     self.aboutButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Reactor.Action.tapAbout }
@@ -220,6 +168,56 @@ final class DiscoverViewController: UIViewController, View {
   }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    return makeHeaderView()
+  }
+  private func makeHeaderView() -> UIView {
+    let headerView: UIView = UIView()
+    headerView.backgroundColor = .breathingWhite
+    
+    headerView.addSubview(self.messageCountBadgeView)
+    messageCountBadgeView.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview().inset(16)
+    }
+    headerView.addSubview(self.filterContainerView)
+    self.filterContainerView.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
+      $0.height.equalTo(26)
+    }
+    countryLabel.do {
+      $0.font = .boldSystemFont(ofSize: 16)
+      $0.textColor = .warmBlue
+    }
+    filterContainerView.addSubview(countryLabel)
+    countryLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(filterContainerView.snp.leading)
+    }
+    
+    let select: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "select")
+    }
+    filterContainerView.addSubview(select)
+    select.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.width.equalTo(14)
+      $0.height.equalTo(8)
+      $0.trailing.equalTo(filterContainerView.snp.trailing)
+      $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
+    }
+    headerView.addSubview(aboutButton)
+    aboutButton.do {
+      $0.setImage(UIImage(named: "about"), for: .normal)
+    }
+    aboutButton.snp.makeConstraints {
+      $0.size.equalTo(20)
+      $0.top.equalToSuperview().inset(20)
+      $0.trailing.equalToSuperview().inset(20)
+    }
+    return headerView
+  }
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     self.messages.count
   }
@@ -234,27 +232,9 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
     }
     bindShareButton(button: cell.shareButton)
-    if reactor?.currentState.currentPage == 1 {
-      self.animate(
-        view: cell,
-        alpha: 0.3,
-        length: 50,
-        duration: 0.5,
-        delay: Double(indexPath.row)
-      )
-    }
     return cell
   }
-  
-  
-//  func collectionView(
-//    _ collectionView: UICollectionView,
-//    layout collectionViewLayout: UICollectionViewLayout,
-//    sizeForItemAt indexPath: IndexPath
-//  ) -> CGSize {
-//    return CGSize(width: collectionView.frame.width, height: 192)
-//  }
-  
+
   private func bindShareButton(button: UIButton) {
     button
       .rx.tap
