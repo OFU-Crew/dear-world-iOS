@@ -9,6 +9,7 @@ import Alamofire
 import Foundation
 import RxSwift
 
+
 enum Network {
   static func request<API: ServiceAPI>(_ endpoint: API) -> Observable<API.Response?> {
     .create { observer in
@@ -22,6 +23,7 @@ enum Network {
               observer.onError(error)
             } else {
               observer.onNext(response.data)
+              observer.onCompleted()
             }
           case .failure(let error):
             observer.onError(error)
