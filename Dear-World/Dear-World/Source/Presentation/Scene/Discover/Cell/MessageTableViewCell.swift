@@ -46,7 +46,7 @@ final class MessageTableViewCell: UITableViewCell {
       $0.backgroundColor = .breathingWhite
     }
     let headerView: UIView = UIView()
-    self.addSubview(headerView)
+    self.contentView.addSubview(headerView)
     headerView.snp.makeConstraints {
       $0.height.equalTo(20)
       $0.top.trailing.leading.equalToSuperview()
@@ -56,7 +56,7 @@ final class MessageTableViewCell: UITableViewCell {
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 20
     }
-    self.addSubview(mainView)
+    self.contentView.addSubview(mainView)
     mainView.snp.makeConstraints {
       $0.top.equalTo(headerView.snp.bottom)
       $0.leading.trailing.equalToSuperview().inset(20)
