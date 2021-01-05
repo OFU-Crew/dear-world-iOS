@@ -24,6 +24,12 @@ final class MessageTableViewCell: UITableViewCell {
       self.likeCountLabel.text = "\(likeCount)"
     }
   }
+  var isLike: Bool = false {
+    //FIXME : 내려올 때 isLiked가 항상 false로 내려옴
+    didSet {
+      self.likeView.image = isLike ? UIImage(named: "heart_liked") : UIImage(named: "heart")
+    }
+  }
   var messageId: Int?
   
   // MARK: 🏁 Initialize
@@ -169,6 +175,7 @@ final class MessageTableViewCell: UITableViewCell {
     
     self.likeView
       .rx.tapGesture()
+      .filter{[weak self] _ in self?.isLike == false }
       .flatMap {[weak self] _ -> Observable<Bool?> in
         guard let id = self?.messageId else {
           return Observable.just(false)
@@ -178,7 +185,7 @@ final class MessageTableViewCell: UITableViewCell {
       }
       .filter {$0 == true}
       .bind {[weak self] _ in
-        self?.likeView.image = UIImage(named: "heart")
+        self?.isLike = true
         self?.likeCount += 1
       }
       .disposed(by: self.disposeBag)
