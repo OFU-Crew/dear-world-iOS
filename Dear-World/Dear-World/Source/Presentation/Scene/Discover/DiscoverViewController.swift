@@ -69,6 +69,7 @@ final class DiscoverViewController: UIViewController, View {
       $0.rowHeight = UITableView.automaticDimension
       $0.sectionHeaderHeight = 150
       $0.tableHeaderView = nil
+      $0.allowsSelection = false
     }
   }
   
@@ -115,7 +116,7 @@ final class DiscoverViewController: UIViewController, View {
       .map(\.isRefreshing)
       .distinctUntilChanged()
       .filter { !$0 }
-      .bind {[weak self] _ in
+      .subscribe {[weak self] _ in
         self?.messageTableView.refreshControl?.endRefreshing()
       }
       .disposed(by: self.disposeBag)
@@ -130,7 +131,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-      .bind { _ in
+      .subscribe { _ in
         self.messageTableView.setContentOffset(.zero, animated: false)
       }
       .disposed(by: self.disposeBag)
@@ -239,7 +240,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   private func bindShareButton(button: UIButton) {
     button
       .rx.tap
-      .bind {
+      .subscribe {
         let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         self.present(activityVC, animated: true)

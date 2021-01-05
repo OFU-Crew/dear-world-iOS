@@ -202,7 +202,7 @@ public class AllCountries {
   private init() {
     _ = Network.request(Message.API.Countries())
       .filterNil()
-      .bind { response in
+      .subscribe { response in
         self.countries = response.countries
       }
   }
