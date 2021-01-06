@@ -183,7 +183,10 @@ final class AboutViewController: UIViewController, View {
       .map { $0.isPresentCrewInfo }
       .filter { $0 }
       .subscribe(onNext: { _ in
-        print("isPresentCrewInfo")
+        let viewController: UIViewController = AboutTeamViewController().then {
+          $0.reactor = AboutTeamReactor()
+        }
+        self.navigationController?.pushViewController(viewController, animated: true)
       })
       .disposed(by: disposeBag)
     

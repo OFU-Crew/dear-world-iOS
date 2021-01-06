@@ -21,6 +21,7 @@ final class SendMessageReactor: Reactor {
   }
   
   enum Mutation {
+    case setEmojiId(Int)
     case setEmoji(String)
     case setName(String)
     case setMessage(String)
@@ -28,7 +29,7 @@ final class SendMessageReactor: Reactor {
   }
   
   struct State: Then {
-    var isPresented: Bool = true
+    @Revision var isPresented: Bool = true
     var emoji: String = "👽"
     var canSendMessage: Bool = false
     var name: String = ""
@@ -67,8 +68,13 @@ final class SendMessageReactor: Reactor {
     
     case .tapRefresh:
       return Network.request(Emoji.API.Random())
-          .filterNil()
-          .map { .setEmoji($0.unicode) }
+        .filterNil()
+        .flatMap {
+          Observable<Mutation>.from([
+            .setEmojiId($0.id),
+            .setEmoji($0.unicode)
+          ])
+        }
       
     case .typeName(let name):
       return .just(.setName(name))
@@ -83,9 +89,12 @@ final class SendMessageReactor: Reactor {
         name: currentState.name,
         message: currentState.message
       )
-      return Network.request(api)
-        .filterNil()
-        .map { _ in .setMessage("완료") }
+      return .concat(
+        Network.request(api)
+          .filterNil()
+          .map { _ in .setMessage("완료") },
+        .just(Mutation.setPresent(false))
+      )
     }
   }
   
@@ -129,6 +138,8 @@ final class SendMessageReactor: Reactor {
           limitCount: $0.messageCountLimit
         )
       }
+    case .setEmojiId(let id):
+      newState = state.with { $0.emojiId = id }
     }
     return newState
   }
