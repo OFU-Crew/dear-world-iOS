@@ -33,7 +33,6 @@ final class DiscoverReactor: Reactor {
     var isRefreshing: Bool = false
     var isLoading: Bool = false
     var isAnimating: Bool = false
-    var currentPage: Int = 1
     @Revision var isPresentAboutPage: Bool = false
   }
   
@@ -52,7 +51,7 @@ final class DiscoverReactor: Reactor {
         Network.request(Message.API.MessageCount(countryCode: country?.code))
           .filterNil()
           .map { Mutation.setMessageCount($0.messageCount) },
-          .concat(
+        .concat(
           .just(Mutation.setCountry(country: country)),
           .just(.setLoading(true)),
             Network.request(
@@ -74,10 +73,13 @@ final class DiscoverReactor: Reactor {
       ])
       
     case .loadMore:
+      guard !currentState.isLoading else { return .empty() }
       return Observable<Mutation>.concat([
+        .just(.setLoading(true)),
         Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId, type: .recent))
           .filterNil()
-          .map{ Mutation.addMessages(result: $0) }
+          .map{ .addMessages(result: $0) },
+        .just(.setLoading(false))
       ])
       
     case .tapAbout:
@@ -91,7 +93,6 @@ final class DiscoverReactor: Reactor {
     switch mutation {
     case let .setMessages(results):
       newState.messages = results
-      newState.currentPage = 1
       
     case let .setRefreshing(flag):
       newState.isRefreshing = flag
