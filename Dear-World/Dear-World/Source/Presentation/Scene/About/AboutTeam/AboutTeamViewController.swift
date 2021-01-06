@@ -35,23 +35,22 @@ final class AboutTeamViewController: UIViewController, View {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    self.navigationController?.navigationBar.isHidden = true
+  }
   // MARK: 🎛 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
-    self.navigationController?.isNavigationBarHidden = true
-  
-//    self.view.snp.makeConstraints {
-//      $0.edges.equalToSuperview()
-//      $0.width.equalTo(UIScreen.main.bounds.width)
-//    }
-    
-    let headerView: UIView = UIView().then {
-      $0.backgroundColor = .warmBlue
+
+    let headerView: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "about_top_img")
     }
     self.view.addSubview(headerView)
     headerView.snp.makeConstraints {
       $0.top.leading.trailing.equalToSuperview()
-      $0.height.equalTo(240)
+      $0.height.equalTo(UIScreen.main.bounds.width * 240.0 / 375.0)
     }
     
     self.view.addSubview(backButton)
@@ -157,7 +156,20 @@ final class AboutTeamViewController: UIViewController, View {
       }
       .disposed(by: disposeBag)
     
+    reactor.state.distinctUntilChanged(\.$isWillDismiss)
+      .filter { $0.isWillDismiss }
+      .subscribe(onNext: { [weak self] _ in
+        self?.dismiss(animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
     reactor.action.onNext(.initialize)
+    
+    backButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { Reactor.Action.tapBack }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
   }
   
 }

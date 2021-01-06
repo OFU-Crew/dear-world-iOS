@@ -33,6 +33,12 @@ final class DiscoverViewController: UIViewController, View {
     startInitAnimation()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    reactor?.action.onNext(.viewWillAppear)
+  }
+  
   private func startInitAnimation() {
     animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
     animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)

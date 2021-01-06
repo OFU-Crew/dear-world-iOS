@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import RxOptional
 import ReactorKit
 
 final class DiscoverReactor: Reactor {
   enum Action {
+    case viewWillAppear
     case tapAbout
     case countryDidChanged(country: Message.Model.Country?, sortType: Message.Model.ListType? = nil)
     case refresh
@@ -48,6 +50,20 @@ final class DiscoverReactor: Reactor {
   // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .viewWillAppear:
+      return .merge(
+        Network.request(Message.API.MessageCount(countryCode: currentState.selectedCountry?.code))
+          .filterNil()
+          .map { Mutation.setMessageCount($0.messageCount) },
+        Network.request(Message.API.Messages(
+          countryCode: currentState.selectedCountry?.code,
+          lastMsgId: nil,
+          type: .recent
+        ))
+        .filterNil()
+        .map{ Mutation.setMessages(result: $0) }
+      )
+      
     case let .countryDidChanged(country, sortType):
       return .merge(
         Network.request(Message.API.MessageCount(countryCode: country?.code))
@@ -99,13 +115,13 @@ final class DiscoverReactor: Reactor {
       
     case let .setRefreshing(flag):
       newState.isRefreshing = flag
-    
+      
     case let .addMessages(result: results):
       newState.messages = Message.Model.Messages(firstMsgId: state.messages.firstMsgId, lastMsgId: results.lastMsgId, messageCount: state.messageCount + results.messageCount, messages: currentState.messages.messages + results.messages)
-    
+      
     case let .setCountry(country: country):
       newState.selectedCountry = country
-    
+      
     case let .setLoading(flag): 
       newState.isLoading = flag
       

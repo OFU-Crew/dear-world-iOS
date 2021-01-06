@@ -10,10 +10,12 @@ import ReactorKit
 final class AboutTeamReactor: Reactor {
   enum Action {
     case initialize
+    case tapBack
   }
   
   struct State {
     var crews: [Crew] = []
+    @Revision var isWillDismiss: Bool = false
   }
   
   let initialState: State = State()
@@ -23,6 +25,9 @@ final class AboutTeamReactor: Reactor {
     switch mutation {
     case .initialize:
       newState.crews = Crew.all
+      
+    case .tapBack:
+      newState.isWillDismiss = true
     }
     return newState
   }
