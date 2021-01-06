@@ -145,12 +145,14 @@ final class DiscoverViewController: UIViewController, View {
     
     self.messageTableView
       .rx.isReachedBottom
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Reactor.Action.loadMore }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.filterContainerView
       .rx.tapGesture()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
       .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
         guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
@@ -240,6 +242,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   private func bindShareButton(button: UIButton) {
     button
       .rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .subscribe {
         let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view

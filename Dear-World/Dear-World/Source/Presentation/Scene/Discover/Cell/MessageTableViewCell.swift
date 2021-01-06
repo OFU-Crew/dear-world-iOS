@@ -168,28 +168,26 @@ final class MessageTableViewCell: UITableViewCell {
   }
   
   // MARK: 🔗 Bind
-  func bind() {
-    self.shareButton
-      .rx.tap
-      .bind{ _ in print("!") }
-    
+  private func bind() {
     self.likeView
       .rx.tapGesture()
-      .filter{[weak self] _ in self?.isLike == false }
-      .flatMap {[weak self] _ -> Observable<Bool?> in
+      .debug()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .filter { [weak self] _ in
+        self?.isLike == false
+      }
+      .flatMap { [weak self] _ -> Observable<Bool?> in
         guard let id = self?.messageId else {
           return Observable.just(false)
         }
         return Network.request(Message.API.Like(messageId: id))
-          .map {$0?.like}
+          .map { $0?.isLiked }
       }
-      .filter {$0 == true}
-      .bind {[weak self] _ in
-        self?.isLike = true
-        self?.likeCount += 1
-      }
+      .filterNil()
+      .subscribe (onNext: {[weak self] isLike in
+        self?.isLike = isLike
+        self?.likeCount += (isLike ? 1 : -1)
+      })
       .disposed(by: self.disposeBag)
-//      .bind(to: self.likeCountLabel.rx.text)
-//      .disposed(by: self.disposeBag)
   }
 }
