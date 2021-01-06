@@ -10,7 +10,7 @@ import Foundation
 
 extension Message.API {
   struct Like: ServiceAPI {
-    typealias Response = Message.Model.Like
+    typealias Response = Message.Model.Message
     
     // MARK: Parameters
     private let messageId: Int
