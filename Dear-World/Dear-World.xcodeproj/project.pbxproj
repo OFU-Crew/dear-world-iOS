@@ -14,6 +14,7 @@
 		121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB6B2597A49B0062B15A /* MessageMock.swift */; };
 		121BDB712597A5D60062B15A /* APIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB702597A5D60062B15A /* APIMock.swift */; };
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
+		12257E1825A622750007E65E /* SortTypeSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12257E1725A622750007E65E /* SortTypeSelectController.swift */; };
 		1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09625A1C87400E3F121 /* Message.API.Countries.swift */; };
 		1263E09C25A1C8DD00E3F121 /* Message.Model.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */; };
 		1263E0CF25A1F5ED00E3F121 /* Message.Model.MessageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */; };
@@ -21,7 +22,6 @@
 		128313E32598A08700BDF8A3 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313E22598A08700BDF8A3 /* Message.swift */; };
 		128313EE2598A14E00BDF8A3 /* Message.API.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */; };
 		12A05EFF25A353700089EF1C /* Message.API.Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A05EFE25A353700089EF1C /* Message.API.Like.swift */; };
-		12A05F0425A3542F0089EF1C /* Message.Model.Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A05F0325A3542F0089EF1C /* Message.Model.Like.swift */; };
 		3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */; };
 		3902F1132597049D00A3DF8C /* SendMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F1122597049D00A3DF8C /* SendMessageViewController.swift */; };
 		3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F117259704AF00A3DF8C /* AboutViewController.swift */; };
@@ -109,6 +109,7 @@
 		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
 		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
+		12257E1725A622750007E65E /* SortTypeSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTypeSelectController.swift; sourceTree = "<group>"; };
 		1263E09625A1C87400E3F121 /* Message.API.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Countries.swift; sourceTree = "<group>"; };
 		1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.Countries.swift; sourceTree = "<group>"; };
 		1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.MessageCount.swift; sourceTree = "<group>"; };
@@ -116,7 +117,6 @@
 		128313E22598A08700BDF8A3 /* Message.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = Message.swift; path = "Dear-World/Source/Domain/Message/Message.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		128313ED2598A14E00BDF8A3 /* Message.API.Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Messages.swift; sourceTree = "<group>"; };
 		12A05EFE25A353700089EF1C /* Message.API.Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Like.swift; sourceTree = "<group>"; };
-		12A05F0325A3542F0089EF1C /* Message.Model.Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.Like.swift; sourceTree = "<group>"; };
 		3902F1042596F26D00A3DF8C /* CheeringMapViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CheeringMapViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F1122597049D00A3DF8C /* SendMessageViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SendMessageViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3902F117259704AF00A3DF8C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +256,6 @@
 				3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */,
 				1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */,
 				1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */,
-				12A05F0325A3542F0089EF1C /* Message.Model.Like.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -402,6 +401,7 @@
 				39F0C1B62598927C00A7001F /* ErrorView.swift */,
 				39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */,
 				39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */,
+				12257E1725A622750007E65E /* SortTypeSelectController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -781,7 +781,6 @@
 				39658F8D259AD9900050D180 /* SplashViewController.swift in Sources */,
 				3971EB29259A7D720084E6DC /* SendMessageReactor.swift in Sources */,
 				1263E0D425A1F5F800E3F121 /* Message.API.MessageCount.swift in Sources */,
-				12A05F0425A3542F0089EF1C /* Message.Model.Like.swift in Sources */,
 				39F0C19B2598860100A7001F /* ResponseWrapper.swift in Sources */,
 				39E9F7E625A1C80300BC2CC2 /* WorldMap.swift in Sources */,
 				3971EB3C259A9C860084E6DC /* Message.Model.SendMessage.swift in Sources */,
@@ -798,6 +797,7 @@
 				121BDB2A2597259E0062B15A /* MessageCountBadgeView.swift in Sources */,
 				39F0C16B2597C7DF00A7001F /* UIImage+.swift in Sources */,
 				39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */,
+				12257E1825A622750007E65E /* SortTypeSelectController.swift in Sources */,
 				39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */,
 				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
 				39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */,

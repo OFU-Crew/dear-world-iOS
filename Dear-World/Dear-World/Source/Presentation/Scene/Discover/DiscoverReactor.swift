@@ -11,7 +11,7 @@ import ReactorKit
 final class DiscoverReactor: Reactor {
   enum Action {
     case tapAbout
-    case countryDidChanged(country: Message.Model.Country?)
+    case countryDidChanged(country: Message.Model.Country?, sortType: Message.Model.ListType? = nil)
     case refresh
     case loadMore
   }
@@ -24,11 +24,13 @@ final class DiscoverReactor: Reactor {
     case setLoading(Bool)
     case setPresentAboutPage(Bool)
     case setMessageCount(Int)
+    case setCurrentSortType(Message.Model.ListType?)
   }
   
   struct State {
     var messageCount: Int = 0
     @Revision var selectedCountry: Message.Model.Country?
+    @Revision var selectedSortType: Message.Model.ListType = .recent
     @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
@@ -46,19 +48,20 @@ final class DiscoverReactor: Reactor {
   // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case let .countryDidChanged(country):
+    case let .countryDidChanged(country, sortType):
       return .merge(
         Network.request(Message.API.MessageCount(countryCode: country?.code))
           .filterNil()
           .map { Mutation.setMessageCount($0.messageCount) },
         .concat(
-          .just(Mutation.setCountry(country: country)),
+          .just(.setCountry(country: country)),
+          .just(.setCurrentSortType(sortType)),
           .just(.setLoading(true)),
             Network.request(
               Message.API.Messages(
                 countryCode: country?.code,
                 lastMsgId: nil,
-                type: .recent)
+                type: sortType ?? currentState.selectedSortType)
             )
             .filterNil()
             .map{ Mutation.setMessages(result: $0) },
@@ -76,7 +79,7 @@ final class DiscoverReactor: Reactor {
       guard !currentState.isLoading else { return .empty() }
       return Observable<Mutation>.concat([
         .just(.setLoading(true)),
-        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId, type: .recent))
+        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId, type: currentState.selectedSortType))
           .filterNil()
           .map{ .addMessages(result: $0) },
         .just(.setLoading(false))
@@ -111,6 +114,10 @@ final class DiscoverReactor: Reactor {
       
     case let .setMessageCount(count):
       newState.messageCount = count
+    case let .setCurrentSortType(type):
+      if type != nil {
+        newState.selectedSortType = type!
+      }
     }
     return newState
   }

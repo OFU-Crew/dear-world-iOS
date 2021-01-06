@@ -20,6 +20,8 @@ final class DiscoverViewController: UIViewController, View {
   private let countryLabel: UILabel = UILabel()
   private let messageTableView: UITableView = UITableView(frame: .null, style: .grouped)
   private let aboutButton: UIButton = UIButton()
+  private let sortView: UIView = UIView()
+  private var sortLabel: UILabel = UILabel()
   private var messages: [Message.Model.Message] = []
   
   var disposeBag: DisposeBag = DisposeBag()
@@ -124,7 +126,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-      .map{$0?.fullName}
+      .map{ $0?.fullName }
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
@@ -145,18 +147,20 @@ final class DiscoverViewController: UIViewController, View {
     
     self.messageTableView
       .rx.isReachedBottom
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Reactor.Action.loadMore }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.filterContainerView
       .rx.tapGesture()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
       .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
         guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
         return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedCountry)
       }
-      .map { Reactor.Action.countryDidChanged(country: $0) }
+      .map { Reactor.Action.countryDidChanged(country: $0, sortType: reactor.currentState.selectedSortType) }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
 
@@ -165,21 +169,44 @@ final class DiscoverViewController: UIViewController, View {
       .map { Reactor.Action.tapAbout }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
+    
+    self.sortView
+      .rx.tapGesture()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      //MARK: 왜 하날 스킵해야하지?
+      .skip(1)
+      .flatMap { [weak self] _ -> Observable<Message.Model.ListType> in
+        guard let self = self else { return Observable.just(Message.Model.ListType.recent)}
+        return SortTypeSelectController.select(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedSortType)
+      }
+      .map { Reactor.Action.countryDidChanged(country: reactor.currentState.selectedCountry, sortType: $0)}
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$selectedSortType)
+      .map(\.selectedSortType)
+      .map(\.title)
+      .bind(to: self.sortLabel.rx.text)
+      .disposed(by: self.disposeBag)
   }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    return makeHeaderView()
+    makeHeaderView()
   }
   private func makeHeaderView() -> UIView {
     let headerView: UIView = UIView()
     headerView.backgroundColor = .breathingWhite
     
+    // 상단 메세지 개수 표시 뷰
     headerView.addSubview(self.messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().inset(16)
     }
+    
+    // 나라 필터링 뷰
     headerView.addSubview(self.filterContainerView)
     self.filterContainerView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -195,7 +222,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.centerY.equalToSuperview()
       $0.leading.equalTo(filterContainerView.snp.leading)
     }
-    
     let select: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "select")
     }
@@ -207,6 +233,34 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.trailing.equalTo(filterContainerView.snp.trailing)
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
+    
+    // 소트 뷰
+    headerView.addSubview(sortView)
+    sortView.snp.makeConstraints {
+      $0.centerY.equalTo(filterContainerView)
+      $0.trailing.equalToSuperview().inset(23)
+    }
+    self.sortLabel.do {
+      //FIXME : 왜 값을 넣으면 겹치는가
+      $0.text = "Recent"
+      $0.textColor = .warmBlue
+      $0.font = .systemFont(ofSize: 12)
+    }
+    sortView.addSubview(sortLabel)
+    sortLabel.snp.makeConstraints {
+      $0.top.leading.bottom.equalToSuperview()
+    }
+    let sortIcon: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "sort")
+    }
+    sortView.addSubview(sortIcon)
+    sortIcon.snp.makeConstraints {
+      $0.trailing.centerY.equalToSuperview()
+      $0.size.equalTo(16)
+      $0.leading.equalTo(sortLabel.snp.trailing).offset(5)
+    }
+    
+    // 어바웃 버튼
     headerView.addSubview(aboutButton)
     aboutButton.do {
       $0.setImage(UIImage(named: "about"), for: .normal)
@@ -224,15 +278,16 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
-    cell.do {
-      $0.nameLabel.text = self.messages[indexPath.row].user.nickname
-      $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
-      $0.detailTextView.text = self.messages[indexPath.row].content
-      $0.likeCount = self.messages[indexPath.row].likeCount
-      $0.isLike = self.messages[indexPath.row].isLiked
-      $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
-      $0.messageId = self.messages[indexPath.row].id
-    }
+      cell.do {
+        let cellMessage = self.messages[indexPath.row]
+        $0.nameLabel.text = cellMessage.user.nickname
+        $0.emojiLabel.text = cellMessage.user.emoji.unicode
+        $0.detailTextView.text = cellMessage.content
+        $0.likeCount = cellMessage.likeCount
+        $0.isLike = cellMessage.isLiked
+        $0.countryLabel.text = cellMessage.user.country.emojiUnicode
+        $0.messageId = cellMessage.id
+      }
     bindShareButton(button: cell.shareButton)
     return cell
   }
@@ -240,6 +295,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   private func bindShareButton(button: UIButton) {
     button
       .rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .subscribe {
         let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
