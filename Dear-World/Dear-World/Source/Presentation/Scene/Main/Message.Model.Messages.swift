@@ -55,4 +55,18 @@ extension Message.Model {
     let fullName: String
     let emojiUnicode: String
   }
+  
+  enum ListType: String, CaseIterable {
+    case recent = "recent"
+    case weeklyHot = "weekly_hot"
+    
+    var title: String {
+      switch self {
+      case .recent:
+        return "Recent"
+      case .weeklyHot:
+        return "Weekly Hot"
+      }
+    }
+  }
 }

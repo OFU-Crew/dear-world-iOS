@@ -10,16 +10,12 @@ import Foundation
 
 extension Message.API {
   struct Messages: ServiceAPI {
-    enum ListType: String {
-      case recent = "recent"
-      case weeklyHot = "weekly_hot"
-    }
     typealias Response = Message.Model.Messages
     
     // MARK: Parameters
     private let countryCode: String?
     private let lastMsgId: Int?
-    private let type: ListType
+    private let type: Message.Model.ListType
     
     var method: HTTPMethod { .get }
     var path: String { "/api/v1/messages" }
@@ -31,7 +27,7 @@ extension Message.API {
       ]
     }
     
-    init(countryCode: String?, lastMsgId: Int?, type: ListType) {
+    init(countryCode: String?, lastMsgId: Int?, type: Message.Model.ListType) {
       self.countryCode = countryCode
       self.lastMsgId = lastMsgId
       self.type = type
