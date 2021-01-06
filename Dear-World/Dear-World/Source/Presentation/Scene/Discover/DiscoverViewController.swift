@@ -20,6 +20,7 @@ final class DiscoverViewController: UIViewController, View {
   private let countryLabel: UILabel = UILabel()
   private let messageTableView: UITableView = UITableView(frame: .null, style: .grouped)
   private let aboutButton: UIButton = UIButton()
+  private let sortView: UIView = UIView()
   private var messages: [Message.Model.Message] = []
   
   var disposeBag: DisposeBag = DisposeBag()
@@ -124,7 +125,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-      .map{$0?.fullName}
+      .map{ $0?.fullName }
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
@@ -171,17 +172,20 @@ final class DiscoverViewController: UIViewController, View {
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    return makeHeaderView()
+    makeHeaderView()
   }
   private func makeHeaderView() -> UIView {
     let headerView: UIView = UIView()
     headerView.backgroundColor = .breathingWhite
     
+    // 상단 메세지 개수 표시 뷰
     headerView.addSubview(self.messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().inset(16)
     }
+    
+    // 나라 필터링 뷰
     headerView.addSubview(self.filterContainerView)
     self.filterContainerView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -197,7 +201,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.centerY.equalToSuperview()
       $0.leading.equalTo(filterContainerView.snp.leading)
     }
-    
     let select: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "select")
     }
@@ -209,6 +212,33 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       $0.trailing.equalTo(filterContainerView.snp.trailing)
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
+    
+    // 소트 뷰
+    headerView.addSubview(sortView)
+    sortView.snp.makeConstraints {
+      $0.centerY.equalTo(filterContainerView)
+      $0.trailing.equalToSuperview().inset(23)
+    }
+    let sortLabel: UILabel = UILabel().then {
+      $0.text = "Recent"
+      $0.textColor = .warmBlue
+      $0.font = .systemFont(ofSize: 12)
+    }
+    sortView.addSubview(sortLabel)
+    sortLabel.snp.makeConstraints {
+      $0.top.leading.bottom.equalToSuperview()
+    }
+    let sortIcon: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "sort")
+    }
+    sortView.addSubview(sortIcon)
+    sortIcon.snp.makeConstraints {
+      $0.trailing.centerY.equalToSuperview()
+      $0.size.equalTo(16)
+      $0.leading.equalTo(sortLabel.snp.trailing).offset(5)
+    }
+    
+    // 어바웃 버튼
     headerView.addSubview(aboutButton)
     aboutButton.do {
       $0.setImage(UIImage(named: "about"), for: .normal)
@@ -226,15 +256,16 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
-    cell.do {
-      $0.nameLabel.text = self.messages[indexPath.row].user.nickname
-      $0.emojiLabel.text = self.messages[indexPath.row].user.emoji.unicode
-      $0.detailTextView.text = self.messages[indexPath.row].content
-      $0.likeCount = self.messages[indexPath.row].likeCount
-      $0.isLike = self.messages[indexPath.row].isLiked
-      $0.countryLabel.text = self.messages[indexPath.row].user.country.emojiUnicode
-      $0.messageId = self.messages[indexPath.row].id
-    }
+      cell.do {
+        let cellMessage = self.messages[indexPath.row]
+        $0.nameLabel.text = cellMessage.user.nickname
+        $0.emojiLabel.text = cellMessage.user.emoji.unicode
+        $0.detailTextView.text = cellMessage.content
+        $0.likeCount = cellMessage.likeCount
+        $0.isLike = cellMessage.isLiked
+        $0.countryLabel.text = cellMessage.user.country.emojiUnicode
+        $0.messageId = cellMessage.id
+      }
     bindShareButton(button: cell.shareButton)
     return cell
   }
