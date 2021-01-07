@@ -19,6 +19,7 @@ public final class CountrySelectController: UIViewController {
   private let exitButton: UIButton = UIButton()
   private var selectedCountry: Message.Model.Country? = nil
   private let wholeWorldButton: UIButton = UIButton()
+  private let outsideView: UIView = UIView()
   let disposeBag: DisposeBag = DisposeBag()
   
   override public func viewDidLoad() {
@@ -30,7 +31,19 @@ public final class CountrySelectController: UIViewController {
   
   // MARK: 🎛 Setup
   private func setupUI() {
-    self.view.do {
+    let insideView: UIView = UIView()
+    self.view.addSubview(insideView)
+    insideView.snp.makeConstraints {
+      $0.height.equalTo(500)
+      $0.bottom.leading.trailing.equalToSuperview()
+    }
+    self.view.addSubview(outsideView)
+    outsideView.snp.makeConstraints {
+      $0.top.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(insideView.snp.top)
+    }
+    
+    insideView.do {
       $0.backgroundColor = .white
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 15
@@ -39,7 +52,7 @@ public final class CountrySelectController: UIViewController {
       $0.setImage(UIImage(named: "cancel"), for: .normal)
       $0.tintColor = .warmBlue
     }
-    self.view.addSubview(exitButton)
+    insideView.addSubview(exitButton)
     self.exitButton.snp.makeConstraints {
       $0.size.equalTo(12)
       $0.top.trailing.equalToSuperview().inset(20)
@@ -52,7 +65,7 @@ public final class CountrySelectController: UIViewController {
         $0.backgroundColor = .white
       }
     }
-    self.view.addSubview(wholeWorldButton)
+    insideView.addSubview(wholeWorldButton)
     let wholeWorldLabel = UILabel().then {
       $0.text = "Whole world"
       $0.font = .systemFont(ofSize: 14)
@@ -74,7 +87,7 @@ public final class CountrySelectController: UIViewController {
     self.countryTableView.do {
       $0.backgroundColor = .white
     }
-    self.view.addSubview(self.countryTableView)
+    insideView.addSubview(self.countryTableView)
     self.countryTableView.snp.makeConstraints {
       $0.top.equalTo(wholeWorldButton.snp.bottom)
       $0.trailing.leading.bottom.equalToSuperview()
@@ -90,6 +103,13 @@ public final class CountrySelectController: UIViewController {
   private func bind() {
     self.exitButton
       .rx.tap
+      .bind { _ in
+        self.willMove(toParent: nil)
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.outsideView
+      .rx.tapGesture()
       .bind { _ in
         self.willMove(toParent: nil)
       }
@@ -122,21 +142,19 @@ public final class CountrySelectController: UIViewController {
     
     self.wholeWorldButton
       .rx.tap
-      .bind{ [weak self] in
-        //TODO: WHoleWorld의 코드는?
-        self?.wholeWorldButton.backgroundColor = .warmBlue
+      .subscribe(onNext: { [weak self] in
         self?.selectedCountry = .init(code: nil, fullName: "Whole world", emojiUnicode: "🍎")
         self?.willMove(toParent: nil)
-      }
+      })
       .disposed(by: self.disposeBag)
     
     self.countryTableView
       .rx.itemSelected
       .map{[weak self] in self?.countries[$0.row]}
-      .bind { [weak self] country in
+      .subscribe (onNext :{ [weak self] country in
         self?.selectedCountry = country
         self?.willMove(toParent: nil)
-      }
+      })
       .disposed(by: self.disposeBag)
   }
   func addCheck(base: UIView) {
@@ -152,7 +170,6 @@ public final class CountrySelectController: UIViewController {
     }
   }
 }
-
 // present 함수
 extension CountrySelectController {
   static func selectCountry(
@@ -174,7 +191,7 @@ extension CountrySelectController {
       presented.view.frame.origin.y = base.view.frame.height
       UIView.animate(withDuration: 0.3) {
         presenting.view.alpha = 0.6
-        presented.view.frame.origin.y = base.view.frame.height - 500
+        presented.view.frame.origin.y = 0
       } completion: { _ in
         presented.didMove(toParent: base)
       }
@@ -206,9 +223,9 @@ public class AllCountries {
   private init() {
     _ = Network.request(Message.API.Countries())
       .filterNil()
-      .subscribe { response in
+      .subscribe (onNext: { response in
         self.countries = response.countries
-      }
+      })
   }
 }
 
