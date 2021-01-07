@@ -32,6 +32,7 @@
 		393E0D4525A23A7B000DB3B9 /* World.API.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */; };
 		393E0D5725A2BE3C000DB3B9 /* AboutTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */; };
 		393E0D5F25A2CEB6000DB3B9 /* AboutTeamReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */; };
+		393E0F3225A6EA4C000DB3B9 /* DWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0F3125A6EA4C000DB3B9 /* DWAlertViewController.swift */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -129,6 +130,7 @@
 		393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.API.Map.swift; sourceTree = "<group>"; };
 		393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamViewController.swift; sourceTree = "<group>"; };
 		393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamReactor.swift; sourceTree = "<group>"; };
+		393E0F3125A6EA4C000DB3B9 /* DWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWAlertViewController.swift; sourceTree = "<group>"; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */,
 				39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */,
 				12257E1725A622750007E65E /* SortTypeSelectController.swift */,
+				393E0F3125A6EA4C000DB3B9 /* DWAlertViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				393E0D5F25A2CEB6000DB3B9 /* AboutTeamReactor.swift in Sources */,
 				1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */,
 				39F0C19025987A2B00A7001F /* ServiceAPI.swift in Sources */,
+				393E0F3225A6EA4C000DB3B9 /* DWAlertViewController.swift in Sources */,
 				12A05EFF25A353700089EF1C /* Message.API.Like.swift in Sources */,
 				3958257B25948E41007325AB /* AppDelegate.swift in Sources */,
 				39F465822597811900621327 /* CheerButton.swift in Sources */,

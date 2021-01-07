@@ -130,6 +130,26 @@ final class SendMessageViewController: UIViewController, View {
       .distinctUntilChanged()
       .bind(to: messageStatusMessageLabel.rx.attributedText)
       .disposed(by: disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$isPresentAlert)
+      .map { $0.isPresentAlert }
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        guard let self = self else { return }
+        let viewController = DWAlertViewController(
+          title: "This message will be sent\n to the world.",
+          message: "You can’t edit or delete this message"
+        )
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.answer()
+          .map { _ in Action.confirmAlert }
+          .bind(to: reactor.action)
+          .disposed(by: self.disposeBag)
+        self.present(viewController, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    reactor.action.onNext(.initialize)
   }
   
   // MARK: 📍 Setup

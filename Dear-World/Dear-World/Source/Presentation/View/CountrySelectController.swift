@@ -155,7 +155,11 @@ public final class CountrySelectController: UIViewController {
 
 // present 함수
 extension CountrySelectController {
-  static func selectCountry(presenting: UIViewController, disposeBag: DisposeBag, selected: Message.Model.Country?) -> Observable<Message.Model.Country> {
+  static func selectCountry(
+    presenting: UIViewController,
+    disposeBag: DisposeBag,
+    selected: Message.Model.Country?
+  ) -> Observable<Message.Model.Country> {
     return Observable<Message.Model.Country>.create { observer in
       guard let base = presenting.tabBarController else {
         observer.onError(NSError())

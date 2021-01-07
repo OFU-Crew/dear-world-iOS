@@ -12,12 +12,17 @@ import Then
 
 final class SendMessageReactor: Reactor {
   
+  typealias API = Message.API
+  typealias Model = Message.Model
+  
   enum Action {
+    case initialize
     case tapClose
     case tapRefresh
     case typeName(String)
     case typeMessage(String)
     case tapSendMessage
+    case confirmAlert
   }
   
   enum Mutation {
@@ -26,10 +31,13 @@ final class SendMessageReactor: Reactor {
     case setName(String)
     case setMessage(String)
     case setPresent(Bool)
+    case setPresentAlert(Bool)
+    case setCountry(Model.Country)
   }
   
   struct State: Then {
     @Revision var isPresented: Bool = true
+    @Revision var isPresentAlert: Bool = false
     var emoji: String = "👽"
     var canSendMessage: Bool = false
     var name: String = ""
@@ -37,6 +45,7 @@ final class SendMessageReactor: Reactor {
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
+    var selectedCountry: Model.Country?
     fileprivate var emojiId: Int = 21
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
@@ -63,9 +72,12 @@ final class SendMessageReactor: Reactor {
   // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .initialize:
+      return .empty()
+      
     case .tapClose:
       return .just(.setPresent(false))
-    
+      
     case .tapRefresh:
       return Network.request(Emoji.API.Random())
         .filterNil()
@@ -83,7 +95,10 @@ final class SendMessageReactor: Reactor {
       return .just(.setMessage(message))
       
     case .tapSendMessage:
-      let api: Message.API.SendMessage = Message.API.SendMessage(
+      return .just(.setPresentAlert(true))
+      
+    case .confirmAlert:
+      let api: API.SendMessage = API.SendMessage(
         countryCode: "KR",
         emojiId: currentState.emojiId,
         name: currentState.name,
@@ -92,8 +107,8 @@ final class SendMessageReactor: Reactor {
       return .concat(
         Network.request(api)
           .filterNil()
-          .map { _ in .setMessage("완료") },
-        .just(Mutation.setPresent(false))
+          .flatMap { _ in Observable<Mutation>.empty() },
+        .just(.setPresent(false))
       )
     }
   }
@@ -106,7 +121,12 @@ final class SendMessageReactor: Reactor {
       newState = state.with {
         $0.isPresented = isPresented
       }
-    
+      
+    case .setPresentAlert(let isPresentAlert):
+      newState = state.with {
+        $0.isPresentAlert = isPresentAlert
+      }
+      
     case .setEmoji(let emoji):
       newState = state.with {
         $0.emoji = emoji
@@ -119,9 +139,9 @@ final class SendMessageReactor: Reactor {
         $0.name = name
         $0.canSendMessage = name.isNotEmpty && $0.message.isNotEmpty
         $0.nameStatusMessage = nameStatusMessage(
-            currentCount: name.count,
-            limitCount: $0.nameCountLimit
-          )
+          currentCount: name.count,
+          limitCount: $0.nameCountLimit
+        )
       }
       
     case .setMessage(let message):
@@ -138,16 +158,19 @@ final class SendMessageReactor: Reactor {
           limitCount: $0.messageCountLimit
         )
       }
+      
     case .setEmojiId(let id):
       newState = state.with { $0.emojiId = id }
+      
+    case .setCountry(let country):
+      newState = state.with { $0.selectedCountry = country }
+      
     }
     return newState
   }
   
   // MARK: 📐 Formatting
-  private func percent(current: Int, total: Int) -> Float {
-    return Float(current) / Float(total)
-  }
+  private func percent(current: Int, total: Int) -> Float { Float(current) / Float(total) }
   
   private func nameStatusMessage(currentCount: Int, limitCount: Int) -> NSAttributedString {
     let style: Style = currentCount > 0 ? Styles.normal : Styles.empty
