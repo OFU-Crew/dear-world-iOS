@@ -53,7 +53,7 @@ extension Message.Model {
   struct Country: Decodable {
     let code: String?
     let fullName: String
-    let emojiUnicode: String
+    let emojiUnicode: String?
   }
   
   enum ListType: String, CaseIterable {
