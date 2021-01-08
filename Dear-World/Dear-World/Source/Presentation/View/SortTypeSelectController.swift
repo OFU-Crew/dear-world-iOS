@@ -18,6 +18,7 @@ public final class SortTypeSelectController: UIViewController {
   private var sortTypeTableView: UITableView = UITableView()
   private let exitButton: UIButton = UIButton()
   private var selectedSortType: Message.Model.ListType? = nil
+  private let outsideView: UIView = UIView()
   let disposeBag: DisposeBag = DisposeBag()
   
   override public func viewDidLoad() {
@@ -29,7 +30,19 @@ public final class SortTypeSelectController: UIViewController {
   
   // MARK: 🎛 Setup
   private func setupUI() {
-    self.view.do {
+    let insideView: UIView = UIView()
+    self.view.addSubview(insideView)
+    insideView.snp.makeConstraints {
+      $0.height.equalTo(500)
+      $0.bottom.leading.trailing.equalToSuperview()
+    }
+    self.view.addSubview(outsideView)
+    outsideView.snp.makeConstraints {
+      $0.top.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(insideView.snp.top)
+    }
+    
+    insideView.do {
       $0.backgroundColor = .white
       $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 15
@@ -38,7 +51,7 @@ public final class SortTypeSelectController: UIViewController {
       $0.setImage(UIImage(named: "cancel"), for: .normal)
       $0.tintColor = .warmBlue
     }
-    self.view.addSubview(exitButton)
+    insideView.addSubview(exitButton)
     self.exitButton.snp.makeConstraints {
       $0.size.equalTo(12)
       $0.top.trailing.equalToSuperview().inset(20)
@@ -46,7 +59,7 @@ public final class SortTypeSelectController: UIViewController {
     self.sortTypeTableView.do {
       $0.backgroundColor = .white
     }
-    self.view.addSubview(self.sortTypeTableView)
+    insideView.addSubview(self.sortTypeTableView)
     self.sortTypeTableView.snp.makeConstraints {
       $0.top.equalTo(exitButton.snp.bottom).offset(10)
       $0.trailing.leading.bottom.equalToSuperview()
@@ -64,6 +77,13 @@ public final class SortTypeSelectController: UIViewController {
       .rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .subscribe { _ in
+        self.willMove(toParent: nil)
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.outsideView
+      .rx.tapGesture()
+      .bind { _ in
         self.willMove(toParent: nil)
       }
       .disposed(by: self.disposeBag)
@@ -132,7 +152,7 @@ extension SortTypeSelectController {
       presented.view.frame.origin.y = base.view.frame.height
       UIView.animate(withDuration: 0.3) {
         presenting.view.alpha = 0.6
-        presented.view.frame.origin.y = base.view.frame.height - 500
+        presented.view.frame.origin.y = 0
       } completion: { _ in
         presented.didMove(toParent: base)
       }
