@@ -215,6 +215,15 @@ extension CountrySelectController {
       return Disposables.create()
     }
   }
+  
+  static func selectCountry(
+    presenting: UIViewController,
+    disposeBag: DisposeBag,
+    selected: Message.Model.Country?
+  ) -> Observable<Message.Model.Country?> {
+    
+    return .empty()
+  }
 }
 
 public class AllCountries {

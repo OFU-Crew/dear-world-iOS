@@ -23,6 +23,7 @@ final class SendMessageReactor: Reactor {
     case typeMessage(String)
     case tapSendMessage
     case confirmAlert
+    case countryDidChange(Model.Country)
   }
   
   enum Mutation {
@@ -45,7 +46,7 @@ final class SendMessageReactor: Reactor {
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
-    var selectedCountry: Model.Country?
+    @Revision var selectedCountry: Model.Country?
     fileprivate var emojiId: Int = 21
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
@@ -110,6 +111,9 @@ final class SendMessageReactor: Reactor {
           .flatMap { _ in Observable<Mutation>.empty() },
         .just(.setPresent(false))
       )
+      
+    case .countryDidChange(let country):
+      return .just(.setCountry(country))
     }
   }
   

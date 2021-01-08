@@ -84,6 +84,25 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
+    selectCountryView.rx.tapGesture()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .skip(1)
+      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
+        guard let self = self else { return .empty() }
+        return CountrySelectController.selectCountry(
+          presenting: self,
+          disposeBag: self.disposeBag,
+          selected: nil)
+      }
+      .map { Action.countryDidChange($0) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$selectedCountry)
+      .map { $0.selectedCountry?.fullName }
+      .bind(to: selectCountryView.titleLabel.rx.text)
+      .disposed(by: disposeBag)
+    
     reactor.state.map(\.isPresented)
       .map { !$0 }
       .subscribe(onNext: { [weak self] willDismiss in
