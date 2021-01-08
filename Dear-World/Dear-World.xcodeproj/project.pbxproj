@@ -33,6 +33,12 @@
 		393E0D5725A2BE3C000DB3B9 /* AboutTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */; };
 		393E0D5F25A2CEB6000DB3B9 /* AboutTeamReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */; };
 		393E0F3225A6EA4C000DB3B9 /* DWAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0F3125A6EA4C000DB3B9 /* DWAlertViewController.swift */; };
+		39518C7725A8FA2400F777D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39518C7625A8FA2400F777D1 /* GoogleService-Info.plist */; };
+		39518C7D25A8FB9D00F777D1 /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = 39518C7C25A8FB9D00F777D1 /* FirebaseInstallations */; };
+		39518C7F25A8FB9D00F777D1 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 39518C7E25A8FB9D00F777D1 /* FirebaseAnalytics */; };
+		39518C8125A8FB9D00F777D1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 39518C8025A8FB9D00F777D1 /* FirebaseCrashlytics */; };
+		39518C8325A8FB9D00F777D1 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 39518C8225A8FB9D00F777D1 /* FirebaseRemoteConfig */; };
+		39518C8525A8FB9D00F777D1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 39518C8425A8FB9D00F777D1 /* FirebaseAuth */; };
 		3958257B25948E41007325AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3958257A25948E41007325AB /* AppDelegate.swift */; };
 		3958258425948E43007325AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3958258325948E43007325AB /* Assets.xcassets */; };
 		3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3958258525948E43007325AB /* LaunchScreen.storyboard */; };
@@ -131,6 +137,7 @@
 		393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamViewController.swift; sourceTree = "<group>"; };
 		393E0D5E25A2CEB6000DB3B9 /* AboutTeamReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamReactor.swift; sourceTree = "<group>"; };
 		393E0F3125A6EA4C000DB3B9 /* DWAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWAlertViewController.swift; sourceTree = "<group>"; };
+		39518C7625A8FA2400F777D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3958257725948E41007325AB /* Dear-World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dear-World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3958257A25948E41007325AB /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 2; };
 		3958258325948E43007325AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -184,16 +191,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				39658F9B259ADB130050D180 /* Lottie in Frameworks */,
+				39518C7D25A8FB9D00F777D1 /* FirebaseInstallations in Frameworks */,
 				39672DBC2598E803001D7E69 /* UITextView+Placeholder in Frameworks */,
 				3971EB0C259A682C0084E6DC /* RxKeyboard in Frameworks */,
+				39518C8325A8FB9D00F777D1 /* FirebaseRemoteConfig in Frameworks */,
 				39C8322A2597651F00236DDF /* RxSwift in Frameworks */,
 				39C832282597651F00236DDF /* RxRelay in Frameworks */,
 				39F4657D25977DB300621327 /* RxGesture in Frameworks */,
 				395826212596D0B0007325AB /* Alamofire in Frameworks */,
+				39518C7F25A8FB9D00F777D1 /* FirebaseAnalytics in Frameworks */,
 				39C8322C2597651F00236DDF /* RxCocoa in Frameworks */,
 				39F465CC2597919700621327 /* RxOptional in Frameworks */,
 				395826272596D225007325AB /* SnapKit in Frameworks */,
+				39518C8525A8FB9D00F777D1 /* FirebaseAuth in Frameworks */,
 				3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */,
+				39518C8125A8FB9D00F777D1 /* FirebaseCrashlytics in Frameworks */,
 				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
 				3958261B2596D06C007325AB /* Then in Frameworks */,
 			);
@@ -320,6 +332,7 @@
 		3958257925948E41007325AB /* Dear-World */ = {
 			isa = PBXGroup;
 			children = (
+				39518C7625A8FA2400F777D1 /* GoogleService-Info.plist */,
 				395825AD25948E5B007325AB /* Source */,
 				395825AE25948E66007325AB /* Resource */,
 				395825AF25948E6D007325AB /* Support File */,
@@ -594,6 +607,8 @@
 				3958257325948E41007325AB /* Sources */,
 				3958257425948E41007325AB /* Frameworks */,
 				3958257525948E41007325AB /* Resources */,
+				39518C8C25A8FC2C00F777D1 /* Firebase Crashlytics */,
+				39518C9325A900ED00F777D1 /* Firebase Distribution */,
 			);
 			buildRules = (
 			);
@@ -614,6 +629,11 @@
 				3971EB0B259A682C0084E6DC /* RxKeyboard */,
 				3971EB31259A8BC90084E6DC /* SwiftRichString */,
 				39658F9A259ADB130050D180 /* Lottie */,
+				39518C7C25A8FB9D00F777D1 /* FirebaseInstallations */,
+				39518C7E25A8FB9D00F777D1 /* FirebaseAnalytics */,
+				39518C8025A8FB9D00F777D1 /* FirebaseCrashlytics */,
+				39518C8225A8FB9D00F777D1 /* FirebaseRemoteConfig */,
+				39518C8425A8FB9D00F777D1 /* FirebaseAuth */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -698,6 +718,7 @@
 				3971EB0A259A682C0084E6DC /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */,
 				39658F99259ADB130050D180 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -717,6 +738,7 @@
 			files = (
 				3958258725948E43007325AB /* LaunchScreen.storyboard in Resources */,
 				39658FA0259ADE770050D180 /* splash_1x.json in Resources */,
+				39518C7725A8FA2400F777D1 /* GoogleService-Info.plist in Resources */,
 				395825B725948EE4007325AB /* Colors.xcassets in Resources */,
 				3958258425948E43007325AB /* Assets.xcassets in Resources */,
 			);
@@ -739,6 +761,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		39518C8C25A8FC2C00F777D1 /* Firebase Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
+		};
+		39518C9325A900ED00F777D1 /* Firebase Distribution */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase Distribution";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\nFRAMEWORK_TMP_PATH=\"$FRAMEWORK_EXECUTABLE_PATH-tmp\"\n\ncase \"${TARGET_BUILD_DIR}\" in\n*\"iphonesimulator\")\n    echo \"No need to remove archs\"\n    ;;\n*)\n    if $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"i386\") ; then\n    lipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"i386\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    echo \"i386 architecture removed\"\n    rm \"$FRAMEWORK_EXECUTABLE_PATH\"\n    mv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    fi\n    if $(lipo \"$FRAMEWORK_EXECUTABLE_PATH\" -verify_arch \"x86_64\") ; then\n    lipo -output \"$FRAMEWORK_TMP_PATH\" -remove \"x86_64\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    echo \"x86_64 architecture removed\"\n    rm \"$FRAMEWORK_EXECUTABLE_PATH\"\n    mv \"$FRAMEWORK_TMP_PATH\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n    fi\n    ;;\nesac\n\necho \"Completed for executable $FRAMEWORK_EXECUTABLE_PATH\"\necho $(lipo -info \"$FRAMEWORK_EXECUTABLE_PATH\")\n\ndone\n";
+		};
 		3958262B2596D7B6007325AB /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -991,6 +1049,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
 				INFOPLIST_FILE = "Dear-World/Support File/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -998,7 +1057,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "developer.o.o.wl.Dear-World";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.OFU.Dear-World";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1011,6 +1071,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8BQHKQSA4Y;
 				INFOPLIST_FILE = "Dear-World/Support File/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1018,7 +1079,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "developer.o.o.wl.Dear-World";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.OFU.Dear-World";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1151,6 +1213,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.3.1;
+			};
+		};
 		395825EE259494B1007325AB /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactorKit/ReactorKit";
@@ -1242,6 +1312,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		39518C7C25A8FB9D00F777D1 /* FirebaseInstallations */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseInstallations;
+		};
+		39518C7E25A8FB9D00F777D1 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		39518C8025A8FB9D00F777D1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		39518C8225A8FB9D00F777D1 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		39518C8425A8FB9D00F777D1 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		395825EF259494B1007325AB /* ReactorKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 395825EE259494B1007325AB /* XCRemoteSwiftPackageReference "ReactorKit" */;

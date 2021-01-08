@@ -8,6 +8,7 @@ import RxSwift
 import SnapKit
 import Then
 import UIKit
+import Firebase
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,11 +18,19 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-  
-    let mainWindow: UIWindow = UIWindow()
-    window = mainWindow
-    mainWindow.rootViewController = MainTabBarController()
-    mainWindow.makeKeyAndVisible()
+    setupFirebase()
+    setupInitialScene()
     return true
+  }
+  
+  private func setupFirebase() {
+    FirebaseApp.configure()
+  }
+  
+  private func setupInitialScene() {
+      let mainWindow: UIWindow = UIWindow()
+      window = mainWindow
+      mainWindow.rootViewController = MainTabBarController()
+      mainWindow.makeKeyAndVisible()
   }
 }

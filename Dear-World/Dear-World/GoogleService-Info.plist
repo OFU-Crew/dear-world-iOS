@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>562294189406-90phjidei0fv8f3r6g4cfsnmi6q0vb82.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.562294189406-90phjidei0fv8f3r6g4cfsnmi6q0vb82</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCcFRScqvkC1zuaSC9Fx542P9bqCUezZ6I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>562294189406</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.OFU.Dear-World</string>
+	<key>PROJECT_ID</key>
+	<string>dear-world-684b8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dear-world-684b8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:562294189406:ios:0adf63bb9839e5e61733cf</string>
+</dict>
+</plist>
