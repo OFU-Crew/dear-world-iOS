@@ -147,7 +147,7 @@ final class SendMessageReactor: Reactor {
       
     case .setName(let name):
       // FIXME: 🐛 네임 텍스트필드랑 불일치 문제 수정
-      let name: String = name.count <= state.nameCountLimit ? name : state.name
+      guard let name = name.substring(from: 0, length: state.nameCountLimit) else { return state }
       newState = state.with {
         $0.name = name
         $0.canSendMessage = name.isNotEmpty && $0.message.isNotEmpty
@@ -158,7 +158,7 @@ final class SendMessageReactor: Reactor {
       }
       
     case .setMessage(let message):
-      let message: String = message.count <= state.messageCountLimit ? message : state.message
+      guard let message = message.substring(from: 0, length: state.messageCountLimit) else { return state }
       newState = state.with {
         $0.canSendMessage = $0.name.isNotEmpty && message.isNotEmpty
         $0.message = message
