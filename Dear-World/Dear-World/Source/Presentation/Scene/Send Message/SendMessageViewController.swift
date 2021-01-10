@@ -201,6 +201,7 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.action.onNext(.initialize)
+    reactor.action.onNext(.tapRefresh)
   }
   
   // MARK: 📍 Setup

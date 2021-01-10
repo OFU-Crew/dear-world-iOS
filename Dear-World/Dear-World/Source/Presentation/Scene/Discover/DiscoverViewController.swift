@@ -275,7 +275,6 @@ final class DiscoverViewController: UIViewController, View {
       .map(\.title)
       .bind(to: self.sortLabel.rx.text)
       .disposed(by: self.disposeBag)
-    
   }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {

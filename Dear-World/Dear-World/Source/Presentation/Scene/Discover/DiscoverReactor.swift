@@ -16,7 +16,8 @@ final class DiscoverReactor: Reactor {
   enum Action {
     case viewWillAppear
     case tapAbout
-    case countryDidChanged(country: Model.Country?, sortType: Model.ListType? = nil)
+    case countryDidChanged(country: Message.Model.Country?)
+    case sortTypeDidChanged(sortType: Message.Model.ListType?)
     case refresh
     case loadMore
   }
@@ -29,7 +30,7 @@ final class DiscoverReactor: Reactor {
     case setLoading(Bool)
     case setPresentAboutPage(Bool)
     case setMessageCount(Int)
-    case setCurrentSortType(Model.ListType?)
+    case setCurrentSortType(Model.ListType)
   }
   
   struct State {
@@ -92,21 +93,6 @@ final class DiscoverReactor: Reactor {
           .map{ Mutation.setMessages(result: $0) },
           .just(.setLoading(false))
         )
-        .filterNil()
-        .map { Mutation.setMessageCount($0.messageCount) },
-        .just(.setCountry(country: country)),
-        .just(.setCurrentSortType(sortType)),
-        .just(.setLoading(true)),
-        Network.request(
-          API.Messages(
-            countryCode: country?.code,
-            lastMsgId: nil,
-            type: sortType ?? currentState.selectedSortType
-          )
-        )
-        .filterNil()
-        .map { Mutation.setMessages(result: $0) },
-        .just(.setLoading(false))
       )
     case let .sortTypeDidChanged(sortType: sortType) :
       return .merge(
