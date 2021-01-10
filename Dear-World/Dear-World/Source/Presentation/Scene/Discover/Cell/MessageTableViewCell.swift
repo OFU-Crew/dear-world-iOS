@@ -12,9 +12,10 @@ import UIKit
 final class MessageTableViewCell: UITableViewCell {
   let disposeBag: DisposeBag = DisposeBag()
   // MARK: 🖼 UI
-  let emojiLabel: UILabel = UILabel()
+  let emojiImageView: UIImageView = UIImageView()
   let nameLabel: UILabel = UILabel()
   let countryLabel: UILabel = UILabel()
+  let countryFlagImageView: UIImageView = UIImageView()
   let detailTextView: UITextView = UITextView()
   let likeView: UIImageView = UIImageView()
   let likeCountLabel: UILabel = UILabel()
@@ -78,13 +79,8 @@ final class MessageTableViewCell: UITableViewCell {
       $0.height.width.equalTo(40)
     }
     
-    self.emojiLabel.do {
-      $0.text = "🎅🏻"
-      $0.font = .systemFont(ofSize: 14)
-      $0.textAlignment = .center
-    }
-    mainView.addSubview(self.emojiLabel)
-    self.emojiLabel.snp.makeConstraints {
+    mainView.addSubview(emojiImageView)
+    emojiImageView.snp.makeConstraints {
       $0.size.equalTo(20)
       $0.center.equalTo(emojiView)
     }
@@ -101,15 +97,21 @@ final class MessageTableViewCell: UITableViewCell {
       $0.trailing.greaterThanOrEqualToSuperview().inset(30)
     }
     
+    mainView.addSubview(countryFlagImageView)
+    countryFlagImageView.snp.makeConstraints {
+      $0.bottom.equalTo(emojiView.snp.bottom)
+      $0.leading.equalTo(emojiView.snp.trailing).offset(10)
+      $0.width.height.equalTo(18)
+    }
     self.countryLabel.do {
-      $0.text = "🇰🇷 South Korea"
+      $0.text = "South Korea"
       $0.font = .boldSystemFont(ofSize: 12)
       $0.textColor = .grayWhite
     }
     mainView.addSubview(self.countryLabel)
     self.countryLabel.snp.makeConstraints {
-      $0.bottom.equalTo(emojiView.snp.bottom)
-      $0.leading.equalTo(emojiView.snp.trailing).offset(10)
+      $0.centerY.equalTo(countryFlagImageView)
+      $0.leading.equalTo(countryFlagImageView.snp.trailing).offset(10)
       $0.trailing.greaterThanOrEqualToSuperview().inset(30)
     }
     

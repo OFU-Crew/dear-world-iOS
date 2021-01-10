@@ -72,7 +72,7 @@ final class RankerTableViewCell: UITableViewCell {
       $0.textColor = .warmBlue
     }
     countryNameLabel.snp.makeConstraints {
-      $0.top.equalToSuperview().inset(14)
+      $0.top.equalToSuperview().inset(12)
       $0.leading.equalTo(countryFlagImageView.snp.trailing).offset(10)
     }
     

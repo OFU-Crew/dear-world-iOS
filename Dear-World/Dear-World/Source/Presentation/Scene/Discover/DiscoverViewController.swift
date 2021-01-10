@@ -325,11 +325,17 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     cell.do {
       let cellMessage = self.messages[indexPath.row]
       $0.nameLabel.text = cellMessage.user.nickname
-      $0.emojiLabel.text = cellMessage.user.emoji.unicode
+      
       $0.detailTextView.text = cellMessage.content
       $0.likeCount = cellMessage.likeCount
       $0.isLike = cellMessage.isLiked
-      $0.countryLabel.text = cellMessage.user.country.emojiUnicode
+      $0.countryLabel.text = cellMessage.user.country.fullName
+      if let emojiImageURL: URL = URL(string: cellMessage.user.emoji.imageURL) {
+        $0.emojiImageView.kf.setImage(with: emojiImageURL)
+      }
+      if let countryImageURL: URL = URL(string: cellMessage.user.country.imageURL) {
+        $0.countryFlagImageView.kf.setImage(with: countryImageURL)
+      }
       $0.messageId = cellMessage.id
     }
     bindShareButton(button: cell.shareButton)
