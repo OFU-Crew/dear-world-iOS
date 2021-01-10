@@ -47,7 +47,7 @@ final class SendMessageViewController: UIViewController, View {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    setupUI()
+    setupUI() 
   }
   
   // MARK: 🔗 Bind
@@ -103,8 +103,11 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: selectCountryView.titleLabel.rx.text)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.isPresented)
+    reactor.state
+      .distinctUntilChanged(\.$isPresented)
+      .map(\.isPresented)
       .map { !$0 }
+      .delay(.milliseconds(300), scheduler: MainScheduler.instance)
       .subscribe(onNext: { [weak self] willDismiss in
         guard willDismiss else { return }
         self?.dismiss(animated: true, completion: nil)
@@ -133,25 +136,29 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: nameCountLabel.rx.attributedText)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.message)
+    reactor.state
+      .map(\.message)
       .filter { [weak self] message in
         self?.messageTextView.text != message
       }
       .bind(to: messageTextView.rx.text)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.messageLimitGauge)
+    reactor.state
+      .map(\.messageLimitGauge)
       .distinctUntilChanged()
       .bind(to: messageLimitGaugeBar.rx.progress)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.messageStatusMessage)
+    reactor.state
+      .map(\.messageStatusMessage)
       .distinctUntilChanged()
       .bind(to: messageStatusMessageLabel.rx.attributedText)
       .disposed(by: disposeBag)
     
-    reactor.state.distinctUntilChanged(\.$isPresentAlert)
-      .map { $0.isPresentAlert }
+    reactor.state
+      .distinctUntilChanged(\.$isPresentSendAlert)
+      .map { $0.isPresentSendAlert }
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
         guard let self = self else { return }
@@ -161,7 +168,27 @@ final class SendMessageViewController: UIViewController, View {
         )
         viewController.modalPresentationStyle = .overFullScreen
         viewController.answer()
-          .map { _ in Action.confirmAlert }
+          .map { _ in Action.confirmSendAlert }
+          .bind(to: reactor.action)
+          .disposed(by: self.disposeBag)
+        self.present(viewController, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$isPresentCancelAlert)
+      .map { $0.isPresentCancelAlert }
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        guard let self = self else { return }
+        let viewController = DWAlertViewController(
+          title: "Wanna stop writting?",
+          message: "Your writting will be deleted."
+        )
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.answer()
+          .filter { $0 }
+          .map { _ in Action.confirmCancelAlert }
           .bind(to: reactor.action)
           .disposed(by: self.disposeBag)
         self.present(viewController, animated: true, completion: nil)

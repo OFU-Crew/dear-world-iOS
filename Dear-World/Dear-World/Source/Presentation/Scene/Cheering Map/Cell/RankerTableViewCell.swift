@@ -82,8 +82,8 @@ final class RankerTableViewCell: UITableViewCell {
     self.contentView.addSubview(messageImageView)
     messageImageView.snp.makeConstraints {
       $0.leading.equalTo(countryNameLabel)
-      $0.width.equalTo(12)
-      $0.height.equalTo(9)
+      $0.width.equalTo(18)
+      $0.height.equalTo(12)
       $0.top.equalTo(countryNameLabel.snp.bottom).offset(10)
     }
     

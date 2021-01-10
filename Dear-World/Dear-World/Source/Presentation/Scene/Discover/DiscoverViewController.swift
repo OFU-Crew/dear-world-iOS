@@ -174,7 +174,8 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$isPresentAboutPage)
       .map { $0.isPresentAboutPage }
-      .subscribe(onNext: { [weak self] in
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
         let viewController = AboutViewController().then {
           $0.reactor = AboutReactor()
         }
@@ -197,7 +198,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
       .map(\.selectedCountry)
-      .map{ $0?.fullName }
+      .map { $0?.fullName }
       .bind(to: self.countryLabel.rx.text)
       .disposed(by: self.disposeBag)
     
@@ -250,11 +251,14 @@ final class DiscoverViewController: UIViewController, View {
     self.sortView
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      //MARK: 왜 하날 스킵해야하지?
       .skip(1)
       .flatMap { [weak self] _ -> Observable<Message.Model.ListType> in
-        guard let self = self else { return Observable.just(Message.Model.ListType.recent)}
-        return SortTypeSelectController.select(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedSortType)
+        guard let self = self else { return .just(Message.Model.ListType.recent) }
+        return SortTypeSelectController
+          .select(
+            presenting: self,
+            disposeBag: self.disposeBag,
+            selected: self.reactor?.currentState.selectedSortType)
       }
       .map { Reactor.Action.sortTypeDidChanged(sortType: $0)}
       .bind(to: reactor.action)

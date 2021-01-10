@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RxOptional
 import ReactorKit
+import RxOptional
 
 final class DiscoverReactor: Reactor {
   enum Action {
@@ -34,7 +34,10 @@ final class DiscoverReactor: Reactor {
     var messageCount: Int = 0
     @Revision var selectedCountry: Message.Model.Country?
     @Revision var selectedSortType: Message.Model.ListType = .recent
-    @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil, lastMsgId: nil, messageCount: 0, messages: [])
+    @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil,
+                                                           lastMsgId: nil,
+                                                           messageCount: 0,
+                                                           messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
     var isAnimating: Bool = false
@@ -53,16 +56,20 @@ final class DiscoverReactor: Reactor {
     switch action {
     case .viewWillAppear:
       return .merge(
-        Network.request(Message.API.MessageCount(countryCode: currentState.selectedCountry?.code))
-          .filterNil()
-          .map { Mutation.setMessageCount($0.messageCount) },
-        Network.request(Message.API.Messages(
-          countryCode: currentState.selectedCountry?.code,
-          lastMsgId: nil,
-          type: .recent
+        Network.request(Message.API.MessageCount(
+          countryCode: currentState.selectedCountry?.code
         ))
         .filterNil()
-        .map{ Mutation.setMessages(result: $0) }
+        .map { Mutation.setMessageCount($0.messageCount) },
+        Network.request(
+          Message.API.Messages(
+            countryCode: currentState.selectedCountry?.code,
+            lastMsgId: nil,
+            type: .recent
+          )
+        )
+        .filterNil()
+        .map { Mutation.setMessages(result: $0) }
       )
       
     case let .countryDidChanged(country):
@@ -83,6 +90,21 @@ final class DiscoverReactor: Reactor {
             .map{ Mutation.setMessages(result: $0) },
           .just(.setLoading(false))
         )
+        .filterNil()
+        .map { Mutation.setMessageCount($0.messageCount) },
+        .just(.setCountry(country: country)),
+        .just(.setCurrentSortType(sortType)),
+        .just(.setLoading(true)),
+        Network.request(
+          Message.API.Messages(
+            countryCode: country?.code,
+            lastMsgId: nil,
+            type: sortType ?? currentState.selectedSortType
+          )
+        )
+        .filterNil()
+        .map { Mutation.setMessages(result: $0) },
+        .just(.setLoading(false))
       )
     case let .sortTypeDidChanged(sortType: sortType) :
       return .merge(
@@ -113,9 +135,15 @@ final class DiscoverReactor: Reactor {
       guard !currentState.isLoading else { return .empty() }
       return Observable<Mutation>.concat([
         .just(.setLoading(true)),
-        Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: currentState.messages.lastMsgId, type: currentState.selectedSortType))
-          .filterNil()
-          .map{ .addMessages(result: $0) },
+        Network.request(
+          Message.API.Messages(
+            countryCode: currentState.selectedCountry?.code,
+            lastMsgId: currentState.messages.lastMsgId,
+            type: currentState.selectedSortType
+          )
+        )
+        .filterNil()
+        .map { .addMessages(result: $0) },
         .just(.setLoading(false))
       ])
       

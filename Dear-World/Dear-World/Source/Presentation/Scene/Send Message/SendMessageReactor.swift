@@ -22,7 +22,8 @@ final class SendMessageReactor: Reactor {
     case typeName(String)
     case typeMessage(String)
     case tapSendMessage
-    case confirmAlert
+    case confirmSendAlert
+    case confirmCancelAlert
     case countryDidChange(Model.Country)
   }
   
@@ -32,13 +33,16 @@ final class SendMessageReactor: Reactor {
     case setName(String)
     case setMessage(String)
     case setPresent(Bool)
-    case setPresentAlert(Bool)
+    case setPresentSendAlert(Bool)
+    case setPresentCancelAlert(Bool)
     case setCountry(Model.Country)
   }
   
   struct State: Then {
     @Revision var isPresented: Bool = true
-    @Revision var isPresentAlert: Bool = false
+    @Revision var isPresentSendAlert: Bool = false
+    @Revision var isPresentCancelAlert: Bool = false
+    @Revision var selectedCountry: Model.Country?
     var emoji: String = "👽"
     var canSendMessage: Bool = false
     var name: String = ""
@@ -46,7 +50,6 @@ final class SendMessageReactor: Reactor {
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
-    @Revision var selectedCountry: Model.Country?
     fileprivate var emojiId: Int = 21
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
@@ -77,7 +80,7 @@ final class SendMessageReactor: Reactor {
       return .empty()
       
     case .tapClose:
-      return .just(.setPresent(false))
+      return .just(.setPresentCancelAlert(true))
       
     case .tapRefresh:
       return Network.request(Emoji.API.Random())
@@ -96,21 +99,25 @@ final class SendMessageReactor: Reactor {
       return .just(.setMessage(message))
       
     case .tapSendMessage:
-      return .just(.setPresentAlert(true))
+      return .just(.setPresentSendAlert(true))
       
-    case .confirmAlert:
-      let api: API.SendMessage = API.SendMessage(
-        countryCode: "KR",
-        emojiId: currentState.emojiId,
-        name: currentState.name,
-        message: currentState.message
-      )
+    case .confirmSendAlert:
       return .concat(
-        Network.request(api)
-          .filterNil()
-          .flatMap { _ in Observable<Mutation>.empty() },
+        Network.request(
+          API.SendMessage(
+            countryCode: "KR",
+            emojiId: currentState.emojiId,
+            name: currentState.name,
+            message: currentState.message
+          )
+        )
+        .filterNil()
+        .flatMap { _ in Observable<Mutation>.empty() },
         .just(.setPresent(false))
       )
+      
+    case .confirmCancelAlert:
+      return .just(.setPresent(false))
       
     case .countryDidChange(let country):
       return .just(.setCountry(country))
@@ -126,9 +133,14 @@ final class SendMessageReactor: Reactor {
         $0.isPresented = isPresented
       }
       
-    case .setPresentAlert(let isPresentAlert):
+    case .setPresentSendAlert(let isPresentSendAlert):
       newState = state.with {
-        $0.isPresentAlert = isPresentAlert
+        $0.isPresentSendAlert = isPresentSendAlert
+      }
+      
+    case .setPresentCancelAlert(let isPresentCancelAlert):
+      newState = state.with {
+        $0.isPresentCancelAlert = isPresentCancelAlert
       }
       
     case .setEmoji(let emoji):
@@ -168,7 +180,6 @@ final class SendMessageReactor: Reactor {
       
     case .setCountry(let country):
       newState = state.with { $0.selectedCountry = country }
-      
     }
     return newState
   }
