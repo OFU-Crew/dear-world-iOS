@@ -93,6 +93,7 @@ final class DiscoverViewController: UIViewController, View {
     countryLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.leading.equalTo(CountryFilterView.snp.leading)
+      $0.width.lessThanOrEqualTo(200)
     }
     let select: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "select")
