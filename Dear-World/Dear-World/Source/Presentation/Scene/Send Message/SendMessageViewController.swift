@@ -11,6 +11,7 @@ import RxKeyboard
 import RxOptional
 import RxSwift
 import UIKit
+import Kingfisher
 import UITextView_Placeholder
 
 final class SendMessageViewController: UIViewController, View {
@@ -23,7 +24,7 @@ final class SendMessageViewController: UIViewController, View {
   private let titleLabel: UILabel = UILabel()
   private let sendButton: UIButton = UIButton()
   private let selectCountryView: SelectCountryView = SelectCountryView()
-  private let emojiLabel: UILabel = UILabel()
+  private let emojiImageView: UIImageView = UIImageView()
   private let refreshButton: UIButton = UIButton()
   private let nameTextField: UITextField = UITextField()
   private let nameCountLabel: UILabel = UILabel()
@@ -114,9 +115,13 @@ final class SendMessageViewController: UIViewController, View {
       })
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.emoji)
+    reactor.state.map(\.emojiURL)
+      .map { URL(string: $0) }
+      .filterNil()
       .distinctUntilChanged()
-      .bind(to: emojiLabel.rx.text)
+      .subscribe { [weak self] in
+        self?.emojiImageView.kf.setImage(with: $0)
+      }
       .disposed(by: disposeBag)
     
     reactor.state.map(\.canSendMessage)
@@ -260,13 +265,10 @@ final class SendMessageViewController: UIViewController, View {
       $0.width.height.equalTo(80)
     }
     
-    self.view.addSubview(emojiLabel)
-    emojiLabel.do {
-      $0.backgroundColor = .grayWhite
-      $0.font = .systemFont(ofSize: 40)
-    }
-    emojiLabel.snp.makeConstraints {
+    self.view.addSubview(emojiImageView)
+    emojiImageView.snp.makeConstraints {
       $0.center.equalTo(profileBackgroundView)
+      $0.edges.equalTo(profileBackgroundView).inset(18)
     }
     
     self.view.addSubview(refreshButton)
@@ -404,9 +406,9 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     RxKeyboard.instance.visibleHeight
-      .drive(onNext: { [weak self] keyboardHeight in
+      .drive { [weak self] keyboardHeight in
         self?.updateBottomBarLayout(with: keyboardHeight)
-      })
+      }
       .disposed(by: disposeBag)
     
     rotateArrowImageViews()

@@ -29,7 +29,7 @@ final class SendMessageReactor: Reactor {
   
   enum Mutation {
     case setEmojiId(Int)
-    case setEmoji(String)
+    case setEmojiURL(String)
     case setName(String)
     case setMessage(String)
     case setPresent(Bool)
@@ -43,14 +43,15 @@ final class SendMessageReactor: Reactor {
     @Revision var isPresentSendAlert: Bool = false
     @Revision var isPresentCancelAlert: Bool = false
     @Revision var selectedCountry: Model.Country?
-    var emoji: String = "👽"
+    var emojiURL: String?
+    var emojiIsLoading: Bool = true
     var canSendMessage: Bool = false
     var name: String = ""
     var message: String = ""
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
-    fileprivate var emojiId: Int = 21
+    fileprivate var emojiId: Int?
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
   }
@@ -87,8 +88,8 @@ final class SendMessageReactor: Reactor {
         .filterNil()
         .flatMap {
           Observable<Mutation>.from([
-            .setEmojiId($0.id),
-            .setEmoji($0.unicode)
+            .setEmojiId($0.id ?? 0),
+            .setEmojiURL($0.imageURL)
           ])
         }
       
@@ -102,11 +103,12 @@ final class SendMessageReactor: Reactor {
       return .just(.setPresentSendAlert(true))
       
     case .confirmSendAlert:
+      guard let emojiId = currentState.emojiId else { return .empty() }
       return .concat(
         Network.request(
           API.SendMessage(
             countryCode: "KR",
-            emojiId: currentState.emojiId,
+            emojiId: emojiId,
             name: currentState.name,
             message: currentState.message
           )
@@ -143,11 +145,6 @@ final class SendMessageReactor: Reactor {
         $0.isPresentCancelAlert = isPresentCancelAlert
       }
       
-    case .setEmoji(let emoji):
-      newState = state.with {
-        $0.emoji = emoji
-      }
-      
     case .setName(let name):
       // FIXME: 🐛 네임 텍스트필드랑 불일치 문제 수정
       let name: String = name.count <= state.nameCountLimit ? name : state.name
@@ -176,7 +173,14 @@ final class SendMessageReactor: Reactor {
       }
       
     case .setEmojiId(let id):
-      newState = state.with { $0.emojiId = id }
+      newState = state.with {
+        $0.emojiId = id
+      }
+      
+    case .setEmojiURL(let emojiURL):
+      newState = state.with {
+        $0.emojiURL = emojiURL
+      }
       
     case .setCountry(let country):
       newState = state.with { $0.selectedCountry = country }

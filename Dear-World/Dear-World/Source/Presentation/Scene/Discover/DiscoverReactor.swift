@@ -10,34 +10,36 @@ import ReactorKit
 import RxOptional
 
 final class DiscoverReactor: Reactor {
+  typealias Model = Message.Model
+  typealias API = Message.API
+  
   enum Action {
     case viewWillAppear
     case tapAbout
-    case countryDidChanged(country: Message.Model.Country?)
-    case sortTypeDidChanged(sortType: Message.Model.ListType?)
+    case countryDidChanged(country: Model.Country?, sortType: Model.ListType? = nil)
     case refresh
     case loadMore
   }
   
   enum Mutation {
-    case setMessages(result: Message.Model.Messages)
+    case setMessages(result: Model.Messages)
     case setRefreshing(Bool)
-    case addMessages(result: Message.Model.Messages)
-    case setCountry(country: Message.Model.Country?)
+    case addMessages(result: Model.Messages)
+    case setCountry(country: Model.Country?)
     case setLoading(Bool)
     case setPresentAboutPage(Bool)
     case setMessageCount(Int)
-    case setCurrentSortType(Message.Model.ListType)
+    case setCurrentSortType(Model.ListType?)
   }
   
   struct State {
     var messageCount: Int = 0
-    @Revision var selectedCountry: Message.Model.Country?
-    @Revision var selectedSortType: Message.Model.ListType = .recent
-    @Revision var messages: Message.Model.Messages = .init(firstMsgId: nil,
-                                                           lastMsgId: nil,
-                                                           messageCount: 0,
-                                                           messages: [])
+    @Revision var selectedCountry: Model.Country?
+    @Revision var selectedSortType: Model.ListType = .recent
+    @Revision var messages: Model.Messages = .init(firstMsgId: nil,
+                                                   lastMsgId: nil,
+                                                   messageCount: 0,
+                                                   messages: [])
     var isRefreshing: Bool = false
     var isLoading: Bool = false
     var isAnimating: Bool = false
@@ -56,13 +58,13 @@ final class DiscoverReactor: Reactor {
     switch action {
     case .viewWillAppear:
       return .merge(
-        Network.request(Message.API.MessageCount(
+        Network.request(API.MessageCount(
           countryCode: currentState.selectedCountry?.code
         ))
         .filterNil()
         .map { Mutation.setMessageCount($0.messageCount) },
         Network.request(
-          Message.API.Messages(
+          API.Messages(
             countryCode: currentState.selectedCountry?.code,
             lastMsgId: nil,
             type: .recent
@@ -80,14 +82,14 @@ final class DiscoverReactor: Reactor {
         .concat(
           .just(.setCountry(country: country)),
           .just(.setLoading(true)),
-            Network.request(
-              Message.API.Messages(
-                countryCode: country?.code,
-                lastMsgId: nil,
-                type: currentState.selectedSortType)
-            )
-            .filterNil()
-            .map{ Mutation.setMessages(result: $0) },
+          Network.request(
+            Message.API.Messages(
+              countryCode: country?.code,
+              lastMsgId: nil,
+              type: currentState.selectedSortType)
+          )
+          .filterNil()
+          .map{ Mutation.setMessages(result: $0) },
           .just(.setLoading(false))
         )
         .filterNil()
@@ -96,7 +98,7 @@ final class DiscoverReactor: Reactor {
         .just(.setCurrentSortType(sortType)),
         .just(.setLoading(true)),
         Network.request(
-          Message.API.Messages(
+          API.Messages(
             countryCode: country?.code,
             lastMsgId: nil,
             type: sortType ?? currentState.selectedSortType
@@ -114,14 +116,14 @@ final class DiscoverReactor: Reactor {
         .concat(
           .just(.setCurrentSortType(sortType ?? .recent)),
           .just(.setLoading(true)),
-            Network.request(
-              Message.API.Messages(
-                countryCode: currentState.selectedCountry?.code,
-                lastMsgId: nil,
-                type: sortType ?? .recent)
-            )
-            .filterNil()
-            .map{ Mutation.setMessages(result: $0) },
+          Network.request(
+            Message.API.Messages(
+              countryCode: currentState.selectedCountry?.code,
+              lastMsgId: nil,
+              type: sortType ?? .recent)
+          )
+          .filterNil()
+          .map{ Mutation.setMessages(result: $0) },
           .just(.setLoading(false))
         )
       )
@@ -136,7 +138,7 @@ final class DiscoverReactor: Reactor {
       return Observable<Mutation>.concat([
         .just(.setLoading(true)),
         Network.request(
-          Message.API.Messages(
+          API.Messages(
             countryCode: currentState.selectedCountry?.code,
             lastMsgId: currentState.messages.lastMsgId,
             type: currentState.selectedSortType
@@ -163,7 +165,12 @@ final class DiscoverReactor: Reactor {
       newState.isRefreshing = flag
       
     case let .addMessages(result: results):
-      newState.messages = Message.Model.Messages(firstMsgId: state.messages.firstMsgId, lastMsgId: results.lastMsgId, messageCount: state.messageCount + results.messageCount, messages: currentState.messages.messages + results.messages)
+      newState.messages = Model.Messages(
+        firstMsgId: state.messages.firstMsgId,
+        lastMsgId: results.lastMsgId,
+        messageCount: state.messageCount + results.messageCount,
+        messages: currentState.messages.messages + results.messages
+      )
       
     case let .setCountry(country: country):
       newState.selectedCountry = country
@@ -176,8 +183,9 @@ final class DiscoverReactor: Reactor {
       
     case let .setMessageCount(count):
       newState.messageCount = count
+      
     case let .setCurrentSortType(type):
-        newState.selectedSortType = type
+      newState.selectedSortType = type
     }
     return newState
   }

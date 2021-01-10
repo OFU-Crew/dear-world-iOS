@@ -13,6 +13,7 @@ import Then
 import UIKit
 
 final class DiscoverViewController: UIViewController, View {
+  typealias Model = Message.Model
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
@@ -149,7 +150,7 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: Message.Model.Country(
+    reactor.action.onNext(.countryDidChanged(country: Model.Country(
                                               code: nil,
                                               fullName: "Whole World",
                                               emojiUnicode: "🍎"
@@ -234,9 +235,13 @@ final class DiscoverViewController: UIViewController, View {
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
+      .flatMap { [weak self] _ -> Observable<Model.Country> in
         guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
-        return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedCountry)
+        return CountrySelectController.selectCountry(
+          presenting: self,
+          disposeBag: self.disposeBag,
+          selected: self.reactor?.currentState.selectedCountry
+        )
       }
       .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
@@ -252,8 +257,8 @@ final class DiscoverViewController: UIViewController, View {
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Message.Model.ListType> in
-        guard let self = self else { return .just(Message.Model.ListType.recent) }
+      .flatMap { [weak self] _ -> Observable<Model.ListType> in
+        guard let self = self else { return .just(Model.ListType.recent) }
         return SortTypeSelectController
           .select(
             presenting: self,

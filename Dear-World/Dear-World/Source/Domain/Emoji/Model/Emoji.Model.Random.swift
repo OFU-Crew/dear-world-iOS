@@ -9,7 +9,14 @@ import Foundation
 
 extension Emoji.Model {
   struct Random: Decodable {
-    let id: Int
+    let id: Int?
     let unicode: String
+    let imageURL: String
+    
+    enum CodingKeys: String, CodingKey {
+      case id
+      case unicode
+      case imageURL = "imageUrl"
+    }
   }
 }
