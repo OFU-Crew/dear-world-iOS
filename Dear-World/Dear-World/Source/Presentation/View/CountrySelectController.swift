@@ -143,7 +143,12 @@ public final class CountrySelectController: UIViewController {
     self.wholeWorldButton
       .rx.tap
       .subscribe(onNext: { [weak self] in
-        self?.selectedCountry = .init(code: nil, fullName: "Whole world", emojiUnicode: "🍎")
+        self?.selectedCountry = .init(
+          code: nil,
+          fullName: "Whole world",
+          emojiUnicode: "🍎",
+          imageURL: nil
+        )
         self?.willMove(toParent: nil)
       })
       .disposed(by: self.disposeBag)

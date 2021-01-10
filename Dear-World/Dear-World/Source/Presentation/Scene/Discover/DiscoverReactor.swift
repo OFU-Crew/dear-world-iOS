@@ -37,10 +37,12 @@ final class DiscoverReactor: Reactor {
     var messageCount: Int = 0
     @Revision var selectedCountry: Model.Country?
     @Revision var selectedSortType: Model.ListType = .recent
-    @Revision var messages: Model.Messages = .init(firstMsgId: nil,
-                                                   lastMsgId: nil,
-                                                   messageCount: 0,
-                                                   messages: [])
+    @Revision var messages: Model.Messages = .init(
+      firstMsgId: nil,
+      lastMsgId: nil,
+      messageCount: 0,
+      messages: []
+    )
     var isRefreshing: Bool = false
     var isLoading: Bool = false
     var isAnimating: Bool = false
@@ -59,9 +61,11 @@ final class DiscoverReactor: Reactor {
     switch action {
     case .viewWillAppear:
       return .merge(
-        Network.request(API.MessageCount(
-          countryCode: currentState.selectedCountry?.code
-        ))
+        Network.request(
+          API.MessageCount(
+            countryCode: currentState.selectedCountry?.code
+          )
+        )
         .filterNil()
         .map { Mutation.setMessageCount($0.messageCount) },
         Network.request(
@@ -77,17 +81,22 @@ final class DiscoverReactor: Reactor {
       
     case let .countryDidChanged(country):
       return .merge(
-        Network.request(Message.API.MessageCount(countryCode: country?.code))
-          .filterNil()
-          .map { .setMessageCount($0.messageCount) },
+        Network.request(
+          API.MessageCount(
+            countryCode: country?.code
+          )
+        )
+        .filterNil()
+        .map { .setMessageCount($0.messageCount) },
         .concat(
           .just(.setCountry(country: country)),
           .just(.setLoading(true)),
           Network.request(
-            Message.API.Messages(
+            API.Messages(
               countryCode: country?.code,
               lastMsgId: nil,
-              type: currentState.selectedSortType)
+              type: currentState.selectedSortType
+            )
           )
           .filterNil()
           .map{ Mutation.setMessages(result: $0) },
@@ -96,17 +105,22 @@ final class DiscoverReactor: Reactor {
       )
     case let .sortTypeDidChanged(sortType: sortType) :
       return .merge(
-        Network.request(Message.API.MessageCount(countryCode: currentState.selectedCountry?.code))
-          .filterNil()
-          .map { .setMessageCount($0.messageCount) },
+        Network.request(
+          API.MessageCount(
+            countryCode: currentState.selectedCountry?.code
+          )
+        )
+        .filterNil()
+        .map { .setMessageCount($0.messageCount) },
         .concat(
           .just(.setCurrentSortType(sortType ?? .recent)),
           .just(.setLoading(true)),
           Network.request(
-            Message.API.Messages(
+            API.Messages(
               countryCode: currentState.selectedCountry?.code,
               lastMsgId: nil,
-              type: sortType ?? .recent)
+              type: sortType ?? .recent
+            )
           )
           .filterNil()
           .map{ Mutation.setMessages(result: $0) },

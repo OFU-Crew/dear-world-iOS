@@ -150,11 +150,13 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: DiscoverReactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(country: Model.Country(
-                                              code: nil,
-                                              fullName: "Whole World",
-                                              emojiUnicode: "🍎"
-    )))
+    reactor.action.onNext(.countryDidChanged(
+      country: Model.Country(
+        code: nil,
+        fullName: "Whole World",
+        emojiUnicode: "🍎", imageURL: nil
+      )
+    ))
     
     reactor.state
       .map(\.messageCount)
@@ -236,7 +238,14 @@ final class DiscoverViewController: UIViewController, View {
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
       .flatMap { [weak self] _ -> Observable<Model.Country> in
-        guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
+        guard let self = self else {
+          return Observable.just(Message.Model.Country(
+                                  code: "",
+                                  fullName: "",
+                                  emojiUnicode: "",
+                                  imageURL: nil)
+          )
+        }
         return CountrySelectController.selectCountry(
           presenting: self,
           disposeBag: self.disposeBag,
@@ -246,7 +255,7 @@ final class DiscoverViewController: UIViewController, View {
       .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
-
+    
     self.aboutButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { Reactor.Action.tapAbout }
@@ -313,20 +322,20 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
-      cell.do {
-        let cellMessage = self.messages[indexPath.row]
-        $0.nameLabel.text = cellMessage.user.nickname
-        $0.emojiLabel.text = cellMessage.user.emoji.unicode
-        $0.detailTextView.text = cellMessage.content
-        $0.likeCount = cellMessage.likeCount
-        $0.isLike = cellMessage.isLiked
-        $0.countryLabel.text = cellMessage.user.country.emojiUnicode
-        $0.messageId = cellMessage.id
-      }
+    cell.do {
+      let cellMessage = self.messages[indexPath.row]
+      $0.nameLabel.text = cellMessage.user.nickname
+      $0.emojiLabel.text = cellMessage.user.emoji.unicode
+      $0.detailTextView.text = cellMessage.content
+      $0.likeCount = cellMessage.likeCount
+      $0.isLike = cellMessage.isLiked
+      $0.countryLabel.text = cellMessage.user.country.emojiUnicode
+      $0.messageId = cellMessage.id
+    }
     bindShareButton(button: cell.shareButton)
     return cell
   }
-
+  
   private func bindShareButton(button: UIButton) {
     button
       .rx.tap

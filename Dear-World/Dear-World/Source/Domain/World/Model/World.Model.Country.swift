@@ -13,6 +13,7 @@ extension World.Model {
     let code: String
     let name: String
     let emoji: String
+    let imageURL: String?
     let status: Status?
     
     enum CodingKeys: String, CodingKey {
@@ -21,6 +22,7 @@ extension World.Model {
       case name = "fullName"
       case emoji = "emojiUnicode"
       case status = "countryStatus"
+      case imageURL = "imageUrl"
     }
   }
 }
