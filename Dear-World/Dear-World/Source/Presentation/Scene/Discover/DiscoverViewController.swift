@@ -16,13 +16,14 @@ final class DiscoverViewController: UIViewController, View {
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
-  private let filterContainerView: UIView = UIView()
+  private let CountryFilterView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
   private let messageTableView: UITableView = UITableView(frame: .null, style: .grouped)
   private let aboutButton: UIButton = UIButton()
   private let sortView: UIView = UIView()
   private var sortLabel: UILabel = UILabel()
   private var messages: [Message.Model.Message] = []
+  let filterContainerView: UIView = UIView()
   
   var disposeBag: DisposeBag = DisposeBag()
   
@@ -41,7 +42,7 @@ final class DiscoverViewController: UIViewController, View {
   
   private func startInitAnimation() {
     animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
-    animate(view: filterContainerView, alpha: 0.4, length: 20, duration: 0.4)
+    animate(view: CountryFilterView, alpha: 0.4, length: 20, duration: 0.4)
   }
   
   private func animate(view: UIView, alpha: CGFloat, length: CGFloat, duration: Double, delay: Double = 0) {
@@ -62,7 +63,71 @@ final class DiscoverViewController: UIViewController, View {
     }
     self.view.addSubview(self.messageTableView)
     self.messageTableView.snp.makeConstraints {
-      $0.top.bottom.trailing.leading.equalToSuperview()
+      $0.top.bottom.trailing.leading.equalTo(self.view.safeAreaLayoutGuide)
+    }
+    
+    filterContainerView.do {
+      $0.backgroundColor = .breathingWhite
+    }
+    messageTableView.addSubview(filterContainerView)
+    filterContainerView.snp.makeConstraints {
+      $0.trailing.leading.equalToSuperview()
+      $0.height.equalTo(50)
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview().inset(109)
+      $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide)
+    }
+    // 나라 필터링 뷰
+    filterContainerView.addSubview(self.CountryFilterView)
+    self.CountryFilterView.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.centerY.equalToSuperview()
+      $0.height.equalTo(20)
+    }
+    countryLabel.do {
+      $0.font = .boldSystemFont(ofSize: 16)
+      $0.textColor = .warmBlue
+    }
+    CountryFilterView.addSubview(countryLabel)
+    countryLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(CountryFilterView.snp.leading)
+    }
+    let select: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "select")
+    }
+    CountryFilterView.addSubview(select)
+    select.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.width.equalTo(14)
+      $0.height.equalTo(8)
+      $0.trailing.equalTo(CountryFilterView.snp.trailing)
+      $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
+    }
+    
+    // 소트 뷰
+    filterContainerView.addSubview(sortView)
+    sortView.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalToSuperview().inset(23)
+    }
+    self.sortLabel.do {
+      $0.text = "Recent"
+      $0.textColor = .warmBlue
+      $0.font = .systemFont(ofSize: 12)
+    }
+    sortView.addSubview(sortLabel)
+    sortLabel.snp.makeConstraints {
+      $0.top.leading.bottom.equalToSuperview()
+    }
+    let sortIcon: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "sort")
+    }
+    sortView.addSubview(sortIcon)
+    sortIcon.snp.makeConstraints {
+      $0.trailing.centerY.equalToSuperview()
+      $0.size.equalTo(16)
+      $0.leading.equalTo(sortLabel.snp.trailing).offset(5)
     }
   }
   
@@ -158,7 +223,7 @@ final class DiscoverViewController: UIViewController, View {
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    self.filterContainerView
+    self.CountryFilterView
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
@@ -198,6 +263,9 @@ final class DiscoverViewController: UIViewController, View {
   }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    tableView.bringSubviewToFront(filterContainerView)
+  }
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     makeHeaderView()
   }
@@ -210,60 +278,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     messageCountBadgeView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().inset(16)
-    }
-    
-    // 나라 필터링 뷰
-    headerView.addSubview(self.filterContainerView)
-    self.filterContainerView.snp.makeConstraints {
-      $0.leading.equalToSuperview().inset(20)
-      $0.top.equalTo(messageCountBadgeView.snp.bottom).offset(30)
-      $0.height.equalTo(26)
-    }
-    countryLabel.do {
-      $0.font = .boldSystemFont(ofSize: 16)
-      $0.textColor = .warmBlue
-    }
-    filterContainerView.addSubview(countryLabel)
-    countryLabel.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
-      $0.leading.equalTo(filterContainerView.snp.leading)
-    }
-    let select: UIImageView = UIImageView().then {
-      $0.image = UIImage(named: "select")
-    }
-    filterContainerView.addSubview(select)
-    select.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
-      $0.width.equalTo(14)
-      $0.height.equalTo(8)
-      $0.trailing.equalTo(filterContainerView.snp.trailing)
-      $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
-    }
-    
-    // 소트 뷰
-    headerView.addSubview(sortView)
-    sortView.snp.makeConstraints {
-      $0.centerY.equalTo(filterContainerView)
-      $0.trailing.equalToSuperview().inset(23)
-    }
-    self.sortLabel.do {
-      //FIXME : 왜 값을 넣으면 겹치는가
-      $0.text = "Recent"
-      $0.textColor = .warmBlue
-      $0.font = .systemFont(ofSize: 12)
-    }
-    sortView.addSubview(sortLabel)
-    sortLabel.snp.makeConstraints {
-      $0.top.leading.bottom.equalToSuperview()
-    }
-    let sortIcon: UIImageView = UIImageView().then {
-      $0.image = UIImage(named: "sort")
-    }
-    sortView.addSubview(sortIcon)
-    sortIcon.snp.makeConstraints {
-      $0.trailing.centerY.equalToSuperview()
-      $0.size.equalTo(16)
-      $0.leading.equalTo(sortLabel.snp.trailing).offset(5)
     }
     
     // 어바웃 버튼
@@ -302,11 +316,14 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     button
       .rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .subscribe {
+      .subscribe (onNext: {
+        self.CountryFilterView.snp.makeConstraints {
+          $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide)
+        }
         let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         self.present(activityVC, animated: true)
-      }
+      })
       .disposed(by: self.disposeBag)
   }
 }

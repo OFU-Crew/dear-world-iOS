@@ -173,9 +173,6 @@ final class MessageTableViewCell: UITableViewCell {
       .rx.tapGesture()
       .debug()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .filter { [weak self] _ in
-        self?.isLike == false
-      }
       .flatMap { [weak self] _ -> Observable<Bool?> in
         guard let id = self?.messageId else {
           return Observable.just(false)
