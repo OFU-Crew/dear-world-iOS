@@ -28,7 +28,7 @@ final class RankerTableViewCell: UITableViewCell {
   
   // MARK: 🖼 UI
   let rankLabel: UILabel = UILabel()
-  let countryFlagLabel: UILabel = UILabel()
+  let countryFlagImageView: UIImageView = UIImageView()
   let countryNameLabel: UILabel = UILabel()
   let messageCountLabel: UILabel = UILabel()
   let cheerUpButton: CheerUpButton = CheerUpButton()
@@ -51,21 +51,19 @@ final class RankerTableViewCell: UITableViewCell {
   // MARK: 📍 Setup
   private func setupUI() {
     self.contentView.addSubview(rankLabel)
-    self.contentView.addSubview(countryFlagLabel)
+    self.contentView.addSubview(countryFlagImageView)
     rankLabel.do {
       $0.font = .boldSystemFont(ofSize: 12)
     }
     rankLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
-      $0.bottom.equalTo(countryFlagLabel)
+      $0.bottom.equalTo(countryFlagImageView)
     }
-    
-    countryFlagLabel.do {
-      $0.font = .boldSystemFont(ofSize: 14)
-    }
-    countryFlagLabel.snp.makeConstraints {
+    countryFlagImageView.snp.makeConstraints {
       $0.top.equalToSuperview().inset(14)
       $0.leading.equalToSuperview().inset(62)
+      $0.width.equalTo(18)
+      $0.height.equalTo(18)
     }
     
     self.contentView.addSubview(countryNameLabel)
@@ -75,15 +73,15 @@ final class RankerTableViewCell: UITableViewCell {
     }
     countryNameLabel.snp.makeConstraints {
       $0.top.equalToSuperview().inset(12)
-      $0.leading.equalTo(countryFlagLabel.snp.trailing).offset(10)
+      $0.leading.equalTo(countryFlagImageView.snp.trailing).offset(10)
     }
     
     let messageImageView: UIImageView = UIImageView(image: UIImage(named: "message_default")!)
     self.contentView.addSubview(messageImageView)
     messageImageView.snp.makeConstraints {
       $0.leading.equalTo(countryNameLabel)
-      $0.width.equalTo(12)
-      $0.height.equalTo(9)
+      $0.width.equalTo(18)
+      $0.height.equalTo(12)
       $0.top.equalTo(countryNameLabel.snp.bottom).offset(10)
     }
     
@@ -114,7 +112,9 @@ final class RankerTableViewCell: UITableViewCell {
   func configure(with country: World.Model.Country, ranking: Int) {
     rankLabel.attributedText = formatRank(ranking)
     countryNameLabel.text = country.name
-    countryFlagLabel.text = country.emoji
+    if let url = URL(string: country.imageURL) {
+      countryFlagImageView.kf.setImage(with: url)
+    }
     messageCountLabel.text = country.status?.messageCount.formatted
   }
   

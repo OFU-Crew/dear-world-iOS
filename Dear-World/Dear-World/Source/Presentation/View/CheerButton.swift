@@ -54,11 +54,11 @@ final class CheerUpButton: UIButton {
       $0.borderColor = UIColor.grayWhite.cgColor
     }
     self.addTarget(self, action: #selector(activate), for: .touchDown)
+    self.addTarget(self, action: #selector(occurHapticFeedback), for: [.touchDown])
     self.addTarget(self, action: #selector(deactivate), for: [.touchUpInside,
                                                               .touchUpOutside,
                                                               .touchCancel,
                                                               .touchDragExit])
-    self.addTarget(self, action: #selector(occurHapticFeedback), for: [.touchDown])
   }
   
   @objc

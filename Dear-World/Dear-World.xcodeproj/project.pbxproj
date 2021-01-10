@@ -11,8 +11,6 @@
 		121BDB44259735200062B15A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB43259735200062B15A /* UIColor+.swift */; };
 		121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB582597652A0062B15A /* MessageTableViewCell.swift */; };
 		121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB662597982F0062B15A /* DiscoverReactor.swift */; };
-		121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB6B2597A49B0062B15A /* MessageMock.swift */; };
-		121BDB712597A5D60062B15A /* APIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB702597A5D60062B15A /* APIMock.swift */; };
 		121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB8D259829840062B15A /* CountrySelectController.swift */; };
 		12257E1825A622750007E65E /* SortTypeSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12257E1725A622750007E65E /* SortTypeSelectController.swift */; };
 		1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09625A1C87400E3F121 /* Message.API.Countries.swift */; };
@@ -28,6 +26,7 @@
 		3902F12425970E5600A3DF8C /* Number+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F12325970E5600A3DF8C /* Number+.swift */; };
 		3902F12A259714D800A3DF8C /* RankerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3902F129259714D800A3DF8C /* RankerTableViewCell.swift */; };
 		3914D9E6259F3FA1009765B0 /* Message.Model.Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3914D9E5259F3FA1009765B0 /* Message.Model.Messages.swift */; };
+		391E066A25AB7BBF006158E4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 391E066925AB7BBF006158E4 /* Kingfisher */; };
 		393E0D4025A23A12000DB3B9 /* World.Model.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D3F25A23A12000DB3B9 /* World.Model.Map.swift */; };
 		393E0D4525A23A7B000DB3B9 /* World.API.Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D4425A23A7B000DB3B9 /* World.API.Map.swift */; };
 		393E0D5725A2BE3C000DB3B9 /* AboutTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393E0D5625A2BE3C000DB3B9 /* AboutTeamViewController.swift */; };
@@ -115,8 +114,6 @@
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		121BDB662597982F0062B15A /* DiscoverReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DiscoverReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
-		121BDB6B2597A49B0062B15A /* MessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMock.swift; sourceTree = "<group>"; };
-		121BDB702597A5D60062B15A /* APIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMock.swift; sourceTree = "<group>"; };
 		121BDB8D259829840062B15A /* CountrySelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectController.swift; sourceTree = "<group>"; };
 		12257E1725A622750007E65E /* SortTypeSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTypeSelectController.swift; sourceTree = "<group>"; };
 		1263E09625A1C87400E3F121 /* Message.API.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Countries.swift; sourceTree = "<group>"; };
@@ -207,6 +204,7 @@
 				3971EB32259A8BC90084E6DC /* SwiftRichString in Frameworks */,
 				39518C8125A8FB9D00F777D1 /* FirebaseCrashlytics in Frameworks */,
 				395825F0259494B1007325AB /* ReactorKit in Frameworks */,
+				391E066A25AB7BBF006158E4 /* Kingfisher in Frameworks */,
 				3958261B2596D06C007325AB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,8 +452,6 @@
 				121BDB57259764F10062B15A /* Cell */,
 				395826112596322B007325AB /* DiscoverViewController.swift */,
 				121BDB662597982F0062B15A /* DiscoverReactor.swift */,
-				121BDB6B2597A49B0062B15A /* MessageMock.swift */,
-				121BDB702597A5D60062B15A /* APIMock.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -634,6 +630,7 @@
 				39518C8025A8FB9D00F777D1 /* FirebaseCrashlytics */,
 				39518C8225A8FB9D00F777D1 /* FirebaseRemoteConfig */,
 				39518C8425A8FB9D00F777D1 /* FirebaseAuth */,
+				391E066925AB7BBF006158E4 /* Kingfisher */,
 			);
 			productName = "Dear-World";
 			productReference = 3958257725948E41007325AB /* Dear-World.app */;
@@ -719,6 +716,7 @@
 				3971EB30259A8BC90084E6DC /* XCRemoteSwiftPackageReference "SwiftRichString" */,
 				39658F99259ADB130050D180 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				391E066825AB7BBF006158E4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 3958257825948E41007325AB /* Products */;
 			projectDirPath = "";
@@ -823,7 +821,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				39EED241259D0227007452E1 /* Revision.swift in Sources */,
-				121BDB712597A5D60062B15A /* APIMock.swift in Sources */,
 				39672DB32598D139001D7E69 /* SelectCountryView.swift in Sources */,
 				39E9F7DB25A1BBED00BC2CC2 /* PixelWorldMapView.swift in Sources */,
 				3902F118259704AF00A3DF8C /* AboutViewController.swift in Sources */,
@@ -877,7 +874,6 @@
 				39E9F7E025A1BC3C00BC2CC2 /* NoticeBadge.swift in Sources */,
 				12257E1825A622750007E65E /* SortTypeSelectController.swift in Sources */,
 				39E9F7ED25A1C84900BC2CC2 /* WorldMap.Model.Country.swift in Sources */,
-				121BDB6C2597A49B0062B15A /* MessageMock.swift in Sources */,
 				39658FC0259AE58C0050D180 /* World.Model.Country.swift in Sources */,
 				121BDB8E259829840062B15A /* CountrySelectController.swift in Sources */,
 				121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */,
@@ -1057,6 +1053,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OFU.Dear-World";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1079,6 +1076,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OFU.Dear-World";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1213,6 +1211,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		391E066825AB7BBF006158E4 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.1;
+			};
+		};
 		39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1312,6 +1318,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		391E066925AB7BBF006158E4 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 391E066825AB7BBF006158E4 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		39518C7C25A8FB9D00F777D1 /* FirebaseInstallations */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39518C7B25A8FB9D00F777D1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

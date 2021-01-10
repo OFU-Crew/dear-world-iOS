@@ -48,6 +48,7 @@ final class AboutReactor: Reactor {
     switch action {
     case .initalize:
       return .empty()
+      
     case .tapCrewInfo:
       return .just(.setPresentCrewInfo(true))
       

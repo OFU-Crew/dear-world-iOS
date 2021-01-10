@@ -22,32 +22,36 @@ final class SendMessageReactor: Reactor {
     case typeName(String)
     case typeMessage(String)
     case tapSendMessage
-    case confirmAlert
+    case confirmSendAlert
+    case confirmCancelAlert
     case countryDidChange(Model.Country)
   }
   
   enum Mutation {
     case setEmojiId(Int)
-    case setEmoji(String)
+    case setEmojiURL(String)
     case setName(String)
     case setMessage(String)
     case setPresent(Bool)
-    case setPresentAlert(Bool)
+    case setPresentSendAlert(Bool)
+    case setPresentCancelAlert(Bool)
     case setCountry(Model.Country)
   }
   
   struct State: Then {
     @Revision var isPresented: Bool = true
-    @Revision var isPresentAlert: Bool = false
-    var emoji: String = "👽"
+    @Revision var isPresentSendAlert: Bool = false
+    @Revision var isPresentCancelAlert: Bool = false
+    @Revision var selectedCountry: Model.Country?
+    var emojiURL: String?
+    var emojiIsLoading: Bool = true
     var canSendMessage: Bool = false
     var name: String = ""
     var message: String = ""
     var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
     var messageLimitGauge: Float = 0.0
     var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
-    @Revision var selectedCountry: Model.Country?
-    fileprivate var emojiId: Int = 21
+    fileprivate var emojiId: Int?
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
   }
@@ -77,15 +81,15 @@ final class SendMessageReactor: Reactor {
       return .empty()
       
     case .tapClose:
-      return .just(.setPresent(false))
+      return .just(.setPresentCancelAlert(true))
       
     case .tapRefresh:
       return Network.request(Emoji.API.Random())
         .filterNil()
         .flatMap {
           Observable<Mutation>.from([
-            .setEmojiId($0.id),
-            .setEmoji($0.unicode)
+            .setEmojiId($0.id ?? 0),
+            .setEmojiURL($0.imageURL)
           ])
         }
       
@@ -96,21 +100,26 @@ final class SendMessageReactor: Reactor {
       return .just(.setMessage(message))
       
     case .tapSendMessage:
-      return .just(.setPresentAlert(true))
+      return .just(.setPresentSendAlert(true))
       
-    case .confirmAlert:
-      let api: API.SendMessage = API.SendMessage(
-        countryCode: "KR",
-        emojiId: currentState.emojiId,
-        name: currentState.name,
-        message: currentState.message
-      )
+    case .confirmSendAlert:
+      guard let emojiId = currentState.emojiId else { return .empty() }
       return .concat(
-        Network.request(api)
-          .filterNil()
-          .flatMap { _ in Observable<Mutation>.empty() },
+        Network.request(
+          API.SendMessage(
+            countryCode: "KR",
+            emojiId: emojiId,
+            name: currentState.name,
+            message: currentState.message
+          )
+        )
+        .filterNil()
+        .flatMap { _ in Observable<Mutation>.empty() },
         .just(.setPresent(false))
       )
+      
+    case .confirmCancelAlert:
+      return .just(.setPresent(false))
       
     case .countryDidChange(let country):
       return .just(.setCountry(country))
@@ -126,14 +135,14 @@ final class SendMessageReactor: Reactor {
         $0.isPresented = isPresented
       }
       
-    case .setPresentAlert(let isPresentAlert):
+    case .setPresentSendAlert(let isPresentSendAlert):
       newState = state.with {
-        $0.isPresentAlert = isPresentAlert
+        $0.isPresentSendAlert = isPresentSendAlert
       }
       
-    case .setEmoji(let emoji):
+    case .setPresentCancelAlert(let isPresentCancelAlert):
       newState = state.with {
-        $0.emoji = emoji
+        $0.isPresentCancelAlert = isPresentCancelAlert
       }
       
     case .setName(let name):
@@ -164,11 +173,17 @@ final class SendMessageReactor: Reactor {
       }
       
     case .setEmojiId(let id):
-      newState = state.with { $0.emojiId = id }
+      newState = state.with {
+        $0.emojiId = id
+      }
+      
+    case .setEmojiURL(let emojiURL):
+      newState = state.with {
+        $0.emojiURL = emojiURL
+      }
       
     case .setCountry(let country):
       newState = state.with { $0.selectedCountry = country }
-      
     }
     return newState
   }

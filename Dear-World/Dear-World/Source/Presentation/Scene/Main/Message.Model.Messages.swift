@@ -45,8 +45,15 @@ extension Message.Model {
     let country: Country
     let nickname: String
     let emoji: Emoji
+    
     struct Emoji: Decodable {
       let unicode: String
+      let imageURL: String
+      
+      enum CodingKeys: String, CodingKey {
+        case unicode
+        case imageURL = "imageUrl"
+      }
     }
   }
   
@@ -54,6 +61,14 @@ extension Message.Model {
     let code: String?
     let fullName: String
     let emojiUnicode: String?
+    let imageURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+      case code
+      case fullName
+      case emojiUnicode
+      case imageURL = "imageUrl"
+    }
   }
   
   enum ListType: String, CaseIterable {
