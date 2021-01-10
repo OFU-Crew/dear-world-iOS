@@ -203,7 +203,13 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
-      .map(\.selectedCountry)
+      .subscribe { _ in
+        self.messageTableView.setContentOffset(.zero, animated: false)
+      }
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$selectedSortType)
       .subscribe { _ in
         self.messageTableView.setContentOffset(.zero, animated: false)
       }
@@ -231,7 +237,7 @@ final class DiscoverViewController: UIViewController, View {
         guard let self = self else { return Observable.just(Message.Model.Country(code: "", fullName: "", emojiUnicode: "")) }
         return CountrySelectController.selectCountry(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedCountry)
       }
-      .map { Reactor.Action.countryDidChanged(country: $0, sortType: reactor.currentState.selectedSortType) }
+      .map { Reactor.Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
 
@@ -250,7 +256,7 @@ final class DiscoverViewController: UIViewController, View {
         guard let self = self else { return Observable.just(Message.Model.ListType.recent)}
         return SortTypeSelectController.select(presenting: self, disposeBag: self.disposeBag, selected: self.reactor?.currentState.selectedSortType)
       }
-      .map { Reactor.Action.countryDidChanged(country: reactor.currentState.selectedCountry, sortType: $0)}
+      .map { Reactor.Action.sortTypeDidChanged(sortType: $0)}
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
@@ -260,6 +266,7 @@ final class DiscoverViewController: UIViewController, View {
       .map(\.title)
       .bind(to: self.sortLabel.rx.text)
       .disposed(by: self.disposeBag)
+    
   }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
