@@ -72,8 +72,10 @@ final class MessageTableViewCell: UITableViewCell {
     }
     let mainView: UIView = UIView().then {
       $0.backgroundColor = .white
-      $0.layer.masksToBounds = true
       $0.layer.cornerRadius = 20
+      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+      $0.layer.shadowOpacity = 0.1
+      $0.layer.shadowColor = UIColor.black.cgColor
     }
     self.contentView.addSubview(mainView)
     mainView.snp.makeConstraints {
@@ -82,19 +84,23 @@ final class MessageTableViewCell: UITableViewCell {
       $0.bottom.equalToSuperview()
     }
     
-    let emojiView: UIImageView = UIImageView().then {
+    let emojiBackgroundView: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "emojiBox")
     }
-    mainView.addSubview(emojiView)
-    emojiView.snp.makeConstraints {
+    mainView.addSubview(emojiBackgroundView)
+    emojiBackgroundView.snp.makeConstraints {
       $0.top.leading.equalToSuperview().inset(30)
       $0.height.width.equalTo(40)
     }
-    
+    emojiImageView.do {
+      $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowColor = UIColor.black.cgColor
+    }
     mainView.addSubview(emojiImageView)
     emojiImageView.snp.makeConstraints {
       $0.size.equalTo(20)
-      $0.center.equalTo(emojiView)
+      $0.center.equalTo(emojiBackgroundView)
     }
     
     self.nameLabel.do {
@@ -108,11 +114,10 @@ final class MessageTableViewCell: UITableViewCell {
       $0.leading.equalTo(emojiView.snp.trailing).offset(10)
       $0.trailing.lessThanOrEqualToSuperview()
     }
-    
     mainView.addSubview(countryFlagImageView)
     countryFlagImageView.snp.makeConstraints {
-      $0.bottom.equalTo(emojiView.snp.bottom)
-      $0.leading.equalTo(emojiView.snp.trailing).offset(10)
+      $0.bottom.equalTo(emojiBackgroundView.snp.bottom)
+      $0.leading.equalTo(emojiBackgroundView.snp.trailing).offset(10)
       $0.width.height.equalTo(18)
     }
     self.countryLabel.do {
@@ -138,7 +143,7 @@ final class MessageTableViewCell: UITableViewCell {
     mainView.addSubview(self.detailTextView)
     self.detailTextView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(30)
-      $0.top.equalTo(emojiView.snp.bottom).offset(10)
+      $0.top.equalTo(emojiBackgroundView.snp.bottom).offset(10)
     }
     
     self.likeView.do {

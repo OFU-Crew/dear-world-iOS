@@ -265,7 +265,11 @@ final class SendMessageViewController: UIViewController, View {
       $0.top.equalTo(selectCountryView.snp.bottom).offset(20)
       $0.width.height.equalTo(80)
     }
-    
+    emojiImageView.do {
+      $0.layer.shadowOffset = CGSize(width: 0, height: 10)
+      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowColor = UIColor.black.cgColor
+    }
     self.view.addSubview(emojiImageView)
     emojiImageView.snp.makeConstraints {
       $0.center.equalTo(profileBackgroundView)
