@@ -26,9 +26,9 @@ final class MessageTableViewCell: UITableViewCell {
     }
   }
   var isLike: Bool = false {
-    //FIXME : 내려올 때 isLiked가 항상 false로 내려옴
     didSet {
       self.likeView.image = isLike ? UIImage(named: "heart_liked") : UIImage(named: "heart")
+      self.likeCountLabel.textColor = isLike ? .loveRed : .grayWhite
     }
   }
   var messageId: Int?
