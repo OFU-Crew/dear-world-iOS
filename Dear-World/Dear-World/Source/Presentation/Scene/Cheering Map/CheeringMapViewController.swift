@@ -77,7 +77,8 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     reactor.state
       .distinctUntilChanged(\.$isPresentAboutPage)
       .map { $0.isPresentAboutPage }
-      .subscribe(onNext: { [weak self] in
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
         let viewController = AboutViewController().then {
           $0.reactor = AboutReactor()
         }

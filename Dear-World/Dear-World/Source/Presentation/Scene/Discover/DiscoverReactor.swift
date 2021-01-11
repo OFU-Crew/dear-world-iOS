@@ -17,7 +17,7 @@ final class DiscoverReactor: Reactor {
     case viewWillAppear
     case tapAbout
     case countryDidChanged(country: Message.Model.Country?)
-    case sortTypeDidChanged(sortType: Message.Model.ListType?)
+    case sortTypeDidChanged(sortType: Message.Model.Sort?)
     case refresh
     case loadMore
   }
@@ -30,13 +30,13 @@ final class DiscoverReactor: Reactor {
     case setLoading(Bool)
     case setPresentAboutPage(Bool)
     case setMessageCount(Int)
-    case setCurrentSortType(Model.ListType)
+    case setCurrentSortType(Model.Sort)
   }
   
   struct State {
     var messageCount: Int = 0
     @Revision var selectedCountry: Model.Country?
-    @Revision var selectedSortType: Model.ListType = .recent
+    @Revision var selectedSortType: Model.Sort = .recent
     @Revision var messages: Model.Messages = .init(
       firstMsgId: nil,
       lastMsgId: nil,

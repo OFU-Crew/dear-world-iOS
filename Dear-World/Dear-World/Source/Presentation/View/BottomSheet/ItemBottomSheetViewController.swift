@@ -5,15 +5,12 @@
 //  Created by dongyoung.lee on 2021/01/11.
 //
 
-import UIKit
 import ReactorKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-final class ItemBottomSheetViewController<Item: BottomSheetItem>:
-  UIViewController,
-  Promisable,
-  View {
+final class ItemBottomSheetViewController<Item: BottomSheetItem>: UIViewController, Promisable, View {
   
   typealias Expected = Item
   typealias Reactor = ItemBottomSheetReactor<Item>
@@ -44,7 +41,6 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>:
     }
     let bottomSheet: UIStackView = UIStackView().then {
       $0.axis = .vertical
-      $0.backgroundColor = .red
     }
     self.view.addSubview(bottomSheet)
     bottomSheet.snp.makeConstraints {
@@ -55,7 +51,7 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>:
       $0.layer.cornerRadius = 15
       $0.layer.maskedCorners = [.layerMinXMinYCorner,
                                 .layerMaxXMinYCorner]
-      $0.backgroundColor = .breathingWhite
+      $0.backgroundColor = .white
     }
     bottomSheet.addArrangedSubview(headerBar)
     headerBar.snp.makeConstraints {
@@ -94,7 +90,6 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>:
   
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
-    
     self.view.rx.tapGesture()
       .skip(1)
       .map { _ in Action.tapBackground }

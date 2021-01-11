@@ -9,7 +9,6 @@ import Alamofire
 import Foundation
 import RxSwift
 
-
 enum Network {
   static var isDebug: Bool = false
   

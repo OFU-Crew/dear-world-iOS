@@ -14,6 +14,8 @@ import UIKit
 
 final class DiscoverViewController: UIViewController, View {
   typealias Model = Message.Model
+  typealias Reactor = DiscoverReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
@@ -159,7 +161,7 @@ final class DiscoverViewController: UIViewController, View {
   }
   
   // MARK: 🔗 Bind
-  func bind(reactor: DiscoverReactor) {
+  func bind(reactor: Reactor) {
     _ = AllCountries.shared
     reactor.action.onNext(.countryDidChanged(
       country: Model.Country(
@@ -233,14 +235,14 @@ final class DiscoverViewController: UIViewController, View {
     self.messageTableView
       .refreshControl?.rx
       .controlEvent(.valueChanged)
-      .map { Reactor.Action.refresh }
+      .map { Action.refresh }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.messageTableView
       .rx.isReachedBottom
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .map { Reactor.Action.loadMore }
+      .map { Action.loadMore }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
@@ -263,13 +265,13 @@ final class DiscoverViewController: UIViewController, View {
           selected: self.reactor?.currentState.selectedCountry
         )
       }
-      .map { Reactor.Action.countryDidChanged(country: $0) }
+      .map { Action.countryDidChanged(country: $0) }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.aboutButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .map { Reactor.Action.tapAbout }
+      .map { Action.tapAbout }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
@@ -277,15 +279,15 @@ final class DiscoverViewController: UIViewController, View {
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Model.ListType> in
-        guard let self = self else { return .just(Model.ListType.recent) }
+      .flatMap { [weak self] _ -> Observable<Model.Sort> in
+        guard let self = self else { return .just(Model.Sort.recent) }
         return SortTypeSelectController
           .select(
             presenting: self,
             disposeBag: self.disposeBag,
             selected: self.reactor?.currentState.selectedSortType)
       }
-      .map { Reactor.Action.sortTypeDidChanged(sortType: $0)}
+      .map { Action.sortTypeDidChanged(sortType: $0)}
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     

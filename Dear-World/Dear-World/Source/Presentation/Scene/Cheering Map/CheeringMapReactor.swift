@@ -68,7 +68,7 @@ final class CheeringMapReactor: Reactor {
     var newState = currentState
     switch mutation {
     case .setPresentAboutPage(let isPresentAboutPage):
-      newState.isPresentAboutPage = true
+      newState.isPresentAboutPage = isPresentAboutPage
       
     case .setRankers(let countries):
       newState.rankers = countries

@@ -16,14 +16,13 @@ struct Revision<T>: Equatable {
 }
 extension Revision {
     static func == (lhs: Revision<T>, rhs: Revision<T>) -> Bool {
-        let r1 = lhs.projectedValue == rhs.projectedValue
-        return r1
+        lhs.projectedValue == rhs.projectedValue
     }
 }
 extension Revision where T: Equatable {
     static func == (lhs: Revision<T>, rhs: Revision<T>) -> Bool {
-        let r1 = lhs.projectedValue == rhs.projectedValue
-        let r2 = lhs.wrappedValue == rhs.wrappedValue
+      let r1: Bool = lhs.projectedValue == rhs.projectedValue
+      let r2: Bool = lhs.wrappedValue == rhs.wrappedValue
         return r1 && r2
     }
 }

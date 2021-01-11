@@ -48,7 +48,7 @@ final class SendMessageViewController: UIViewController, View {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    setupUI() 
+    setupUI()
   }
   
   // MARK: 🔗 Bind
@@ -456,13 +456,4 @@ final class SendMessageViewController: UIViewController, View {
     }
     self.present(viewController, animated: true, completion: nil)
   }
-}
-
-extension Message.Model.Country {
-  static let wholeWorld: Message.Model.Country = Message.Model.Country(
-    code: nil,
-    fullName: "Whole World",
-    emojiUnicode: nil,
-    imageURL: nil
-  )
 }

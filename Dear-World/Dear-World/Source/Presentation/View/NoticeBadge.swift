@@ -28,7 +28,7 @@ final class NoticeBadge: UILabel {
   }
   
   override var intrinsicContentSize: CGSize {
-    let size = super.intrinsicContentSize
+    let size: CGSize = super.intrinsicContentSize
     return CGSize(width: size.width + contentInsets.left + contentInsets.right,
                   height: size.height + contentInsets.top + contentInsets.bottom)
   }

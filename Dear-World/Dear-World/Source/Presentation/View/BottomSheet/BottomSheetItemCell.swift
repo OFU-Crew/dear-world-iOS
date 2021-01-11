@@ -30,7 +30,7 @@ final class BottomSheetItemCell: UITableViewCell {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.do {
-      $0.backgroundColor = .breathingWhite
+      $0.backgroundColor = .white
       $0.textLabel?.textColor = .warmBlue
       $0.textLabel?.font = .systemFont(ofSize: 14)
     }

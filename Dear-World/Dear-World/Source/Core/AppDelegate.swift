@@ -4,11 +4,11 @@
 //
 //  Created by dongyoung.lee on 2020/12/24.
 //
+import Firebase
 import RxSwift
 import SnapKit
 import Then
 import UIKit
-import Firebase
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {

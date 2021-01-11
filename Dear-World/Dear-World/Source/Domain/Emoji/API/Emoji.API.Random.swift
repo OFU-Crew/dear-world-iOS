@@ -14,6 +14,6 @@ extension Emoji.API {
     
     var method: HTTPMethod { .get }
     var path: String { "api/v1/emojis/random" }
-    var parameters: [String : Any?]? { nil }
+    var parameters: [String: Any?]? { nil }
   }
 }

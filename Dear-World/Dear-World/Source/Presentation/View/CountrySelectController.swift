@@ -67,7 +67,7 @@ final class CountrySelectController: UIViewController {
       }
     }
     insideView.addSubview(wholeWorldButton)
-    let wholeWorldLabel = UILabel().then {
+    let wholeWorldLabel: UILabel = UILabel().then {
       $0.text = "Whole world"
       $0.font = .systemFont(ofSize: 14)
       if selectedCountry?.code == nil {
@@ -117,8 +117,8 @@ final class CountrySelectController: UIViewController {
       .disposed(by: self.disposeBag)
     
     Observable.just(self.countries)
-      .bind(to: self.countryTableView.rx.items) { [weak self] (tableView, row, item) -> UITableViewCell in
-        guard let self = self else { return UITableViewCell()}
+      .bind(to: self.countryTableView.rx.items) { [weak self] tableView, row, item -> UITableViewCell in
+        guard let self = self else { return UITableViewCell() }
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "countryCell", for: IndexPath(row: row, section: 0))
         cell.textLabel?.text = item.fullName
         cell.textLabel?.textColor = .warmBlue
@@ -133,7 +133,7 @@ final class CountrySelectController: UIViewController {
           cell.subviews.last?.isHidden = false
         }
         cell.textLabel?.font = .systemFont(ofSize: 14)
-        let cellBackgroudView = UIView()
+        let cellBackgroudView: UIView = UIView()
         cellBackgroudView.backgroundColor = .breathingWhite
         cell.selectedBackgroundView = cellBackgroudView
         cell.textLabel?.snp.makeConstraints {
@@ -159,7 +159,7 @@ final class CountrySelectController: UIViewController {
     
     self.countryTableView
       .rx.itemSelected
-      .map { [weak self] in self?.countries[$0.row]}
+      .map { [weak self] in self?.countries[$0.row] }
       .subscribe(onNext: { [weak self] country in
         self?.selectedCountry = country
         self?.willMove(toParent: nil)

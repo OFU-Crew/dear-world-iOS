@@ -5,14 +5,14 @@
 //  Created by rookie.w on 2020/12/26.
 //
 
-import Then
 import SnapKit
+import Then
 import UIKit
 
 final class MessageCountBadgeView: UIView {
   private var totalCount: UILabel = UILabel()
   
-  public var count: Int? {
+  var count: Int? {
     didSet {
       self.totalCount.text = count?.formatted
     }
@@ -24,13 +24,6 @@ final class MessageCountBadgeView: UIView {
     setupSubviews()
   }
   
-//  override public func didMoveToSuperview() {
-//    self.snp.makeConstraints {
-//      $0.centerX.equalToSuperview()
-//      $0.top.equalToSuperview().inset(60)
-//    }
-//  }
-//  
   private func setupUI() {
     self.snp.makeConstraints {
       $0.width.equalTo(88)
