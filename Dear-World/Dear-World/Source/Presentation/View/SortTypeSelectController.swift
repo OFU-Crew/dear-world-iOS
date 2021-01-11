@@ -137,7 +137,11 @@ public final class SortTypeSelectController: UIViewController {
 
 // present 함수
 extension SortTypeSelectController {
-  static func select(presenting: UIViewController, disposeBag: DisposeBag, selected: Message.Model.ListType?) -> Observable<Message.Model.ListType> {
+  static func select(
+    presenting: UIViewController,
+    disposeBag: DisposeBag,
+    selected: Message.Model.ListType?
+  ) -> Observable<Message.Model.ListType> {
     return Observable<Message.Model.ListType>.create { observer in
       guard let base = presenting.tabBarController else {
         observer.onError(NSError())

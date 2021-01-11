@@ -11,8 +11,8 @@ import SnapKit
 import Then
 import UIKit
 
-public final class CountrySelectController: UIViewController {
-  
+final class CountrySelectController: UIViewController {
+  typealias Model = Message.Model
   // MARK: 🖼 UI
   private var countryTableView: UITableView = UITableView()
   private let countries: [Message.Model.Country] = AllCountries.shared.countries
@@ -20,9 +20,10 @@ public final class CountrySelectController: UIViewController {
   private var selectedCountry: Message.Model.Country? = nil
   private let wholeWorldButton: UIButton = UIButton()
   private let outsideView: UIView = UIView()
+  
   let disposeBag: DisposeBag = DisposeBag()
   
-  override public func viewDidLoad() {
+  override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     setupTableView()
@@ -158,13 +159,14 @@ public final class CountrySelectController: UIViewController {
     
     self.countryTableView
       .rx.itemSelected
-      .map{[weak self] in self?.countries[$0.row]}
-      .subscribe (onNext :{ [weak self] country in
+      .map { [weak self] in self?.countries[$0.row]}
+      .subscribe(onNext: { [weak self] country in
         self?.selectedCountry = country
         self?.willMove(toParent: nil)
       })
       .disposed(by: self.disposeBag)
   }
+  
   func addCheck(base: UIView) {
     let checkImage: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "check")
@@ -180,6 +182,7 @@ public final class CountrySelectController: UIViewController {
 }
 // present 함수
 extension CountrySelectController {
+  
   static func selectCountry(
     presenting: UIViewController,
     disposeBag: DisposeBag,

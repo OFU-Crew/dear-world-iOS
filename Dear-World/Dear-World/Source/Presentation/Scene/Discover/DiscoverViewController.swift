@@ -171,9 +171,9 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .map(\.messageCount)
-      .subscribe { [weak self] count in
+      .subscribe(onNext: { [weak self] count in
         self?.messageCountBadgeView.count = count
-      }
+      })
       .disposed(by: self.disposeBag)
     
     reactor.state
@@ -218,16 +218,16 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
-      .subscribe { _ in
-        self.messageTableView.setContentOffset(.zero, animated: false)
-      }
+      .subscribe(onNext: { [weak self] _ in
+        self?.messageTableView.setContentOffset(.zero, animated: false)
+      })
       .disposed(by: self.disposeBag)
     
     reactor.state
       .distinctUntilChanged(\.$selectedSortType)
-      .subscribe { _ in
-        self.messageTableView.setContentOffset(.zero, animated: false)
-      }
+      .subscribe(onNext: { [weak self]_ in
+        self?.messageTableView.setContentOffset(.zero, animated: false)
+      })
       .disposed(by: self.disposeBag)
     
     self.messageTableView

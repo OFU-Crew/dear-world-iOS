@@ -88,14 +88,7 @@ final class SendMessageViewController: UIViewController, View {
     selectCountryView.rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
-        guard let self = self else { return .empty() }
-        return CountrySelectController.selectCountry(
-          presenting: self,
-          disposeBag: self.disposeBag,
-          selected: nil)
-      }
-      .map { Action.countryDidChange($0) }
+      .map { _ in Action.tapFilter }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
@@ -114,6 +107,14 @@ final class SendMessageViewController: UIViewController, View {
         self?.dismiss(animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$isPresentFilter)
+      .filter { $0.isPresentFilter }
+      .subscribe(onNext: { [weak self] _ in
+        self?.presentFilter()
+      })
+      .disposed(by: self.disposeBag)
     
     reactor.state.map(\.emojiURL)
       .map { URL(string: $0) }
@@ -440,4 +441,28 @@ final class SendMessageViewController: UIViewController, View {
       self?.rotateArrowImageViews()
     }
   }
+  
+  private func presentFilter() {
+    guard let reactor = self.reactor else { return }
+    let selected: Message.Model.Country? = reactor.currentState.selectedCountry ?? .wholeWorld
+    let items: [Message.Model.Country] = reactor.currentState.countries
+    let viewController = ItemBottomSheetViewController<Message.Model.Country>().then {
+      $0.reactor = ItemBottomSheetReactor(selectedItem: selected, items: items)
+      $0.modalPresentationStyle = .overFullScreen
+      $0.expectedValue
+        .map { Action.countryDidChange($0) }
+        .bind(to: reactor.action)
+        .disposed(by: disposeBag)
+    }
+    self.present(viewController, animated: true, completion: nil)
+  }
+}
+
+extension Message.Model.Country {
+  static let wholeWorld: Message.Model.Country = Message.Model.Country(
+    code: nil,
+    fullName: "Whole World",
+    emojiUnicode: nil,
+    imageURL: nil
+  )
 }

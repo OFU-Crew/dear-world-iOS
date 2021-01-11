@@ -19,6 +19,7 @@ final class SendMessageReactor: Reactor {
     case initialize
     case tapClose
     case tapRefresh
+    case tapFilter
     case typeName(String)
     case typeMessage(String)
     case tapSendMessage
@@ -35,14 +36,18 @@ final class SendMessageReactor: Reactor {
     case setPresent(Bool)
     case setPresentSendAlert(Bool)
     case setPresentCancelAlert(Bool)
+    case setPresentFilter(Bool)
     case setCountry(Model.Country)
+    case setCountries([Model.Country])
   }
   
   struct State: Then {
     @Revision var isPresented: Bool = true
     @Revision var isPresentSendAlert: Bool = false
     @Revision var isPresentCancelAlert: Bool = false
+    @Revision var isPresentFilter: Bool = false
     @Revision var selectedCountry: Model.Country?
+    @Revision var countries: [Model.Country] = []
     var emojiURL: String?
     var emojiIsLoading: Bool = true
     var canSendMessage: Bool = false
@@ -78,7 +83,12 @@ final class SendMessageReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .initialize:
-      return .empty()
+      return Network.request(API.Countries())
+        .filterNil()
+        .map { .setCountries($0.countries) }
+      
+    case .tapFilter:
+      return .just(.setPresentFilter(true))
       
     case .tapClose:
       return .just(.setPresentCancelAlert(true))
@@ -183,7 +193,19 @@ final class SendMessageReactor: Reactor {
       }
       
     case .setCountry(let country):
-      newState = state.with { $0.selectedCountry = country }
+      newState = state.with {
+        $0.selectedCountry = country
+      }
+      
+    case .setCountries(let countries):
+      newState = state.with {
+        $0.countries = countries
+      }
+      
+    case .setPresentFilter(let isPresentFilter):
+      newState = state.with {
+        $0.isPresentFilter = isPresentFilter
+      }
     }
     return newState
   }
@@ -213,4 +235,8 @@ final class SendMessageReactor: Reactor {
     return "\(currentCount)".set(style: currentStyle)
       + "/\(limitCount)".set(style: limitStyle)
   }
+}
+
+extension Message.Model.Country: BottomSheetItem {
+  var name: String { fullName }
 }
