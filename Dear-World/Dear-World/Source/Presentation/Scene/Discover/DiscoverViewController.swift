@@ -24,7 +24,8 @@ final class DiscoverViewController: UIViewController, View {
   private let sortView: UIView = UIView()
   private var sortLabel: UILabel = UILabel()
   private var messages: [Message.Model.Message] = []
-  let filterContainerView: UIView = UIView()
+  private let filterContainerView: UIView = UIView()
+  private let refreshControl: UIRefreshControl = UIRefreshControl()
   
   var disposeBag: DisposeBag = DisposeBag()
   
@@ -145,6 +146,15 @@ final class DiscoverViewController: UIViewController, View {
       $0.sectionHeaderHeight = 150
       $0.tableHeaderView = nil
       $0.allowsSelection = false
+      $0.refreshControl = refreshControl
+    }
+    
+    refreshControl.addTarget(self, action: #selector(tableViewWillRefresh), for: .valueChanged)
+  }
+  
+  @objc private func tableViewWillRefresh() {
+    if self.refreshControl.isRefreshing {
+      reactor?.action.on(.next(.refresh))
     }
   }
   
@@ -284,6 +294,13 @@ final class DiscoverViewController: UIViewController, View {
       .map(\.selectedSortType)
       .map(\.title)
       .bind(to: self.sortLabel.rx.text)
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$isRefreshing)
+      .map(\.isRefreshing)
+      .filter{!$0}
+      .bind(to: self.refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
   }
 }
