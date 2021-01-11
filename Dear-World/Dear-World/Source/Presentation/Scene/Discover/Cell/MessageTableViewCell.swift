@@ -26,9 +26,9 @@ final class MessageTableViewCell: UITableViewCell {
     }
   }
   var isLike: Bool = false {
-    //FIXME : 내려올 때 isLiked가 항상 false로 내려옴
     didSet {
       self.likeView.image = isLike ? UIImage(named: "heart_liked") : UIImage(named: "heart")
+      self.likeCountLabel.textColor = isLike ? .loveRed : .grayWhite
     }
   }
   var messageId: Int?
@@ -94,7 +94,7 @@ final class MessageTableViewCell: UITableViewCell {
     self.nameLabel.snp.makeConstraints {
       $0.top.equalTo(emojiView.snp.top)
       $0.leading.equalTo(emojiView.snp.trailing).offset(10)
-      $0.trailing.greaterThanOrEqualToSuperview().inset(30)
+      $0.trailing.lessThanOrEqualToSuperview()
     }
     
     mainView.addSubview(countryFlagImageView)
@@ -106,19 +106,19 @@ final class MessageTableViewCell: UITableViewCell {
     self.countryLabel.do {
       $0.text = "South Korea"
       $0.font = .boldSystemFont(ofSize: 12)
-      $0.textColor = .grayWhite
+      $0.textColor = .nightBlue
     }
     mainView.addSubview(self.countryLabel)
     self.countryLabel.snp.makeConstraints {
-      $0.centerY.equalTo(countryFlagImageView)
-      $0.leading.equalTo(countryFlagImageView.snp.trailing).offset(10)
-      $0.trailing.greaterThanOrEqualToSuperview().inset(30)
+      $0.bottom.equalTo(emojiView.snp.bottom)
+      $0.leading.equalTo(emojiView.snp.trailing).offset(10)
+      $0.trailing.lessThanOrEqualToSuperview()
     }
     
     self.detailTextView.do {
       $0.text = "Hello world, dont worry because you’re strong enough to overcome this corona blue. At the end of the day, trust yourself. more"
       $0.font = .systemFont(ofSize: 12)
-      $0.textColor = .black
+      $0.textColor = .warmBlue
       $0.textContainerInset = .zero
       $0.isScrollEnabled = false
       $0.isEditable = false

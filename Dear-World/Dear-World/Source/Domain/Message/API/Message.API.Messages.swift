@@ -22,7 +22,7 @@ extension Message.API {
     var parameters: [String: Any?]? {
       [
         "countryCode": countryCode,
-        "type": type,
+        "type": type.rawValue,
         "lastId": lastMsgId
       ]
     }

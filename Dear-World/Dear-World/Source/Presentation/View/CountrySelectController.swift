@@ -135,7 +135,10 @@ public final class CountrySelectController: UIViewController {
         let cellBackgroudView = UIView()
         cellBackgroudView.backgroundColor = .breathingWhite
         cell.selectedBackgroundView = cellBackgroudView
-        //TODO: CheckMark 달기
+        cell.textLabel?.snp.makeConstraints {
+          $0.left.equalToSuperview().inset(20)
+          $0.centerY.equalToSuperview()
+        }
         return cell
       }
       .disposed(by: self.disposeBag)
@@ -242,4 +245,3 @@ public class AllCountries {
       })
   }
 }
-

@@ -43,7 +43,8 @@ final class DiscoverReactor: Reactor {
       messageCount: 0,
       messages: []
     )
-    var isRefreshing: Bool = false
+    @Revision var isRefreshing: Bool = false
+
     var isLoading: Bool = false
     var isAnimating: Bool = false
     @Revision var isPresentAboutPage: Bool = false
@@ -120,19 +121,26 @@ final class DiscoverReactor: Reactor {
               countryCode: currentState.selectedCountry?.code,
               lastMsgId: nil,
               type: sortType ?? .recent
-            )
-          )
-          .filterNil()
-          .map{ Mutation.setMessages(result: $0) },
-          .just(.setLoading(false))
+            ))
+            .filterNil()
+            .map{ .setMessages(result: $0)},
+            .just(.setLoading(false))
         )
       )
     case .refresh:
-      return .concat([
-        .just(Mutation.setRefreshing(true)),
-        .just(Mutation.setRefreshing(false))
-      ])
-      
+      guard currentState.isRefreshing == false else { return .empty() }
+      return .merge(
+        Network.request(Message.API.MessageCount(countryCode: currentState.selectedCountry?.code))
+          .filterNil()
+          .map(\.messageCount)
+          .map{.setMessageCount($0)}
+        ,.concat([
+          .just(.setRefreshing(true)),
+          Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: nil, type: currentState.selectedSortType))
+            .filterNil()
+            .map{.setMessages(result: $0)},
+          .just(.setRefreshing(false))
+      ]))
     case .loadMore:
       guard !currentState.isLoading else { return .empty() }
       return Observable<Mutation>.concat([
