@@ -18,6 +18,7 @@ final class DiscoverReactor: Reactor {
     case tapAbout
     case tapFilter
     case tapSort
+    case tapShare(at: Int)
     case countryDidChanged(Model.Country?)
     case sortTypeDidChanged(Model.Sort?)
     case refresh
@@ -25,9 +26,12 @@ final class DiscoverReactor: Reactor {
   }
   
   enum Mutation {
-    case setMessages(Model.Messages)
+    case setFirstMsgId(Int?)
+    case setLastMsgId(Int?)
+    case setMessages([Model.Message])
     case setRefreshing(Bool)
-    case addMessages(Model.Messages)
+    case addMessages([Model.Message])
+    case setShareURL(URL)
     case setCountry(Model.Country?)
     case setCountries([Model.Country])
     case setLoading(Bool)
@@ -46,12 +50,10 @@ final class DiscoverReactor: Reactor {
     @Revision var selectedCountry: Model.Country? = .wholeWorld
     @Revision var countries: [Model.Country] = []
     @Revision var selectedSortType: Model.Sort = .recent
-    @Revision var messages: Model.Messages = .init(
-      firstMsgId: nil,
-      lastMsgId: nil,
-      messageCount: 0,
-      messages: []
-    )
+    @Revision var shareURL: URL?
+    @Revision var firstMsgId: Int?
+    @Revision var lastMsgId: Int?
+    @Revision var messages: [Model.Message] = []
     var messageCount: Int = 0
     var isLoading: Bool = false
     var isAnimating: Bool = false
@@ -84,7 +86,13 @@ final class DiscoverReactor: Reactor {
           )
         )
         .filterNil()
-        .map { Mutation.setMessages($0) },
+        .flatMap { response -> Observable<Mutation> in
+          .from([
+            .setFirstMsgId(response.firstMsgId),
+            .setLastMsgId(response.lastMsgId),
+            .setMessages(response.messages)
+          ])
+        },
         Network.request(API.Countries())
           .filterNil()
           .map { .setCountries($0.countries) }
@@ -95,6 +103,12 @@ final class DiscoverReactor: Reactor {
       
     case .tapSort:
       return .just(.setPresentSort(true))
+      
+    case .tapShare(let index):
+      let urlString = currentState.messages[index].shareURL
+      guard let shareURL = URL(string: urlString) else { return .empty() }
+      return .just(.setShareURL(shareURL))
+      
       
     case let .countryDidChanged(country):
       return .merge(
@@ -116,7 +130,13 @@ final class DiscoverReactor: Reactor {
             )
           )
           .filterNil()
-          .map{ Mutation.setMessages($0) },
+          .flatMap { response -> Observable<Mutation> in
+            .from([
+              .setMessages(response.messages),
+              .setFirstMsgId(response.firstMsgId),
+              .setLastMsgId(response.lastMsgId)
+            ])
+          },
           .just(.setLoading(false))
         )
       )
@@ -140,24 +160,47 @@ final class DiscoverReactor: Reactor {
             )
           )
           .filterNil()
-          .map{ Mutation.setMessages($0) },
-          .just(.setLoading(false))
+          .flatMap { response -> Observable<Mutation> in
+            .from([
+              .setMessages(response.messages),
+              .setFirstMsgId(response.firstMsgId),
+              .setLastMsgId(response.lastMsgId)
+            ])
+          }
         )
       )
     case .refresh:
       guard currentState.isRefreshing == false else { return .empty() }
       return .merge(
-        Network.request(Message.API.MessageCount(countryCode: currentState.selectedCountry?.code))
-          .filterNil()
-          .map(\.messageCount)
-          .map{.setMessageCount($0)}
-        ,.concat([
+        Network.request(
+          Message.API.MessageCount(
+            countryCode: currentState.selectedCountry?.code
+          )
+        )
+        .filterNil()
+        .map(\.messageCount)
+        .map { .setMessageCount($0) },
+        .concat([
           .just(.setRefreshing(true)),
-          Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: nil, type: currentState.selectedSortType))
-            .filterNil()
-            .map{.setMessages($0)},
+          Network.request(
+            Message.API.Messages(
+              countryCode: currentState.selectedCountry?.code,
+              lastMsgId: nil,
+              type: currentState.selectedSortType
+            )
+          )
+          .filterNil()
+          .flatMap { response -> Observable<Mutation> in
+            .from([
+              .setMessages(response.messages),
+              .setFirstMsgId(response.firstMsgId),
+              .setLastMsgId(response.lastMsgId)
+            ])
+          },
           .just(.setRefreshing(false))
-      ]))
+        ])
+      )
+      
     case .loadMore:
       guard !currentState.isLoading else { return .empty() }
       return Observable<Mutation>.concat([
@@ -165,12 +208,18 @@ final class DiscoverReactor: Reactor {
         Network.request(
           API.Messages(
             countryCode: currentState.selectedCountry?.code,
-            lastMsgId: currentState.messages.lastMsgId,
+            lastMsgId: currentState.lastMsgId,
             type: currentState.selectedSortType
           )
         )
         .filterNil()
-        .map { .addMessages($0) },
+        .flatMap { response -> Observable<Mutation> in
+          .from([
+            .setMessages(response.messages),
+            .setFirstMsgId(response.firstMsgId),
+            .setLastMsgId(response.lastMsgId)
+          ])
+        },
         .just(.setLoading(false))
       ])
       
@@ -189,13 +238,8 @@ final class DiscoverReactor: Reactor {
     case .setRefreshing(let flag):
       newState.isRefreshing = flag
       
-    case .addMessages(let results):
-      newState.messages = Model.Messages(
-        firstMsgId: state.messages.firstMsgId,
-        lastMsgId: results.lastMsgId,
-        messageCount: state.messageCount + results.messageCount,
-        messages: currentState.messages.messages + results.messages
-      )
+    case .addMessages(let messages):
+      newState.messages = currentState.messages + messages
       
     case .setCountry(let country):
       newState.selectedCountry = country
@@ -220,6 +264,15 @@ final class DiscoverReactor: Reactor {
       
     case .setPresentSort(let isPresentSort):
       newState.isPresentSort = isPresentSort
+      
+    case .setFirstMsgId(let firstMsgId):
+      newState.firstMsgId = firstMsgId
+      
+    case .setLastMsgId(let lastMsgId):
+      newState.lastMsgId = lastMsgId
+      
+    case .setShareURL(let shareURL):
+      newState.shareURL = shareURL
     }
     return newState
   }

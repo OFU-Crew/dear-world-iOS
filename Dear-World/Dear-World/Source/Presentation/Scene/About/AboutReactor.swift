@@ -7,6 +7,7 @@
 
 import Foundation
 import ReactorKit
+import UIKit
 
 final class AboutReactor: Reactor {
   
@@ -33,7 +34,7 @@ final class AboutReactor: Reactor {
     @Revision var isPresentAppStore: Bool = false
     @Revision var willDismiss: Bool = false
     var noticeCount: Int?
-    var currentVersion: String? = "10.1.1"
+    var currentVersion: String?
   }
   
   var initialState: State
@@ -47,7 +48,7 @@ final class AboutReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .initalize:
-      return .empty()
+      return .just(.setCurrentVersion(UIApplication.shared.version ?? ""))
       
     case .tapCrewInfo:
       return .just(.setPresentCrewInfo(true))

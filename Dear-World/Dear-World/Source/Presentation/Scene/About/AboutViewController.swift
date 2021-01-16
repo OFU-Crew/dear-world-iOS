@@ -16,6 +16,7 @@ final class AboutViewController: UIViewController, View {
   // MARK: 🖼 UI
   private let stackView: UIStackView = UIStackView()
   private let crewInfoView: UIView = UIView()
+  private let contactInfoView: UIView = UIView()
   private let noticeInfoView: UIView = UIView()
   private let noticeBadge: NoticeBadge = NoticeBadge()
   private let versionInfoView: UIView = UIView()
@@ -54,6 +55,7 @@ final class AboutViewController: UIViewController, View {
       $0.axis = .vertical
       $0.spacing = 20
       $0.addArrangedSubview(crewInfoView)
+      $0.addArrangedSubview(contactInfoView)
       $0.addArrangedSubview(noticeInfoView)
       $0.addArrangedSubview(versionInfoView)
     }
@@ -86,6 +88,23 @@ final class AboutViewController: UIViewController, View {
     crewInfoView.snp.makeConstraints {
       $0.height.equalTo(57)
     }
+    let contactInfoTitleLabel: UILabel = UILabel().then {
+      $0.text = "Contact"
+      $0.font = .systemFont(ofSize: 14)
+      $0.textColor = .warmBlue
+    }
+    contactInfoView.do {
+      $0.backgroundColor = .grayWhite
+      $0.addSubview(contactInfoTitleLabel)
+      $0.layer.cornerRadius = 10
+    }
+    contactInfoTitleLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.centerY.equalToSuperview()
+    }
+    contactInfoView.snp.makeConstraints {
+      $0.height.equalTo(57)
+    }
     
     let noticeInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Notice"
@@ -112,7 +131,7 @@ final class AboutViewController: UIViewController, View {
     noticeInfoView.snp.makeConstraints {
       $0.height.equalTo(57)
     }
-    
+    noticeInfoView.isHidden = true
     let versionInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Version Info."
       $0.font = .systemFont(ofSize: 14)
@@ -221,5 +240,7 @@ final class AboutViewController: UIViewController, View {
       .distinctUntilChanged()
       .bind(to: versionLabel.rx.text)
       .disposed(by: disposeBag)
+    
+    reactor.action.onNext(.initalize)
   }
 }

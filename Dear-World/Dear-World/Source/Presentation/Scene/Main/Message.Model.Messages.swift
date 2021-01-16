@@ -29,6 +29,7 @@ extension Message.Model {
     let likeCount: Int
     let content: String
     let createdAt: String
+    let shareURL: String
     
     enum CodingKeys: String, CodingKey {
       case id
@@ -37,6 +38,7 @@ extension Message.Model {
       case likeCount
       case content
       case createdAt
+      case shareURL = "shareLink"
     }
   }
   

@@ -181,8 +181,8 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$messages)
       .map(\.messages)
-      .subscribe(onNext: {[weak self] mess in
-        self?.messages = mess.messages
+      .subscribe(onNext: {[weak self] in
+        self?.messages = $0
         self?.messageTableView.reloadData()
       })
       .disposed(by: self.disposeBag)
@@ -302,7 +302,21 @@ final class DiscoverViewController: UIViewController, View {
       .filter{!$0}
       .bind(to: self.refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$shareURL)
+      .map { $0.shareURL }
+      .subscribe(onNext: { shareURL in
+        let shareViewController: UIActivityViewController = UIActivityViewController(
+          activityItems: ["from: Dear World\n 메시지가 도착했습니다! 💌",
+                          shareURL],
+          applicationActivities: nil
+        )
+        shareViewController.popoverPresentationController?.sourceView = self.view
+        self.present(shareViewController, animated: true)
+      })
+      .disposed(by: self.disposeBag)
   }
+  
   private func presentFilter() -> Observable<Model.Country> {
     guard let reactor = self.reactor else { return .empty() }
     let selected: Model.Country? = reactor.currentState.selectedCountry
@@ -377,39 +391,16 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     cellForRowAt indexPath: IndexPath
   ) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
-    cell.do {
-      let cellMessage = self.messages[indexPath.row]
-      $0.nameLabel.text = cellMessage.user.nickname
-      
-      $0.detailTextView.text = cellMessage.content
-      $0.likeCount = cellMessage.likeCount
-      $0.isLike = cellMessage.isLiked
-      $0.countryLabel.text = cellMessage.user.country.fullName
-      if let emojiImageURL: URL = URL(string: cellMessage.user.emoji.imageURL) {
-        $0.emojiImageView.kf.setImage(with: emojiImageURL)
-      }
-      if let countryImageURL: URL = URL(string: cellMessage.user.country.imageURL) {
-        $0.countryFlagImageView.kf.setImage(with: countryImageURL)
-      }
-      $0.messageId = cellMessage.id
+    let message = messages[indexPath.row]
+    cell.configure(message)
+    if let reactor = self.reactor {
+      cell.shareButton.rx.tap
+        .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+        .map { Action.tapShare(at: indexPath.row) }
+        .bind(to: reactor.action)
+        .disposed(by: self.disposeBag)
     }
-    bindShareButton(button: cell.shareButton)
     return cell
-  }
-  
-  private func bindShareButton(button: UIButton) {
-    button
-      .rx.tap
-      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .subscribe (onNext: {
-        self.filterView.snp.makeConstraints {
-          $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide)
-        }
-        let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)
-        activityVC.popoverPresentationController?.sourceView = self.view
-        self.present(activityVC, animated: true)
-      })
-      .disposed(by: self.disposeBag)
   }
 }
 
