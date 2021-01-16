@@ -5,7 +5,6 @@
 //  Created by rookie.w on 2021/01/07.
 //
 
-
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -13,11 +12,11 @@ import Then
 import UIKit
 
 public final class SortTypeSelectController: UIViewController {
-  private var sortTypes: [Message.Model.ListType] = Message.Model.ListType.allCases
+  private var sortTypes: [Message.Model.Sort] = Message.Model.Sort.allCases
   // MARK: 🖼 UI
   private var sortTypeTableView: UITableView = UITableView()
   private let exitButton: UIButton = UIButton()
-  private var selectedSortType: Message.Model.ListType? = nil
+  private var selectedSortType: Message.Model.Sort?
   private let outsideView: UIView = UIView()
   let disposeBag: DisposeBag = DisposeBag()
   
@@ -89,8 +88,8 @@ public final class SortTypeSelectController: UIViewController {
       .disposed(by: self.disposeBag)
     
     Observable.just(self.sortTypes)
-      .bind(to: self.sortTypeTableView.rx.items) { [weak self] (tableView, row, item) -> UITableViewCell in
-        guard let self = self else { return UITableViewCell()}
+      .bind(to: self.sortTypeTableView.rx.items) { [weak self] tableView, row, item -> UITableViewCell in
+        guard let self = self else { return UITableViewCell() }
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "sortTypeCell", for: IndexPath(row: row, section: 0))
         cell.textLabel?.text = item.title
         cell.textLabel?.textColor = .warmBlue
@@ -105,7 +104,7 @@ public final class SortTypeSelectController: UIViewController {
           cell.subviews.last?.isHidden = false
         }
         cell.textLabel?.font = .systemFont(ofSize: 14)
-        let cellBackgroudView = UIView()
+        let cellBackgroudView: UIView = UIView()
         cellBackgroudView.backgroundColor = .breathingWhite
         cell.selectedBackgroundView = cellBackgroudView
         return cell
@@ -114,7 +113,7 @@ public final class SortTypeSelectController: UIViewController {
 
     self.sortTypeTableView
       .rx.itemSelected
-      .map{[weak self] in self?.sortTypes[$0.row]}
+      .map { [weak self] in self?.sortTypes[$0.row] }
       .bind { [weak self] sortType in
         self?.selectedSortType = sortType
         self?.willMove(toParent: nil)
@@ -137,8 +136,12 @@ public final class SortTypeSelectController: UIViewController {
 
 // present 함수
 extension SortTypeSelectController {
-  static func select(presenting: UIViewController, disposeBag: DisposeBag, selected: Message.Model.ListType?) -> Observable<Message.Model.ListType> {
-    return Observable<Message.Model.ListType>.create { observer in
+  static func select(
+    presenting: UIViewController,
+    disposeBag: DisposeBag,
+    selected: Message.Model.Sort?
+  ) -> Observable<Message.Model.Sort> {
+    return Observable<Message.Model.Sort>.create { observer in
       guard let base = presenting.tabBarController else {
         observer.onError(NSError())
         return Disposables.create()
@@ -159,7 +162,7 @@ extension SortTypeSelectController {
       
       presented.rx.methodInvoked(#selector(UIViewController.willMove(toParent:)))
         .bind { _ in
-          if let type: Message.Model.ListType = presented.selectedSortType {
+          if let type: Message.Model.Sort = presented.selectedSortType {
             observer.onNext(type)
           }
           UIView.animate(withDuration: 0.3) {

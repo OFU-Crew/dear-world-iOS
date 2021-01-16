@@ -29,8 +29,9 @@ final class CheeringMapReactor: Reactor {
     var messageCount: Int = 100_000
     @Revision var rankers: [Model.Country] = []
     @Revision var countries: [Model.Country] = []
-    @Revision var selectedCountries: [Model.Country] = []
+    @Revision var selectedCountries: Model.Country?
     @Revision var isPresentAboutPage: Bool = false
+    @Revision var isPresentFilter: Bool = false
   }
   
   var initialState: State = State()
@@ -67,7 +68,7 @@ final class CheeringMapReactor: Reactor {
     var newState = currentState
     switch mutation {
     case .setPresentAboutPage(let isPresentAboutPage):
-      newState.isPresentAboutPage = true
+      newState.isPresentAboutPage = isPresentAboutPage
       
     case .setRankers(let countries):
       newState.rankers = countries
@@ -84,3 +85,5 @@ final class CheeringMapReactor: Reactor {
     return newState
   }
 }
+
+extension World.Model.Country: BottomSheetItem {}

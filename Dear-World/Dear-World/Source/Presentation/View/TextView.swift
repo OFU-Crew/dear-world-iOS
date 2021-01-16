@@ -22,21 +22,21 @@ open class TextView: UITextView {
   
   public let placeholderLabel: UILabel = UILabel()
   
-  private var placeholderLabelConstraints = [NSLayoutConstraint]()
+  private var placeholderLabelConstraints: [NSLayoutConstraint] = [NSLayoutConstraint]()
   
-  @IBInspectable open var placeholder: String = "" {
+  @IBInspectable var placeholder: String = "" {
     didSet {
       placeholderLabel.text = placeholder
     }
   }
   
-  @IBInspectable open var placeholderColor: UIColor = Constants.defaultiOSPlaceholderColor {
+  @IBInspectable var placeholderColor: UIColor = Constants.defaultiOSPlaceholderColor {
     didSet {
       placeholderLabel.textColor = placeholderColor
     }
   }
   
-  override open var font: UIFont! {
+  open override var font: UIFont! {
     didSet {
       if placeholderFont == nil {
         placeholderLabel.font = font
@@ -44,32 +44,32 @@ open class TextView: UITextView {
     }
   }
   
-  open var placeholderFont: UIFont? {
+  var placeholderFont: UIFont? {
     didSet {
       let font = (placeholderFont != nil) ? placeholderFont : self.font
       placeholderLabel.font = font
     }
   }
   
-  override open var textAlignment: NSTextAlignment {
+  open override var textAlignment: NSTextAlignment {
     didSet {
       placeholderLabel.textAlignment = textAlignment
     }
   }
   
-  override open var text: String! {
+  open override var text: String! {
     didSet {
       textDidChange()
     }
   }
   
-  override open var attributedText: NSAttributedString! {
+  open override var attributedText: NSAttributedString! {
     didSet {
       textDidChange()
     }
   }
   
-  override open var textContainerInset: UIEdgeInsets {
+  open override var textContainerInset: UIEdgeInsets {
     didSet {
       updateConstraintsForPlaceholderLabel()
     }
@@ -87,9 +87,9 @@ open class TextView: UITextView {
   
   private func commonInit() {
     #if swift(>=4.2)
-    let notificationName = UITextView.textDidChangeNotification
+    let notificationName: NSNotification.Name = UITextView.textDidChangeNotification
     #else
-    let notificationName = NSNotification.Name.UITextView.textDidChangeNotification
+    let notificationName: NSNotification.Name = NSNotification.Name.UITextView.textDidChangeNotification
     #endif
     
     NotificationCenter.default.addObserver(
@@ -111,7 +111,7 @@ open class TextView: UITextView {
   }
   
   private func updateConstraintsForPlaceholderLabel() {
-    var newConstraints = NSLayoutConstraint.constraints(
+    var newConstraints: [NSLayoutConstraint] = NSLayoutConstraint.constraints(
       withVisualFormat: "H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]",
       options: [],
       metrics: nil,
@@ -146,25 +146,26 @@ open class TextView: UITextView {
     placeholderLabelConstraints = newConstraints
   }
   
-  @objc private func textDidChange() {
+  @objc
+  private func textDidChange() {
     placeholderLabel.isHidden = !text.isEmpty
   }
   
-  open override func layoutSubviews() {
+  open
+  override func layoutSubviews() {
     super.layoutSubviews()
     placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
   }
   
   deinit {
     #if swift(>=4.2)
-    let notificationName = UITextView.textDidChangeNotification
+    let notificationName: NSNotification.Name = UITextView.textDidChangeNotification
     #else
-    let notificationName = NSNotification.Name.UITextView.textDidChangeNotification
+    let notificationName: NSNotification.Name = NSNotification.Name.UITextView.textDidChangeNotification
     #endif
     
     NotificationCenter.default.removeObserver(self,
                                               name: notificationName,
                                               object: nil)
   }
-  
 }

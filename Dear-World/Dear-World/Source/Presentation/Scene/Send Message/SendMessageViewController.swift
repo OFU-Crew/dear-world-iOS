@@ -5,17 +5,18 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import Kingfisher
 import ReactorKit
 import RxCocoa
 import RxKeyboard
 import RxOptional
 import RxSwift
 import UIKit
-import Kingfisher
 import UITextView_Placeholder
 
 final class SendMessageViewController: UIViewController, View {
   
+  typealias Model = Message.Model
   typealias Reactor = SendMessageReactor
   typealias Action = Reactor.Action
   
@@ -48,7 +49,7 @@ final class SendMessageViewController: UIViewController, View {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    setupUI() 
+    setupUI()
   }
   
   // MARK: 🔗 Bind
@@ -88,19 +89,12 @@ final class SendMessageViewController: UIViewController, View {
     selectCountryView.rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Message.Model.Country> in
-        guard let self = self else { return .empty() }
-        return CountrySelectController.selectCountry(
-          presenting: self,
-          disposeBag: self.disposeBag,
-          selected: nil)
-      }
-      .map { Action.countryDidChange($0) }
+      .map { _ in Action.tapFilter }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     reactor.state.distinctUntilChanged(\.$selectedCountry)
-      .map { $0.selectedCountry?.fullName }
+      .map { $0.selectedCountry.fullName }
       .bind(to: selectCountryView.titleLabel.rx.text)
       .disposed(by: disposeBag)
     
@@ -114,6 +108,14 @@ final class SendMessageViewController: UIViewController, View {
         self?.dismiss(animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$isPresentFilter)
+      .filter { $0.isPresentFilter }
+      .flatMap { [weak self] _ in self?.presentFilter() ?? .empty() }
+      .map { Action.countryDidChange($0) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
     
     reactor.state.map(\.emojiURL)
       .map { URL(string: $0) }
@@ -130,6 +132,7 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state.map(\.name)
+      .distinctUntilChanged()
       .filter { [weak self] name in
         self?.nameTextField.text != name
       }
@@ -143,6 +146,7 @@ final class SendMessageViewController: UIViewController, View {
     
     reactor.state
       .map(\.message)
+      .distinctUntilChanged()
       .filter { [weak self] message in
         self?.messageTextView.text != message
       }
@@ -265,7 +269,11 @@ final class SendMessageViewController: UIViewController, View {
       $0.top.equalTo(selectCountryView.snp.bottom).offset(20)
       $0.width.height.equalTo(80)
     }
-    
+    emojiImageView.do {
+      $0.layer.shadowOffset = CGSize(width: 0, height: 10)
+      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowColor = UIColor.black.cgColor
+    }
     self.view.addSubview(emojiImageView)
     emojiImageView.snp.makeConstraints {
       $0.center.equalTo(profileBackgroundView)
@@ -435,5 +443,21 @@ final class SendMessageViewController: UIViewController, View {
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
       self?.rotateArrowImageViews()
     }
+  }
+  
+  private func presentFilter() -> Observable<Model.Country> {
+    guard let reactor = self.reactor else { return .empty() }
+    let selected: Model.Country? = reactor.currentState.selectedCountry
+    let items: [Model.Country] = reactor.currentState.countries
+    let viewController = ItemBottomSheetViewController<Model.Country>().then {
+      $0.reactor = ItemBottomSheetReactor(
+        items: items,
+        selectedItem: selected,
+        headerItem: .wholeWorld
+      )
+      $0.modalPresentationStyle = .overFullScreen
+    }
+    self.present(viewController, animated: true, completion: nil)
+    return viewController.expected.asObservable()
   }
 }

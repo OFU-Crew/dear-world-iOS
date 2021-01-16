@@ -14,10 +14,12 @@ import UIKit
 
 final class DiscoverViewController: UIViewController, View {
   typealias Model = Message.Model
+  typealias Reactor = DiscoverReactor
+  typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
   private let messageCountBadgeView: MessageCountBadgeView = MessageCountBadgeView()
-  private let CountryFilterView: UIView = UIView()
+  private let filterView: UIView = UIView()
   private let countryLabel: UILabel = UILabel()
   private let messageTableView: UITableView = UITableView(frame: .null, style: .grouped)
   private let aboutButton: UIButton = UIButton()
@@ -44,7 +46,7 @@ final class DiscoverViewController: UIViewController, View {
   
   private func startInitAnimation() {
     animate(view: messageCountBadgeView, alpha: 0.4, length: 20, duration: 0.4)
-    animate(view: CountryFilterView, alpha: 0.4, length: 20, duration: 0.4)
+    animate(view: filterView, alpha: 0.4, length: 20, duration: 0.4)
   }
   
   private func animate(view: UIView, alpha: CGFloat, length: CGFloat, duration: Double, delay: Double = 0) {
@@ -80,8 +82,8 @@ final class DiscoverViewController: UIViewController, View {
       $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide)
     }
     // 나라 필터링 뷰
-    filterContainerView.addSubview(self.CountryFilterView)
-    self.CountryFilterView.snp.makeConstraints {
+    filterContainerView.addSubview(self.filterView)
+    self.filterView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
       $0.centerY.equalToSuperview()
       $0.height.equalTo(20)
@@ -90,21 +92,21 @@ final class DiscoverViewController: UIViewController, View {
       $0.font = .boldSystemFont(ofSize: 16)
       $0.textColor = .warmBlue
     }
-    CountryFilterView.addSubview(countryLabel)
+    filterView.addSubview(countryLabel)
     countryLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.leading.equalTo(CountryFilterView.snp.leading)
+      $0.leading.equalTo(filterView.snp.leading)
       $0.width.lessThanOrEqualTo(200)
     }
     let select: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "select")
     }
-    CountryFilterView.addSubview(select)
+    filterView.addSubview(select)
     select.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.width.equalTo(14)
       $0.height.equalTo(8)
-      $0.trailing.equalTo(CountryFilterView.snp.trailing)
+      $0.trailing.equalTo(filterView.snp.trailing)
       $0.leading.equalTo(countryLabel.snp.trailing).offset(5)
     }
     
@@ -159,10 +161,10 @@ final class DiscoverViewController: UIViewController, View {
   }
   
   // MARK: 🔗 Bind
-  func bind(reactor: DiscoverReactor) {
+  func bind(reactor: Reactor) {
     _ = AllCountries.shared
     reactor.action.onNext(.countryDidChanged(
-      country: Model.Country(
+      Model.Country(
         code: nil,
         fullName: "Whole World",
         emojiUnicode: "🍎", imageURL: nil
@@ -171,9 +173,9 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .map(\.messageCount)
-      .subscribe { [weak self] count in
+      .subscribe(onNext: { [weak self] count in
         self?.messageCountBadgeView.count = count
-      }
+      })
       .disposed(by: self.disposeBag)
     
     reactor.state
@@ -218,58 +220,64 @@ final class DiscoverViewController: UIViewController, View {
     
     reactor.state
       .distinctUntilChanged(\.$selectedCountry)
-      .subscribe { _ in
-        self.messageTableView.setContentOffset(.zero, animated: false)
-      }
+      .subscribe(onNext: { [weak self] _ in
+        self?.messageTableView.setContentOffset(.zero, animated: false)
+      })
       .disposed(by: self.disposeBag)
     
     reactor.state
       .distinctUntilChanged(\.$selectedSortType)
-      .subscribe { _ in
-        self.messageTableView.setContentOffset(.zero, animated: false)
-      }
+      .subscribe(onNext: { [weak self]_ in
+        self?.messageTableView.setContentOffset(.zero, animated: false)
+      })
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$isPresentFilter)
+      .filter { $0.isPresentFilter }
+      .flatMap { [weak self] _ in self?.presentFilter()  ?? .empty() }
+      .map { Action.countryDidChanged($0) }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$isPresentSort)
+      .filter { $0.isPresentSort }
+      .flatMap { [weak self] _ in self?.presentSort() ?? .empty() }
+      .map { Action.sortTypeDidChanged($0) }
+      .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.messageTableView
       .refreshControl?.rx
       .controlEvent(.valueChanged)
-      .map { Reactor.Action.refresh }
+      .map { Action.refresh }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     self.messageTableView
       .rx.isReachedBottom
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .map { Reactor.Action.loadMore }
+      .map { Action.loadMore }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
-    self.CountryFilterView
+    self.filterView
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Model.Country> in
-        guard let self = self else {
-          return Observable.just(Message.Model.Country(
-                                  code: "",
-                                  fullName: "",
-                                  emojiUnicode: "",
-                                  imageURL: nil)
-          )
-        }
-        return CountrySelectController.selectCountry(
-          presenting: self,
-          disposeBag: self.disposeBag,
-          selected: self.reactor?.currentState.selectedCountry
-        )
-      }
-      .map { Reactor.Action.countryDidChanged(country: $0) }
+      .map { _ in Action.tapFilter }
       .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.$selectedSortType)
+      .map(\.selectedSortType)
+      .map(\.title)
+      .bind(to: self.sortLabel.rx.text)
       .disposed(by: self.disposeBag)
     
     self.aboutButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .map { Reactor.Action.tapAbout }
+      .map { Action.tapAbout }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
@@ -277,15 +285,7 @@ final class DiscoverViewController: UIViewController, View {
       .rx.tapGesture()
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .skip(1)
-      .flatMap { [weak self] _ -> Observable<Model.ListType> in
-        guard let self = self else { return .just(Model.ListType.recent) }
-        return SortTypeSelectController
-          .select(
-            presenting: self,
-            disposeBag: self.disposeBag,
-            selected: self.reactor?.currentState.selectedSortType)
-      }
-      .map { Reactor.Action.sortTypeDidChanged(sortType: $0)}
+      .map { _ in Action.tapSort }
       .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
@@ -303,25 +303,58 @@ final class DiscoverViewController: UIViewController, View {
       .bind(to: self.refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
   }
+  private func presentFilter() -> Observable<Model.Country> {
+    guard let reactor = self.reactor else { return .empty() }
+    let selected: Model.Country? = reactor.currentState.selectedCountry
+    let items: [Model.Country] = reactor.currentState.countries
+    let viewController = ItemBottomSheetViewController<Model.Country>().then {
+      $0.reactor = ItemBottomSheetReactor(
+        items: items,
+        selectedItem: selected,
+        headerItem: .wholeWorld
+      )
+      $0.modalPresentationStyle = .overFullScreen
+    }
+    self.present(viewController, animated: true, completion: nil)
+    return viewController.expected.asObservable()
+  }
+  
+  private func presentSort() -> Observable<Model.Sort> {
+    guard let reactor = self.reactor else { return .empty() }
+    let items: [Model.Sort] = [.recent, .weeklyHot]
+    let viewController = ItemBottomSheetViewController<Model.Sort>().then {
+      $0.reactor = ItemBottomSheetReactor(
+        items: items,
+        selectedItem: reactor.currentState.selectedSortType
+      )
+      $0.modalPresentationStyle = .overFullScreen
+    }
+    self.present(viewController, animated: false, completion: nil)
+    return viewController.expected.asObservable()
+  }
 }
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+  func tableView(
+    _ tableView: UITableView,
+    willDisplayHeaderView view: UIView,
+    forSection section: Int
+  ) {
     tableView.bringSubviewToFront(filterContainerView)
   }
+  
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     makeHeaderView()
   }
+  
   private func makeHeaderView() -> UIView {
     let headerView: UIView = UIView()
     headerView.backgroundColor = .breathingWhite
-    
     // 상단 메세지 개수 표시 뷰
     headerView.addSubview(self.messageCountBadgeView)
     messageCountBadgeView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().inset(16)
     }
-    
     // 어바웃 버튼
     headerView.addSubview(aboutButton)
     aboutButton.do {
@@ -334,11 +367,15 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     }
     return headerView
   }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     self.messages.count
   }
   
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
     cell.do {
       let cellMessage = self.messages[indexPath.row]
@@ -365,7 +402,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
       .rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .subscribe (onNext: {
-        self.CountryFilterView.snp.makeConstraints {
+        self.filterView.snp.makeConstraints {
           $0.top.greaterThanOrEqualTo(self.view.safeAreaLayoutGuide)
         }
         let activityVC: UIActivityViewController = UIActivityViewController(activityItems: ["hi"], applicationActivities: nil)

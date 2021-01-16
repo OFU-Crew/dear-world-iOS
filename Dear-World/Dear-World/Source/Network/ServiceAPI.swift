@@ -25,7 +25,7 @@ extension ServiceAPI {
     let url: URL = baseURL.appendingPathComponent(path)
     var request: URLRequest = URLRequest(url: url)
     request.httpMethod = method.rawValue
-    let parameters = self.parameters?.compactMapValues { $0 }
+    let parameters: [String: Any]? = self.parameters?.compactMapValues { $0 }
     switch method {
     case .post:
       request = try JSONEncoding.default.encode(request, with: parameters)

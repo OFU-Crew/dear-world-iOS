@@ -15,6 +15,5 @@ extension Message.API {
     var method: HTTPMethod { .get }
     var path: String { "api/v1/countries/" }
     var parameters: [String : Any?]? { nil } 
-    
   }
 }

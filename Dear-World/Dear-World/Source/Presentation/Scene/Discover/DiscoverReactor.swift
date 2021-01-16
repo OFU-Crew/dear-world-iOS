@@ -16,38 +16,45 @@ final class DiscoverReactor: Reactor {
   enum Action {
     case viewWillAppear
     case tapAbout
-    case countryDidChanged(country: Message.Model.Country?)
-    case sortTypeDidChanged(sortType: Message.Model.ListType?)
+    case tapFilter
+    case tapSort
+    case countryDidChanged(Model.Country?)
+    case sortTypeDidChanged(Model.Sort?)
     case refresh
     case loadMore
   }
   
   enum Mutation {
-    case setMessages(result: Model.Messages)
+    case setMessages(Model.Messages)
     case setRefreshing(Bool)
-    case addMessages(result: Model.Messages)
-    case setCountry(country: Model.Country?)
+    case addMessages(Model.Messages)
+    case setCountry(Model.Country?)
+    case setCountries([Model.Country])
     case setLoading(Bool)
     case setPresentAboutPage(Bool)
+    case setPresentFilter(Bool)
+    case setPresentSort(Bool)
     case setMessageCount(Int)
-    case setCurrentSortType(Model.ListType)
+    case setCurrentSortType(Model.Sort)
   }
   
   struct State {
-    var messageCount: Int = 0
-    @Revision var selectedCountry: Model.Country?
-    @Revision var selectedSortType: Model.ListType = .recent
+    @Revision var isRefreshing: Bool = false
+    @Revision var isPresentAboutPage: Bool = false
+    @Revision var isPresentFilter: Bool = false
+    @Revision var isPresentSort: Bool = false
+    @Revision var selectedCountry: Model.Country? = .wholeWorld
+    @Revision var countries: [Model.Country] = []
+    @Revision var selectedSortType: Model.Sort = .recent
     @Revision var messages: Model.Messages = .init(
       firstMsgId: nil,
       lastMsgId: nil,
       messageCount: 0,
       messages: []
     )
-    @Revision var isRefreshing: Bool = false
-
+    var messageCount: Int = 0
     var isLoading: Bool = false
     var isAnimating: Bool = false
-    @Revision var isPresentAboutPage: Bool = false
   }
   
   var initialState: State
@@ -77,8 +84,17 @@ final class DiscoverReactor: Reactor {
           )
         )
         .filterNil()
-        .map { Mutation.setMessages(result: $0) }
+        .map { Mutation.setMessages($0) },
+        Network.request(API.Countries())
+          .filterNil()
+          .map { .setCountries($0.countries) }
       )
+      
+    case .tapFilter:
+      return .just(.setPresentFilter(true))
+      
+    case .tapSort:
+      return .just(.setPresentSort(true))
       
     case let .countryDidChanged(country):
       return .merge(
@@ -90,7 +106,7 @@ final class DiscoverReactor: Reactor {
         .filterNil()
         .map { .setMessageCount($0.messageCount) },
         .concat(
-          .just(.setCountry(country: country)),
+          .just(.setCountry(country)),
           .just(.setLoading(true)),
           Network.request(
             API.Messages(
@@ -100,7 +116,7 @@ final class DiscoverReactor: Reactor {
             )
           )
           .filterNil()
-          .map{ Mutation.setMessages(result: $0) },
+          .map{ Mutation.setMessages($0) },
           .just(.setLoading(false))
         )
       )
@@ -121,10 +137,11 @@ final class DiscoverReactor: Reactor {
               countryCode: currentState.selectedCountry?.code,
               lastMsgId: nil,
               type: sortType ?? .recent
-            ))
-            .filterNil()
-            .map{ .setMessages(result: $0)},
-            .just(.setLoading(false))
+            )
+          )
+          .filterNil()
+          .map{ Mutation.setMessages($0) },
+          .just(.setLoading(false))
         )
       )
     case .refresh:
@@ -138,7 +155,7 @@ final class DiscoverReactor: Reactor {
           .just(.setRefreshing(true)),
           Network.request(Message.API.Messages(countryCode: currentState.selectedCountry?.code, lastMsgId: nil, type: currentState.selectedSortType))
             .filterNil()
-            .map{.setMessages(result: $0)},
+            .map{.setMessages($0)},
           .just(.setRefreshing(false))
       ]))
     case .loadMore:
@@ -153,7 +170,7 @@ final class DiscoverReactor: Reactor {
           )
         )
         .filterNil()
-        .map { .addMessages(result: $0) },
+        .map { .addMessages($0) },
         .just(.setLoading(false))
       ])
       
@@ -166,13 +183,13 @@ final class DiscoverReactor: Reactor {
   func reduce(state: State, mutation: Mutation) -> State {
     var newState: State = state
     switch mutation {
-    case let .setMessages(results):
+    case .setMessages(let results):
       newState.messages = results
       
-    case let .setRefreshing(flag):
+    case .setRefreshing(let flag):
       newState.isRefreshing = flag
       
-    case let .addMessages(result: results):
+    case .addMessages(let results):
       newState.messages = Model.Messages(
         firstMsgId: state.messages.firstMsgId,
         lastMsgId: results.lastMsgId,
@@ -180,20 +197,29 @@ final class DiscoverReactor: Reactor {
         messages: currentState.messages.messages + results.messages
       )
       
-    case let .setCountry(country: country):
+    case .setCountry(let country):
       newState.selectedCountry = country
       
-    case let .setLoading(flag): 
+    case .setCountries(let countries):
+      newState.countries = countries
+      
+    case .setLoading(let flag):
       newState.isLoading = flag
       
     case .setPresentAboutPage(let isPresentAboutPage):
       newState.isPresentAboutPage = isPresentAboutPage
       
-    case let .setMessageCount(count):
+    case .setMessageCount(let count):
       newState.messageCount = count
       
-    case let .setCurrentSortType(type):
+    case .setCurrentSortType(let type):
       newState.selectedSortType = type
+      
+    case .setPresentFilter(let isPresentFilter):
+      newState.isPresentFilter = isPresentFilter
+      
+    case .setPresentSort(let isPresentSort):
+      newState.isPresentSort = isPresentSort
     }
     return newState
   }

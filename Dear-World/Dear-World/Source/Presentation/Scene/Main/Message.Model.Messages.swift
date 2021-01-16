@@ -71,7 +71,7 @@ extension Message.Model {
     }
   }
   
-  enum ListType: String, CaseIterable {
+  enum Sort: String, CaseIterable {
     case recent = "recent"
     case weeklyHot = "weekly_hot"
     
@@ -84,4 +84,13 @@ extension Message.Model {
       }
     }
   }
+}
+
+extension Message.Model.Country {
+  static let wholeWorld: Message.Model.Country = Message.Model.Country(
+    code: nil,
+    fullName: "Whole World",
+    emojiUnicode: nil,
+    imageURL: nil
+  )
 }
