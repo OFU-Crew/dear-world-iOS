@@ -36,6 +36,8 @@ final class MainTabBarController: UITabBarController {
   private func setupTabBar() {
     self.delegate = self
     tabBar.barTintColor = .white
+    tabBar.layer.cornerRadius = 10
+    tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     let discoverViewController: UIViewController = DiscoverViewController().then {
       $0.tabBarItem.image = UIImage(named: "message_default")?
         .withRenderingMode(.alwaysOriginal)
