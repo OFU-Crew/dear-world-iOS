@@ -95,7 +95,7 @@ final class DiscoverViewController: UIViewController, View {
     filterView.addSubview(countryLabel)
     countryLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.leading.equalTo(filterContainerView.snp.leading)
+      $0.leading.equalTo(filterView.snp.leading)
       $0.width.lessThanOrEqualTo(200)
     }
     let select: UIImageView = UIImageView().then {
