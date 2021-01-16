@@ -31,7 +31,7 @@ extension Int {
 extension Double {
   var decimalFormat: String? {
       let numberFormatter: NumberFormatter = NumberFormatter().then {
-        $0.roundingMode = .halfEven
+        $0.roundingMode = .down
         $0.minimumFractionDigits = 0
         $0.maximumFractionDigits = 1
         $0.numberStyle = .decimal
