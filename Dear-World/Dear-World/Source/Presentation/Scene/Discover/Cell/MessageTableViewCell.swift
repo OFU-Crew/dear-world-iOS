@@ -5,10 +5,10 @@
 //  Created by rookie.w on 2020/12/26.
 //
 
+import Lottie
 import RxCocoa
 import RxSwift
 import UIKit
-import Lottie
 
 final class MessageTableViewCell: UITableViewCell {
   private enum HeartProgress: CGFloat {
@@ -30,7 +30,7 @@ final class MessageTableViewCell: UITableViewCell {
   let countryFlagImageView: UIImageView = UIImageView()
   let detailTextView: UITextView = UITextView()
   let shareButton: UIButton = UIButton()
-  let likeView: AnimationView = AnimationView(animation: Animation.named("heartFull"))
+  let likeView: AnimationView = AnimationView(animation: Animation.named("heart_fill"))
   let likeCountLabel: UILabel = UILabel()
   var likeCount: Int = 0 {
     didSet {
@@ -211,7 +211,7 @@ final class MessageTableViewCell: UITableViewCell {
         likeView.play(
           // TODO : 각 상황에 대한 값들을 enum으로 정의할것
           fromProgress: isLike ? HeartProgress.unlikeDefault.percent() : HeartProgress.likeDefault.percent(),
-          toProgress: isLike ? HeartProgress.likeTouchEnd.percent() : HeartProgress.unlikeTouchEnd.percent()) { (completed) in
+          toProgress: isLike ? HeartProgress.likeTouchEnd.percent() : HeartProgress.unlikeTouchEnd.percent()) { completed in
           if completed && isLike{
             self?.likeCount += 1
             self?.likeCountLabel.textColor = .loveRed
