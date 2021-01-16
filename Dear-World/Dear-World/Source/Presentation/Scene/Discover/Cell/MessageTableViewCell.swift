@@ -43,7 +43,7 @@ final class MessageTableViewCell: UITableViewCell {
       self.likeCountLabel.textColor = isLike ? .loveRed : .grayWhite
     }
   }
-  var messageId: Int?
+  private var messageId: Int?
   
   // MARK: 🏁 Initialize
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -219,5 +219,20 @@ final class MessageTableViewCell: UITableViewCell {
         }
       })
       .disposed(by: self.disposeBag)
+  }
+  
+  func configure(_ message: Message.Model.Message) {
+    nameLabel.text = message.user.nickname
+    detailTextView.text = message.content
+    likeCount = message.likeCount
+    isLike = message.isLiked
+    countryLabel.text = message.user.country.fullName
+    if let emojiImageURL: URL = URL(string: message.user.emoji.imageURL) {
+      emojiImageView.kf.setImage(with: emojiImageURL)
+    }
+    if let countryImageURL: URL = URL(string: message.user.country.imageURL) {
+      countryFlagImageView.kf.setImage(with: countryImageURL)
+    }
+    messageId = message.id
   }
 }

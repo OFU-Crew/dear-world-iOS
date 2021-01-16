@@ -83,9 +83,12 @@ final class SendMessageReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .initialize:
-      return Network.request(API.Countries())
-        .filterNil()
-        .map { .setCountries($0.countries) }
+      return .merge(
+        Network.request(API.Countries())
+          .filterNil()
+          .map { .setCountries($0.countries) },
+        .just(.setCountry(.current))
+        )
       
     case .tapFilter:
       return .just(.setPresentFilter(true))
@@ -239,3 +242,13 @@ final class SendMessageReactor: Reactor {
   }
 }
 
+extension Message.Model.Country {
+  static var current: Message.Model.Country {
+    Message.Model.Country(
+      code: Locale.current.regionCode,
+      fullName: Locale.current.localizedString(forRegionCode: Locale.current.regionCode ?? "") ?? "",
+      emojiUnicode: nil,
+      imageURL: nil
+    )
+  }
+}

@@ -76,6 +76,7 @@
 		39965E8825ABE32400069860 /* BottomSheetItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965E8725ABE32400069860 /* BottomSheetItemHeaderView.swift */; };
 		39965E8D25ACA87A00069860 /* BottomSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965E8C25ACA87A00069860 /* BottomSheetItem.swift */; };
 		39965F2525B2E20A00069860 /* heart_fill.json in Resources */ = {isa = PBXBuildFile; fileRef = 39965F2425B2E20900069860 /* heart_fill.json */; };
+		39965F3325B308B000069860 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965F3225B308B000069860 /* UIApplication+.swift */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
 		39C8322C2597651F00236DDF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 39C8322B2597651F00236DDF /* RxCocoa */; };
@@ -178,6 +179,7 @@
 		39965E8725ABE32400069860 /* BottomSheetItemHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetItemHeaderView.swift; sourceTree = "<group>"; };
 		39965E8C25ACA87A00069860 /* BottomSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetItem.swift; sourceTree = "<group>"; };
 		39965F2425B2E20900069860 /* heart_fill.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heart_fill.json; sourceTree = "<group>"; };
+		39965F3225B308B000069860 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutReactor.swift; sourceTree = "<group>"; };
 		39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelWorldMapView.swift; sourceTree = "<group>"; };
 		39E9F7DF25A1BC3C00BC2CC2 /* NoticeBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBadge.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				39F0C1622597B34F00A7001F /* UIView+.swift */,
 				39F0C16A2597C7DF00A7001F /* UIImage+.swift */,
 				39F0C175259860D700A7001F /* UIControl+Rx.swift */,
+				39965F3225B308B000069860 /* UIApplication+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -894,6 +897,7 @@
 				39658FAF259AE4E40050D180 /* World.swift in Sources */,
 				3971EB24259A7C420084E6DC /* Emoji.Model.Random.swift in Sources */,
 				39F0C1632597B34F00A7001F /* UIView+.swift in Sources */,
+				39965F3325B308B000069860 /* UIApplication+.swift in Sources */,
 				3971EB1F259A7C0E0084E6DC /* Emoji.API.Random.swift in Sources */,
 				393E0D4025A23A12000DB3B9 /* World.Model.Map.swift in Sources */,
 				3902F1052596F26D00A3DF8C /* CheeringMapViewController.swift in Sources */,

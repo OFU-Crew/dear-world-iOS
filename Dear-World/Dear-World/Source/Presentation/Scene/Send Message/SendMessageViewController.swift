@@ -453,7 +453,7 @@ final class SendMessageViewController: UIViewController, View {
       $0.reactor = ItemBottomSheetReactor(
         items: items,
         selectedItem: selected,
-        headerItem: .wholeWorld
+        headerItem: nil
       )
       $0.modalPresentationStyle = .overFullScreen
     }
