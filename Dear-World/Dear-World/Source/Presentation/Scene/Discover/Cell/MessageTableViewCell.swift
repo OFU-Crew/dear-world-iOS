@@ -8,8 +8,20 @@
 import RxCocoa
 import RxSwift
 import UIKit
+import Lottie
 
 final class MessageTableViewCell: UITableViewCell {
+  private enum HeartProgress: CGFloat {
+    case likeDefault = 30
+    case unlikeDefault = 1
+    case likeTouchEnd = 15
+    case unlikeTouchEnd = 60
+    
+    func percent() -> CGFloat {
+      self.rawValue / 60
+    }
+  }
+  
   let disposeBag: DisposeBag = DisposeBag()
   // MARK: 🖼 UI
   let emojiImageView: UIImageView = UIImageView()
@@ -17,9 +29,9 @@ final class MessageTableViewCell: UITableViewCell {
   let countryLabel: UILabel = UILabel()
   let countryFlagImageView: UIImageView = UIImageView()
   let detailTextView: UITextView = UITextView()
-  let likeView: UIImageView = UIImageView()
-  let likeCountLabel: UILabel = UILabel()
   let shareButton: UIButton = UIButton()
+  let likeView: AnimationView = AnimationView(animation: Animation.named("heartfull"))
+  let likeCountLabel: UILabel = UILabel()
   var likeCount: Int = 0 {
     didSet {
       self.likeCountLabel.text = "\(likeCount)"
@@ -27,7 +39,7 @@ final class MessageTableViewCell: UITableViewCell {
   }
   var isLike: Bool = false {
     didSet {
-      self.likeView.image = isLike ? UIImage(named: "heart_liked") : UIImage(named: "heart")
+      self.likeView.currentProgress = isLike ? HeartProgress.likeDefault.percent() : HeartProgress.unlikeDefault.percent()
       self.likeCountLabel.textColor = isLike ? .loveRed : .grayWhite
     }
   }
@@ -130,15 +142,16 @@ final class MessageTableViewCell: UITableViewCell {
     }
     
     self.likeView.do {
-      $0.image = UIImage(named: "heart")
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      $0.clipsToBounds = false
     }
     mainView.addSubview(likeView)
-    self.likeView.snp.makeConstraints {
-      $0.leading.equalToSuperview().inset(30)
-      $0.top.equalTo(detailTextView.snp.bottom).offset(19)
-      $0.bottom.equalToSuperview().inset(24)
-      $0.height.equalTo(17)
-      $0.width.equalTo(20)
+    likeView.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.top.equalTo(detailTextView.snp.bottom).offset(7)
+      $0.bottom.equalToSuperview().inset(13)
+      $0.height.equalTo(40)
+      $0.width.equalTo(40)
     }
     
     self.likeCountLabel.do {
@@ -148,8 +161,8 @@ final class MessageTableViewCell: UITableViewCell {
     mainView.addSubview(self.likeCountLabel)
     self.likeCountLabel.snp.makeConstraints {
       $0.centerY.equalTo(likeView.snp.centerY)
-      $0.height.equalTo(14)
-      $0.leading.equalTo(likeView.snp.trailing).offset(5)
+      $0.height.equalTo(17)
+      $0.leading.equalTo(likeView.snp.trailing).offset(-5)
     }
     
     self.shareButton.do {
@@ -169,12 +182,12 @@ final class MessageTableViewCell: UITableViewCell {
     }
   }
   
-  // MARK: 🔗 Bind
   private func bind() {
     self.likeView
       .rx.tapGesture()
       .debug()
-      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .skip(1)
+      .throttle(.milliseconds(1000), latest: false, scheduler: MainScheduler.instance)
       .flatMap { [weak self] _ -> Observable<Bool?> in
         guard let id = self?.messageId else {
           return Observable.just(false)
@@ -183,10 +196,85 @@ final class MessageTableViewCell: UITableViewCell {
           .map { $0?.isLiked }
       }
       .filterNil()
-      .subscribe (onNext: {[weak self] isLike in
-        self?.isLike = isLike
-        self?.likeCount += (isLike ? 1 : -1)
+      .subscribe(onNext: { [weak self] isLike in
+        guard let likeView = self?.likeView else { return }
+        likeView.pause()
+        if !isLike {
+          self?.likeCount -= 1
+          self?.likeCountLabel.textColor = .grayWhite
+        }
+        likeView.play(
+          // TODO : 각 상황에 대한 값들을 enum으로 정의할것
+          fromProgress: isLike ? HeartProgress.unlikeDefault.percent() : HeartProgress.likeDefault.percent(),
+          toProgress: isLike ? HeartProgress.likeTouchEnd.percent() : HeartProgress.unlikeTouchEnd.percent()) { (completed) in
+          if completed && isLike{
+            self?.likeCount += 1
+            self?.likeCountLabel.textColor = .loveRed
+          }
+        }
       })
       .disposed(by: self.disposeBag)
   }
 }
+//class Fdf: UIView {
+//  enum Progress: CGFloat {
+//    case likeDefault = 30
+//    case unlikeDefault = 1
+//    case likeTouchEnd = 15
+//    case unlikeTouchEnd = 60
+//
+//    func percent() -> CGFloat {
+//      self.rawValue / 60
+//    }
+//  }
+//
+//  let disposeBag: DisposeBag = DisposeBag()
+//  let animationView: AnimationView = AnimationView(animation: Animation.named("heartfull"))
+//  var messageId: Int
+//  init(isLike: Bool, messageId: Int) {
+//    self.messageId = messageId
+//    super.init(frame: .null)
+//    setupUI(isLike: isLike)
+//    bind()
+//  }
+//  func setupUI(isLike: Bool) {
+//    self.addSubview(animationView)
+//    self.translatesAutoresizingMaskIntoConstraints = false
+//    self.clipsToBounds = false
+//    animationView.snp.makeConstraints {
+//      $0.top.bottom.leading.trailing.equalToSuperview()
+//    }
+//    self.animationView.currentProgress = isLike ? Progress.likeDefault.percent() : Progress.unlikeDefault.percent()
+//  }
+//  func bind() {
+//    self.rx.tapGesture()
+//      .skip(1)
+//      .throttle(.milliseconds(1000), latest: false, scheduler: MainScheduler.instance)
+//      .flatMap { [weak self] _ -> Observable<Bool?> in
+//        guard let id = self?.messageId else {
+//          return Observable.just(false)
+//        }
+//        return Network.request(Message.API.Like(messageId: id))
+//          .map { $0?.isLiked }
+//      }
+//      .subscribe(onNext: { [weak self] isLike in
+//        self?.tap(isLike!)
+//      })
+//      .disposed(by: self.disposeBag)
+//  }
+//  @objc func tap(_ isLike: Bool) {
+//    animationView.pause()
+//    if isLike {
+//      self.animationView.play(fromProgress: Progress.unlikeDefault.percent(), toProgress: Progress.likeTouchEnd.percent())
+//    } else {
+//      self.animationView.play(fromProgress: Progress.likeDefault.percent(), toProgress: Progress.unlikeTouchEnd.percent())
+//    }
+//  }
+//  override init(frame: CGRect) {
+//    self.messageId = 0
+//    super.init(frame: frame)
+//  }
+//  required init?(coder: NSCoder) {
+//    fatalError("init(coder:) has not been implemented")
+//  }
+//}
