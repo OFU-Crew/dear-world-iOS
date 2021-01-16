@@ -28,11 +28,13 @@ final class DiscoverViewController: UIViewController, View {
   private var messages: [Message.Model.Message] = []
   private let filterContainerView: UIView = UIView()
   private let refreshControl: UIRefreshControl = UIRefreshControl()
+  private let messageEmptyView: UIStackView = UIStackView()
   
   var disposeBag: DisposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     setupUI()
     setupTableView()
     startInitAnimation()
@@ -61,6 +63,25 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.view.backgroundColor = .breathingWhite
+    
+    messageEmptyView.do {
+      $0.axis = .vertical
+      $0.spacing = 25
+    }
+    self.view.addSubview(self.messageEmptyView)
+    messageEmptyView.snp.makeConstraints {
+      $0.center.equalToSuperview()
+    }
+    let emptyImageView: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "empty_message")
+    }
+    let emptyMessageLabel: UILabel = UILabel().then {
+      $0.text = "Sorry..\nThere is no message yet.."
+      $0.textColor = .warmBlue
+      $0.font = .boldSystemFont(ofSize: 16)
+    }
+    messageEmptyView.addArrangedSubview(emptyImageView)
+    messageEmptyView.addArrangedSubview(emptyMessageLabel)
     
     messageTableView.do {
       $0.backgroundColor = .breathingWhite
@@ -162,7 +183,6 @@ final class DiscoverViewController: UIViewController, View {
   
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
-    _ = AllCountries.shared
     reactor.action.onNext(.countryDidChanged(.wholeWorld))
     
     reactor.state

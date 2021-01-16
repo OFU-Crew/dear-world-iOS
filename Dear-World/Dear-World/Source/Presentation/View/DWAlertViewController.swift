@@ -9,6 +9,7 @@ import RxSwift
 import UIKit
 
 final class DWAlertViewController: UIViewController, Promisable {
+  
   typealias Expected = Bool
   // MARK: 🖼 UI
   let okButton: UIButton = UIButton()
@@ -142,23 +143,4 @@ final class DWAlertViewController: UIViewController, Promisable {
       self?.dismiss(animated: false, completion: nil)
     }
   }
-//
-//  func answer() -> Observable<Bool> {
-//    Observable<Bool>.create { [weak self] observer in
-//      guard let self = self else { return Disposables.create() }
-//      Observable.merge(
-//        self.okButton.rx.tap.map { _ in true },
-//        self.cancelButton.rx.tap.map { _ in false }
-//      )
-//      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-//      .subscribe(onNext: { [weak self] in
-//        observer.onNext($0)
-//        self?.dismiss(animated: true, completion: nil)
-//        observer.onCompleted()
-//      })
-//      .disposed(by: self.disposeBag)
-//
-//      return Disposables.create()
-//    }
-//  }
 }
