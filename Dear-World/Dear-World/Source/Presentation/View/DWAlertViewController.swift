@@ -88,8 +88,7 @@ final class DWAlertViewController: UIViewController {
     alertView.addSubview(buttonsStackView)
     buttonsStackView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(20)
-      $0.top.equalTo(messageLabel.snp.bottom).offset(20)
-      $0.height.equalTo(38)
+      $0.bottom.equalToSuperview().inset(20)
     }
     
     okButton.do {
@@ -100,7 +99,9 @@ final class DWAlertViewController: UIViewController {
       $0.layer.masksToBounds = true
       $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
-    
+    okButton.snp.makeConstraints {
+      $0.height.equalTo(38)
+    }
     cancelButton.do {
       $0.setTitle("Cancel", for: .normal)
       $0.backgroundColor = .loveRed
@@ -108,6 +109,9 @@ final class DWAlertViewController: UIViewController {
       $0.layer.cornerRadius = 19
       $0.layer.masksToBounds = true
       $0.titleLabel?.font = .systemFont(ofSize: 14)
+    }
+    cancelButton.snp.makeConstraints {
+      $0.height.equalTo(38)
     }
   }
  

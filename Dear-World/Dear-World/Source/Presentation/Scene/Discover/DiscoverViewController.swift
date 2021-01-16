@@ -293,7 +293,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$isRefreshing)
       .map(\.isRefreshing)
-      .filter{!$0}
+      .filter { !$0 }
       .bind(to: self.refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
     
@@ -337,7 +337,7 @@ final class DiscoverViewController: UIViewController, View {
       )
       $0.modalPresentationStyle = .overFullScreen
     }
-    self.present(viewController, animated: false, completion: nil)
+    self.present(viewController, animated: true, completion: nil)
     return viewController.expected.asObservable()
   }
 }

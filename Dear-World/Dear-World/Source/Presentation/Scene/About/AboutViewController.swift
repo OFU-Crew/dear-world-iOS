@@ -42,6 +42,11 @@ final class AboutViewController: UIViewController, View {
     setupUI()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.isHidden = false
+  }
+  
   // MARK: 🎛 Setup
   private func setupUI() {
     view.backgroundColor = .breathingWhite
@@ -71,13 +76,10 @@ final class AboutViewController: UIViewController, View {
       $0.image = UIImage(named: "ufo")
     }
     crewInfoView.do {
-      $0.backgroundColor = .grayWhite
+      $0.backgroundColor = .refreshingWhite
       $0.addSubview(crewInfoTitleLabel)
       $0.addSubview(crewContentImageView)
       $0.layer.cornerRadius = 10
-      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-      $0.layer.shadowOpacity = 0.1
-      $0.layer.shadowColor = UIColor.black.cgColor
     }
     crewInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -99,13 +101,10 @@ final class AboutViewController: UIViewController, View {
       $0.image = UIImage(named: "left_arrow")
     }
     contactInfoView.do {
-      $0.backgroundColor = .grayWhite
+      $0.backgroundColor = .refreshingWhite
       $0.addSubview(contactInfoTitleLabel)
       $0.addSubview(contactContentImageView)
       $0.layer.cornerRadius = 10
-      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-      $0.layer.shadowOpacity = 0.1
-      $0.layer.shadowColor = UIColor.black.cgColor
     }
     contactInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -128,13 +127,10 @@ final class AboutViewController: UIViewController, View {
       $0.text = "1"
     }
     noticeInfoView.do {
-      $0.backgroundColor = .grayWhite
+      $0.backgroundColor = .refreshingWhite
       $0.addSubview(noticeInfoTitleLabel)
       $0.addSubview(noticeBadge)
       $0.layer.cornerRadius = 10
-      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-      $0.layer.shadowOpacity = 0.1
-      $0.layer.shadowColor = UIColor.black.cgColor
     }
     noticeInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -159,13 +155,10 @@ final class AboutViewController: UIViewController, View {
       $0.textColor = .livelyBlue
     }
     versionInfoView.do {
-      $0.backgroundColor = .grayWhite
+      $0.backgroundColor = .refreshingWhite
       $0.addSubview(versionInfoTitleLabel)
       $0.addSubview(versionLabel)
       $0.layer.cornerRadius = 10
-      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-      $0.layer.shadowOpacity = 0.1
-      $0.layer.shadowColor = UIColor.black.cgColor
     }
     versionInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -249,15 +242,20 @@ final class AboutViewController: UIViewController, View {
       .distinctUntilChanged(\.$isPresentEmail)
       .map { $0.isPresentEmail }
       .filter { $0 }
-      .filter { _ in MFMailComposeViewController.canSendMail() }
-      .subscribe(onNext: { _ in
-        let viewController = MFMailComposeViewController().then {
-          $0.setToRecipients(["dearworld.crew@gmail.com"])
-          $0.setSubject("Dear world 에게 문의드립니다.")
-          $0.setMessageBody("문의사항", isHTML: false)
+      .subscribe(onNext: { [weak self] _ in
+        if MFMailComposeViewController.canSendMail() {
+          let viewController = MFMailComposeViewController().then {
+            $0.setToRecipients(["dearworld.crew@gmail.com"])
+            $0.setSubject("Dear world 에게 문의드립니다.")
+            $0.setMessageBody("문의사항", isHTML: false)
+          }
+          viewController.mailComposeDelegate = self
+          self?.present(viewController, animated: true, completion: nil)
+        } else {
+          let alert = UIAlertController(title: "알림", message: "메일을 발신할 수 없습니다", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+          self?.present(alert, animated: true, completion: nil)
         }
-        viewController.mailComposeDelegate = self
-        self.present(viewController, animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
     
@@ -287,4 +285,8 @@ final class AboutViewController: UIViewController, View {
     reactor.action.onNext(.initalize)
   }
 }
-extension AboutViewController: MFMailComposeViewControllerDelegate {}
+extension AboutViewController: MFMailComposeViewControllerDelegate {
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    controller.dismiss(animated: true, completion: nil)
+  }
+}

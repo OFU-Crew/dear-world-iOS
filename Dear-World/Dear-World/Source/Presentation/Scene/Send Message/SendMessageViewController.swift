@@ -15,7 +15,6 @@ import UIKit
 import UITextView_Placeholder
 
 final class SendMessageViewController: UIViewController, View {
-  
   typealias Model = Message.Model
   typealias Reactor = SendMessageReactor
   typealias Action = Reactor.Action
@@ -270,8 +269,8 @@ final class SendMessageViewController: UIViewController, View {
       $0.width.height.equalTo(80)
     }
     emojiImageView.do {
-      $0.layer.shadowOffset = CGSize(width: 0, height: 10)
-      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowOffset = CGSize(width: 3, height: 5)
+      $0.layer.shadowOpacity = 0.2
       $0.layer.shadowColor = UIColor.black.cgColor
     }
     self.view.addSubview(emojiImageView)
@@ -439,7 +438,7 @@ final class SendMessageViewController: UIViewController, View {
     arrowImageViews.removeArrangedSubview(firstArrowImageView)
     firstArrowImageView.removeFromSuperview()
     arrowImageViews.addArrangedSubview(firstArrowImageView)
-    
+     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
       self?.rotateArrowImageViews()
     }
