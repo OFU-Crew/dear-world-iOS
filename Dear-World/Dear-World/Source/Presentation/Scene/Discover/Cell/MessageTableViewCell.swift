@@ -110,8 +110,8 @@ final class MessageTableViewCell: UITableViewCell {
     }
     mainView.addSubview(self.nameLabel)
     self.nameLabel.snp.makeConstraints {
-      $0.top.equalTo(emojiView.snp.top)
-      $0.leading.equalTo(emojiView.snp.trailing).offset(10)
+      $0.top.equalTo(emojiImageView.snp.top)
+      $0.leading.equalTo(emojiImageView.snp.trailing).offset(10)
       $0.trailing.lessThanOrEqualToSuperview()
     }
     mainView.addSubview(countryFlagImageView)

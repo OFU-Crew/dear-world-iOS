@@ -17,10 +17,11 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>: UIViewControll
   typealias Action = Reactor.Action
   
   // MARK: 🖼 UI
+  let bottomSheet: UIStackView = UIStackView()
   private let closeButton: UIButton = UIButton()
   private let bottomSheetHeaderView: BottomSheetItemHeaderView<Item> = BottomSheetItemHeaderView()
   private let itemsTableView: UITableView = UITableView()
-  
+  private var selectedItem: Item?
   var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
@@ -39,7 +40,7 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>: UIViewControll
     self.view.do {
       $0.backgroundColor = UIColor.black.withAlphaComponent(0.6)
     }
-    let bottomSheet: UIStackView = UIStackView().then {
+    bottomSheet.do {
       $0.axis = .vertical
     }
     self.view.addSubview(bottomSheet)
@@ -88,11 +89,16 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>: UIViewControll
     }
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    reactor?.action.onNext(.tapBackground)
+  }
+  
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
-    self.view.rx.tapGesture()
+    
+    bottomSheetHeaderView.rx.tapGesture()
       .skip(1)
-      .map { _ in Action.tapBackground }
+      .map { _ in Action.tapHeader }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
@@ -111,23 +117,51 @@ final class ItemBottomSheetViewController<Item: BottomSheetItem>: UIViewControll
       .bind(to: itemsTableView.rx.items(
         cellIdentifier: "BottomSheetItemCell",
         cellType: BottomSheetItemCell.self
-      )) { index, item, cell in
+      )) { [weak self] _, item, cell in
+        cell.isSelected = item.name == self?.selectedItem?.name
         cell.configure(item: item)
       }
       .disposed(by: disposeBag)
     
+    reactor.state.distinctUntilChanged(\.$headerItem)
+      .map { $0.headerItem }
+      .filterNil()
+      .bind(to: bottomSheetHeaderView.headerItem)
+      .disposed(by: disposeBag)
+    
+    reactor.state.distinctUntilChanged(\.$headerItem)
+      .map { $0.headerItem }
+      .map { $0 == nil }
+      .bind(to: bottomSheetHeaderView.rx.isHidden)
+      .disposed(by: disposeBag)
+    
     reactor.state.distinctUntilChanged(\.$selectedItem)
       .map { $0.selectedItem }
+      .do { [weak self] in
+        self?.selectedItem = $0
+        self?.bottomSheetHeaderView.isSelected = $0?.name == self?.reactor?.currentState.headerItem?.name
+      }
       .filterNil()
-      .bind(to: bottomSheetHeaderView.selectedItem)
+      .bind(to: expected)
       .disposed(by: disposeBag)
     
     reactor.state.distinctUntilChanged(\.$isPresent)
       .filter { !$0.isPresent }
       .subscribe(onNext: { [weak self] _ in
-        self?.dismiss(animated: true, completion: nil)
+        self?.close()
       })
       .disposed(by: disposeBag)
+  }
+  
+  private func close() {
+    UIView.animate(withDuration: 0.3) {
+      self.bottomSheet.snp.makeConstraints {
+        $0.top.equalTo(self.view.snp.bottom)
+      }
+      self.view.layoutIfNeeded()
+    } completion: { [weak self] _ in
+      self?.dismiss(animated: false, completion: nil)
+    }
   }
 }
 

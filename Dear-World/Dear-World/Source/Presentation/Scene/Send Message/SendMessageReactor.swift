@@ -46,7 +46,7 @@ final class SendMessageReactor: Reactor {
     @Revision var isPresentSendAlert: Bool = false
     @Revision var isPresentCancelAlert: Bool = false
     @Revision var isPresentFilter: Bool = false
-    @Revision var selectedCountry: Model.Country?
+    @Revision var selectedCountry: Model.Country = .wholeWorld
     @Revision var countries: [Model.Country] = []
     var emojiURL: String?
     var emojiIsLoading: Bool = true
@@ -113,11 +113,13 @@ final class SendMessageReactor: Reactor {
       return .just(.setPresentSendAlert(true))
       
     case .confirmSendAlert:
-      guard let emojiId = currentState.emojiId else { return .empty() }
+      guard let emojiId = currentState.emojiId,
+            let countryCode = currentState.selectedCountry.code
+      else { return .empty() }
       return .concat(
         Network.request(
           API.SendMessage(
-            countryCode: "KR",
+            countryCode: countryCode,
             emojiId: emojiId,
             name: currentState.name,
             message: currentState.message
@@ -237,6 +239,3 @@ final class SendMessageReactor: Reactor {
   }
 }
 
-extension Message.Model.Country: BottomSheetItem {
-  var name: String { fullName }
-}

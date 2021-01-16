@@ -5,17 +5,18 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import Kingfisher
 import ReactorKit
 import RxCocoa
 import RxKeyboard
 import RxOptional
 import RxSwift
 import UIKit
-import Kingfisher
 import UITextView_Placeholder
 
 final class SendMessageViewController: UIViewController, View {
   
+  typealias Model = Message.Model
   typealias Reactor = SendMessageReactor
   typealias Action = Reactor.Action
   
@@ -93,7 +94,7 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state.distinctUntilChanged(\.$selectedCountry)
-      .map { $0.selectedCountry?.fullName }
+      .map { $0.selectedCountry.fullName }
       .bind(to: selectCountryView.titleLabel.rx.text)
       .disposed(by: disposeBag)
     
@@ -111,9 +112,9 @@ final class SendMessageViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$isPresentFilter)
       .filter { $0.isPresentFilter }
-      .subscribe(onNext: { [weak self] _ in
-        self?.presentFilter()
-      })
+      .flatMap { [weak self] _ in self?.presentFilter() ?? .empty() }
+      .map { Action.countryDidChange($0) }
+      .bind(to: reactor.action)
       .disposed(by: self.disposeBag)
     
     reactor.state.map(\.emojiURL)
@@ -131,6 +132,7 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state.map(\.name)
+      .distinctUntilChanged()
       .filter { [weak self] name in
         self?.nameTextField.text != name
       }
@@ -144,6 +146,7 @@ final class SendMessageViewController: UIViewController, View {
     
     reactor.state
       .map(\.message)
+      .distinctUntilChanged()
       .filter { [weak self] message in
         self?.messageTextView.text != message
       }
@@ -442,18 +445,19 @@ final class SendMessageViewController: UIViewController, View {
     }
   }
   
-  private func presentFilter() {
-    guard let reactor = self.reactor else { return }
-    let selected: Message.Model.Country? = reactor.currentState.selectedCountry ?? .wholeWorld
-    let items: [Message.Model.Country] = reactor.currentState.countries
-    let viewController = ItemBottomSheetViewController<Message.Model.Country>().then {
-      $0.reactor = ItemBottomSheetReactor(selectedItem: selected, items: items)
+  private func presentFilter() -> Observable<Model.Country> {
+    guard let reactor = self.reactor else { return .empty() }
+    let selected: Model.Country? = reactor.currentState.selectedCountry
+    let items: [Model.Country] = reactor.currentState.countries
+    let viewController = ItemBottomSheetViewController<Model.Country>().then {
+      $0.reactor = ItemBottomSheetReactor(
+        items: items,
+        selectedItem: selected,
+        headerItem: .wholeWorld
+      )
       $0.modalPresentationStyle = .overFullScreen
-      $0.expectedValue
-        .map { Action.countryDidChange($0) }
-        .bind(to: reactor.action)
-        .disposed(by: disposeBag)
     }
     self.present(viewController, animated: true, completion: nil)
+    return viewController.expected.asObservable()
   }
 }

@@ -16,7 +16,7 @@ final class PixelMapView: UIView {
   }
   
   func drawCountries(_ countries: [Model.Country]) {
-    layoutIfNeeded()
+    layoutSubviews()
     self.layer.sublayers?.removeAll()
     countries.forEach { drawCountry($0) }
   }

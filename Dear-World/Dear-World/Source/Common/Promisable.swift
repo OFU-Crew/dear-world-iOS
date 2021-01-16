@@ -15,16 +15,16 @@ enum AssociatedKeys {
 
 protocol Promisable {
   associatedtype Expected
-  var expectedValue: PublishRelay<Expected> { get }
+  var expected: PublishRelay<Expected> { get }
 }
 extension Promisable where Self: AnyObject {
-  var expectedValue: PublishRelay<Expected> {
+  var expected: PublishRelay<Expected> {
     get {
       if let object: PublishRelay = objc_getAssociatedObject(self, &AssociatedKeys.expectedValue) as? PublishRelay<Expected> {
         return object
       } else {
         let object: PublishRelay = PublishRelay<Expected>()
-        self.expectedValue = object
+        self.expected = object
         return object
       }
     }

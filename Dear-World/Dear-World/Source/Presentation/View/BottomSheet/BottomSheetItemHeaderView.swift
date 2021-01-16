@@ -13,9 +13,22 @@ import UIKit
 final class BottomSheetItemHeaderView<Item: BottomSheetItem>: UIView {
   
   // MARK: 🖼 UI
+  private let checkImageView: UIImageView = UIImageView()
   private let nameLabel: UILabel = UILabel()
   
-  let selectedItem: PublishRelay<Item> = PublishRelay()
+  let headerItem: PublishRelay<Item> = PublishRelay()
+  var isSelected: Bool = false {
+    didSet {
+      if isSelected {
+        nameLabel.textColor = .livelyBlue
+        backgroundColor = .breathingWhite
+      } else {
+        nameLabel.textColor = .warmBlue
+        backgroundColor = .white
+      }
+      checkImageView.isHidden = !isSelected
+    }
+  }
   private let disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
@@ -33,12 +46,12 @@ final class BottomSheetItemHeaderView<Item: BottomSheetItem>: UIView {
   // MARK: 🎛 Setup
   private func setupUI() {
     self.do {
-      $0.backgroundColor = .breathingWhite
+      $0.backgroundColor = .white
     }
     
     nameLabel.do {
-      $0.textColor = .livelyBlue
-      $0.font = .systemFont(ofSize: 14)
+      $0.textColor = .warmBlue
+      $0.font = .boldSystemFont(ofSize: 15)
     }
     self.addSubview(nameLabel)
     nameLabel.snp.makeConstraints {
@@ -46,11 +59,12 @@ final class BottomSheetItemHeaderView<Item: BottomSheetItem>: UIView {
       $0.leading.equalToSuperview().inset(20)
     }
     
-    let checkView: UIImageView = UIImageView().then {
+    checkImageView.do {
+      $0.isHidden = !isSelected
       $0.image = UIImage(named: "check")
     }
-    self.addSubview(checkView)
-    checkView.snp.makeConstraints {
+    self.addSubview(checkImageView)
+    checkImageView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.trailing.equalToSuperview().inset(20)
       $0.width.equalTo(12)
@@ -60,12 +74,12 @@ final class BottomSheetItemHeaderView<Item: BottomSheetItem>: UIView {
   
   // MARK: 🔗 Bind
   private func bind() {
-    selectedItem.map { $0.name }
+    headerItem.map { $0.name }
       .distinctUntilChanged()
       .bind(to: nameLabel.rx.text)
       .disposed(by: disposeBag)
     
-    selectedItem.map { $0.name.isEmpty }
+    headerItem.map { $0.name.isEmpty }
       .distinctUntilChanged()
       .bind(to: self.rx.isHidden)
       .disposed(by: disposeBag)

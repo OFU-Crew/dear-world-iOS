@@ -13,6 +13,7 @@ final class ItemBottomSheetReactor<Item: BottomSheetItem>: Reactor {
   enum Action {
     case tapClose
     case tapBackground
+    case tapHeader
     case selectItem(at: Int)
   }
   
@@ -23,6 +24,7 @@ final class ItemBottomSheetReactor<Item: BottomSheetItem>: Reactor {
   
   struct State {
     @Revision var isPresent: Bool
+    @Revision var headerItem: Item?
     @Revision var selectedItem: Item?
     @Revision var items: [Item]
   }
@@ -30,9 +32,14 @@ final class ItemBottomSheetReactor<Item: BottomSheetItem>: Reactor {
   let initialState: State
   
   // MARK: 🏁 Initialize
-  init(selectedItem: Item? = nil, items: [Item]) {
+  init(
+    items: [Item],
+    selectedItem: Item? = nil,
+    headerItem: Item? = nil
+  ) {
     initialState = State(
       isPresent: true,
+      headerItem: headerItem,
       selectedItem: selectedItem,
       items: items
     )
@@ -41,6 +48,10 @@ final class ItemBottomSheetReactor<Item: BottomSheetItem>: Reactor {
   // MARK: 🔫 Mutate
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .tapHeader:
+      guard let headerItem = currentState.headerItem else { return .empty() }
+      return .just(.setSelectedItem(headerItem))
+    
     case .tapClose:
       return .just(.setPresent(false))
       
@@ -49,7 +60,8 @@ final class ItemBottomSheetReactor<Item: BottomSheetItem>: Reactor {
       
     case .selectItem(let index):
       let item: Item = currentState.items[index]
-      return .just(.setSelectedItem(item))
+      return .from([.setSelectedItem(item),
+                    .setPresent(false)])
     }
   }
   

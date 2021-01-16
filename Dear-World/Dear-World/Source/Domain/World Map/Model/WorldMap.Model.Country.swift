@@ -1141,7 +1141,7 @@ extension WorldMap.Model {
       Location(x: 42, y: 6),
       Location(x: 42, y: 7),
       Location(x: 42, y: 9),
-      Location(x: 42, y: 15),
+      Location(x: 42, y: 15)
     ]
   )
   static let SE: Country = Country(
