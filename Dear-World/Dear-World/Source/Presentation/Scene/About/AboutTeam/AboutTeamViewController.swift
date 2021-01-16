@@ -42,26 +42,36 @@ final class AboutTeamViewController: UIViewController, View {
   }
   // MARK: 🎛 Setup
   private func setupUI() {
-    self.view.backgroundColor = .breathingWhite
-
+    
+    let scrollView: UIScrollView = UIScrollView().then {
+      $0.backgroundColor = .breathingWhite
+    }
+    self.view.addSubview(scrollView)
+    scrollView.snp.makeConstraints {
+      $0.top.bottom.leading.trailing.equalToSuperview()
+    }
+    scrollView.contentLayoutGuide.snp.makeConstraints {
+      $0.leading.trailing.equalTo(self.view)
+    }
+    
     let headerView: UIImageView = UIImageView().then {
       $0.image = UIImage(named: "about_top_img")
     }
-    self.view.addSubview(headerView)
+    scrollView.addSubview(headerView)
     headerView.snp.makeConstraints {
       $0.top.leading.trailing.equalToSuperview()
       $0.height.equalTo(UIScreen.main.bounds.width * 240.0 / 375.0)
     }
-    
-    self.view.addSubview(backButton)
+
+    scrollView.addSubview(backButton)
     backButton.do {
-      $0.setBackgroundImage(UIImage(named: "backWhite"), for: .normal)
+      $0.setBackgroundImage(UIImage(named: "back"), for: .normal)
     }
     backButton.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
-      $0.top.equalTo(self.view.safeAreaLayoutGuide).inset(37)
+      $0.top.equalToSuperview().inset(22)
     }
-    
+
     let teamGreetingTitleLabel: UILabel = UILabel().then {
       $0.text = "Hello, we are team OFU!"
       $0.font = .boldSystemFont(ofSize: 16)
@@ -77,8 +87,8 @@ final class AboutTeamViewController: UIViewController, View {
       $0.textColor = .nightBlue
       $0.numberOfLines = 0
     }
-    self.view.addSubview(teamGreetingTitleLabel)
-    self.view.addSubview(teamGreetingLabel)
+    scrollView.addSubview(teamGreetingTitleLabel)
+    scrollView.addSubview(teamGreetingLabel)
     teamGreetingTitleLabel.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(20)
       $0.top.equalTo(headerView.snp.bottom).offset(30)
@@ -87,19 +97,19 @@ final class AboutTeamViewController: UIViewController, View {
       $0.leading.trailing.equalToSuperview().inset(20)
       $0.top.equalTo(teamGreetingTitleLabel.snp.bottom).offset(10)
     }
-    
+
     let crewsTitleLable: UILabel = UILabel().then {
       $0.text = "OFU CREWS"
       $0.textColor = .warmBlue
       $0.font = .boldSystemFont(ofSize: 16)
     }
-    self.view.addSubview(crewsTitleLable)
+    scrollView.addSubview(crewsTitleLable)
     crewsTitleLable.snp.makeConstraints {
       $0.top.equalTo(teamGreetingLabel.snp.bottom).offset(50)
       $0.leading.trailing.equalToSuperview().inset(20)
     }
-    
-    self.view.addSubview(crewsCollectionView)
+
+    scrollView.addSubview(crewsCollectionView)
     crewsCollectionView.do {
       $0.register(CrewCollectionViewCell.self, forCellWithReuseIdentifier: "CrewCollectionViewCell")
       $0.backgroundColor = .breathingWhite
@@ -111,20 +121,21 @@ final class AboutTeamViewController: UIViewController, View {
       $0.leading.trailing.equalToSuperview().inset(20)
       $0.height.equalTo(440)
     }
-    
+
     let footerView: UIView = UIView().then {
-      $0.backgroundColor = .livelyBlue
+      $0.backgroundColor = .nightBlue
     }
-    self.view.addSubview(footerView)
+    scrollView.addSubview(footerView)
     footerView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(144)
-      $0.top.equalTo(crewsCollectionView.snp.bottom).offset(100)
+//      $0.height.equalTo(144)
+      $0.top.equalTo(crewsCollectionView.snp.bottom).offset(20)
+      $0.bottom.equalToSuperview()
     }
-    
+
     footerView.addSubview(moreButton)
     moreButton.do {
-      $0.backgroundColor = .illuminatingYellow
+      $0.backgroundColor = .livelyBlue
       $0.setTitle("More about OFU CREW", for: .normal)
       $0.titleLabel?.font = .systemFont(ofSize: 14)
       $0.layer.cornerRadius = 10
@@ -132,10 +143,11 @@ final class AboutTeamViewController: UIViewController, View {
     }
     moreButton.snp.makeConstraints {
       $0.top.equalToSuperview().inset(15)
+      $0.bottom.equalToSuperview().inset(82)
       $0.leading.trailing.equalToSuperview().inset(20)
-      $0.height.equalTo(48)
+      $0.height.equalTo(47)
     }
-    
+
     let copyrightLabel: UILabel = UILabel().then {
       $0.text = "ⓒ OFU 2021. Made in Korea"
       $0.font = .systemFont(ofSize: 14)
