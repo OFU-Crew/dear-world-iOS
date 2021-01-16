@@ -109,8 +109,7 @@ final class DiscoverReactor: Reactor {
       guard let shareURL = URL(string: urlString) else { return .empty() }
       return .just(.setShareURL(shareURL))
       
-      
-    case let .countryDidChanged(country):
+    case .countryDidChanged(let country):
       return .merge(
         Network.request(
           API.MessageCount(
@@ -140,7 +139,8 @@ final class DiscoverReactor: Reactor {
           .just(.setLoading(false))
         )
       )
-    case let .sortTypeDidChanged(sortType: sortType) :
+      
+    case .sortTypeDidChanged(let sortType):
       return .merge(
         Network.request(
           API.MessageCount(
@@ -169,6 +169,7 @@ final class DiscoverReactor: Reactor {
           }
         )
       )
+      
     case .refresh:
       guard currentState.isRefreshing == false else { return .empty() }
       return .merge(

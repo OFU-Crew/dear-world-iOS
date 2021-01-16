@@ -163,13 +163,7 @@ final class DiscoverViewController: UIViewController, View {
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
     _ = AllCountries.shared
-    reactor.action.onNext(.countryDidChanged(
-      Model.Country(
-        code: nil,
-        fullName: "Whole World",
-        emojiUnicode: "🍎", imageURL: nil
-      )
-    ))
+    reactor.action.onNext(.countryDidChanged(.wholeWorld))
     
     reactor.state
       .map(\.messageCount)
@@ -307,7 +301,7 @@ final class DiscoverViewController: UIViewController, View {
       .map { $0.shareURL }
       .subscribe(onNext: { shareURL in
         let shareViewController: UIActivityViewController = UIActivityViewController(
-          activityItems: ["from: Dear World\n 메시지가 도착했습니다! 💌",
+          activityItems: ["🛸우웅🛸\n지구 어디선가 메세지가 도착했어요💌",
                           shareURL],
           applicationActivities: nil
         )
@@ -383,15 +377,16 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    self.messages.count
+    self.reactor?.currentState.messages.count ?? 0
   }
   
   func tableView(
     _ tableView: UITableView,
     cellForRowAt indexPath: IndexPath
   ) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
-    let message = messages[indexPath.row]
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell,
+          let message = reactor?.currentState.messages[indexPath.row]
+    else { return UITableViewCell() }
     cell.configure(message)
     if let reactor = self.reactor {
       cell.shareButton.rx.tap

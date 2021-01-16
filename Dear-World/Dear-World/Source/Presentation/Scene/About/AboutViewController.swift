@@ -5,11 +5,11 @@
 //  Created by dongyoung.lee on 2020/12/26.
 //
 
+import MessageUI
 import ReactorKit
 import UIKit
 
 final class AboutViewController: UIViewController, View {
-  
   typealias Reactor = AboutReactor
   typealias Action = Reactor.Action
   
@@ -27,7 +27,6 @@ final class AboutViewController: UIViewController, View {
     target: nil,
     action: nil
   )
-  
   var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
@@ -65,38 +64,48 @@ final class AboutViewController: UIViewController, View {
     
     let crewInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Dear world, we are OFU Crew."
-      $0.font = .systemFont(ofSize: 14)
+      $0.font = .boldSystemFont(ofSize: 14)
       $0.textColor = .warmBlue
     }
-    let crewContentLabel: UILabel = UILabel().then {
-      $0.text = "🛸"
+    let crewContentImageView: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "ufo")
     }
     crewInfoView.do {
       $0.backgroundColor = .grayWhite
       $0.addSubview(crewInfoTitleLabel)
-      $0.addSubview(crewContentLabel)
+      $0.addSubview(crewContentImageView)
       $0.layer.cornerRadius = 10
+      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+      $0.layer.shadowOpacity = 0.1
+      $0.layer.shadowColor = UIColor.black.cgColor
     }
     crewInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
       $0.centerY.equalToSuperview()
     }
-    crewContentLabel.snp.makeConstraints {
+    crewContentImageView.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(20)
-      $0.centerY.equalToSuperview()
+      $0.bottom.equalToSuperview()
     }
     crewInfoView.snp.makeConstraints {
       $0.height.equalTo(57)
     }
     let contactInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Contact"
-      $0.font = .systemFont(ofSize: 14)
+      $0.font = .boldSystemFont(ofSize: 14)
       $0.textColor = .warmBlue
+    }
+    let contactContentImageView: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "left_arrow")
     }
     contactInfoView.do {
       $0.backgroundColor = .grayWhite
       $0.addSubview(contactInfoTitleLabel)
+      $0.addSubview(contactContentImageView)
       $0.layer.cornerRadius = 10
+      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+      $0.layer.shadowOpacity = 0.1
+      $0.layer.shadowColor = UIColor.black.cgColor
     }
     contactInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -105,10 +114,14 @@ final class AboutViewController: UIViewController, View {
     contactInfoView.snp.makeConstraints {
       $0.height.equalTo(57)
     }
+    contactContentImageView.snp.makeConstraints {
+      $0.trailing.equalToSuperview().inset(20)
+      $0.centerY.equalToSuperview()
+    }
     
     let noticeInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Notice"
-      $0.font = .systemFont(ofSize: 14)
+      $0.font = .boldSystemFont(ofSize: 14)
       $0.textColor = .warmBlue
     }
     noticeBadge.do {
@@ -119,6 +132,9 @@ final class AboutViewController: UIViewController, View {
       $0.addSubview(noticeInfoTitleLabel)
       $0.addSubview(noticeBadge)
       $0.layer.cornerRadius = 10
+      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+      $0.layer.shadowOpacity = 0.1
+      $0.layer.shadowColor = UIColor.black.cgColor
     }
     noticeInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -134,11 +150,12 @@ final class AboutViewController: UIViewController, View {
     noticeInfoView.isHidden = true
     let versionInfoTitleLabel: UILabel = UILabel().then {
       $0.text = "Version Info."
-      $0.font = .systemFont(ofSize: 14)
+      $0.font = .boldSystemFont(ofSize: 14)
       $0.textColor = .warmBlue
     }
     versionLabel.do {
       $0.text = "New Version"
+      $0.font = .boldSystemFont(ofSize: 16)
       $0.textColor = .livelyBlue
     }
     versionInfoView.do {
@@ -146,6 +163,9 @@ final class AboutViewController: UIViewController, View {
       $0.addSubview(versionInfoTitleLabel)
       $0.addSubview(versionLabel)
       $0.layer.cornerRadius = 10
+      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+      $0.layer.shadowOpacity = 0.1
+      $0.layer.shadowColor = UIColor.black.cgColor
     }
     versionInfoTitleLabel.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -166,6 +186,13 @@ final class AboutViewController: UIViewController, View {
       .when(.recognized)
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
       .map { _ in Action.tapCrewInfo }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    contactInfoView.rx.tapGesture()
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .skip(1)
+      .map { _ in Action.tapContact }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
@@ -219,6 +246,22 @@ final class AboutViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$isPresentEmail)
+      .map { $0.isPresentEmail }
+      .filter { $0 }
+      .filter { _ in MFMailComposeViewController.canSendMail() }
+      .subscribe(onNext: { _ in
+        let viewController = MFMailComposeViewController().then {
+          $0.setToRecipients(["dearworld.crew@gmail.com"])
+          $0.setSubject("Dear world 에게 문의드립니다.")
+          $0.setMessageBody("문의사항", isHTML: false)
+        }
+        viewController.mailComposeDelegate = self
+        self.present(viewController, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    reactor.state
       .distinctUntilChanged(\.$isPresentAppStore)
       .map { $0.isPresentAppStore }
       .filter { $0 }
@@ -244,3 +287,4 @@ final class AboutViewController: UIViewController, View {
     reactor.action.onNext(.initalize)
   }
 }
+extension AboutViewController: MFMailComposeViewControllerDelegate {}

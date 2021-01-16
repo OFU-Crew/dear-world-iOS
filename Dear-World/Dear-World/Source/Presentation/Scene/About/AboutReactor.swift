@@ -14,6 +14,7 @@ final class AboutReactor: Reactor {
   enum Action {
     case initalize
     case tapClose
+    case tapContact
     case tapCrewInfo
     case tapNotice
     case tapVersion
@@ -21,6 +22,7 @@ final class AboutReactor: Reactor {
   
   enum Mutation {
     case setPresentCrewInfo(Bool)
+    case setPresentEmail(Bool)
     case setPresentNotice(Bool)
     case setPresentAppStore(Bool)
     case setWillDismiss(Bool)
@@ -32,6 +34,7 @@ final class AboutReactor: Reactor {
     @Revision var isPresentCrewInfo: Bool = false
     @Revision var isPresentNotice: Bool = false
     @Revision var isPresentAppStore: Bool = false
+    @Revision var isPresentEmail: Bool = false
     @Revision var willDismiss: Bool = false
     var noticeCount: Int?
     var currentVersion: String?
@@ -53,6 +56,9 @@ final class AboutReactor: Reactor {
     case .tapCrewInfo:
       return .just(.setPresentCrewInfo(true))
       
+    case .tapContact:
+      return .just(.setPresentEmail(true))
+      
     case .tapNotice:
       return .just(.setPresentNotice(true))
       
@@ -70,6 +76,9 @@ final class AboutReactor: Reactor {
     switch mutation {
     case .setPresentCrewInfo(let isPresentCrewInfo):
       newState.isPresentCrewInfo = isPresentCrewInfo
+      
+    case .setPresentEmail(let isPresentEmail):
+      newState.isPresentEmail = isPresentEmail
       
     case .setPresentNotice(let isPresentNotice):
       newState.isPresentNotice = isPresentNotice
