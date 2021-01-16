@@ -175,7 +175,8 @@ final class SendMessageViewController: UIViewController, View {
           message: "You can’t edit or delete this message"
         )
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.answer()
+        viewController.expected.asObservable()
+          .filter { $0 }
           .map { _ in Action.confirmSendAlert }
           .bind(to: reactor.action)
           .disposed(by: self.disposeBag)
@@ -194,7 +195,8 @@ final class SendMessageViewController: UIViewController, View {
           message: "Your writting will be deleted."
         )
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.answer()
+        viewController.expected
+          .asObservable()
           .filter { $0 }
           .map { _ in Action.confirmCancelAlert }
           .bind(to: reactor.action)

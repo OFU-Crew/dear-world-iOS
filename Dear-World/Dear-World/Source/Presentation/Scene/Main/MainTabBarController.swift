@@ -15,7 +15,6 @@ final class MainTabBarController: UITabBarController {
     super.viewDidLoad()
     
     setupTabBar()
-    self.delegate = self
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -35,6 +34,8 @@ final class MainTabBarController: UITabBarController {
   }
   
   private func setupTabBar() {
+    self.delegate = self
+    tabBar.barTintColor = .white
     let discoverViewController: UIViewController = DiscoverViewController().then {
       $0.tabBarItem.image = UIImage(named: "message_default")?
         .withRenderingMode(.alwaysOriginal)
