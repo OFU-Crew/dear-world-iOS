@@ -130,8 +130,9 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: sendButton.rx.isEnabled)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.name)
-      .distinctUntilChanged()
+    reactor.state
+      .distinctUntilChanged(\.$name)
+      .map(\.name)
       .filter { [weak self] name in
         self?.nameTextField.text != name
       }
@@ -144,8 +145,8 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$message)
       .map(\.message)
-      .distinctUntilChanged()
       .filter { [weak self] message in
         self?.messageTextView.text != message
       }
