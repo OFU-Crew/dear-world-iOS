@@ -15,7 +15,6 @@ import UIKit
 import UITextView_Placeholder
 
 final class SendMessageViewController: UIViewController, View {
-  
   typealias Model = Message.Model
   typealias Reactor = SendMessageReactor
   typealias Action = Reactor.Action
@@ -131,8 +130,9 @@ final class SendMessageViewController: UIViewController, View {
       .bind(to: sendButton.rx.isEnabled)
       .disposed(by: disposeBag)
     
-    reactor.state.map(\.name)
-      .distinctUntilChanged()
+    reactor.state
+      .distinctUntilChanged(\.$name)
+      .map(\.name)
       .filter { [weak self] name in
         self?.nameTextField.text != name
       }
@@ -145,8 +145,8 @@ final class SendMessageViewController: UIViewController, View {
       .disposed(by: disposeBag)
     
     reactor.state
+      .distinctUntilChanged(\.$message)
       .map(\.message)
-      .distinctUntilChanged()
       .filter { [weak self] message in
         self?.messageTextView.text != message
       }
@@ -176,7 +176,8 @@ final class SendMessageViewController: UIViewController, View {
           message: "You can’t edit or delete this message"
         )
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.answer()
+        viewController.expected.asObservable()
+          .filter { $0 }
           .map { _ in Action.confirmSendAlert }
           .bind(to: reactor.action)
           .disposed(by: self.disposeBag)
@@ -195,7 +196,8 @@ final class SendMessageViewController: UIViewController, View {
           message: "Your writting will be deleted."
         )
         viewController.modalPresentationStyle = .overFullScreen
-        viewController.answer()
+        viewController.expected
+          .asObservable()
           .filter { $0 }
           .map { _ in Action.confirmCancelAlert }
           .bind(to: reactor.action)
@@ -270,8 +272,8 @@ final class SendMessageViewController: UIViewController, View {
       $0.width.height.equalTo(80)
     }
     emojiImageView.do {
-      $0.layer.shadowOffset = CGSize(width: 0, height: 10)
-      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowOffset = CGSize(width: 3, height: 5)
+      $0.layer.shadowOpacity = 0.2
       $0.layer.shadowColor = UIColor.black.cgColor
     }
     self.view.addSubview(emojiImageView)
@@ -439,7 +441,7 @@ final class SendMessageViewController: UIViewController, View {
     arrowImageViews.removeArrangedSubview(firstArrowImageView)
     firstArrowImageView.removeFromSuperview()
     arrowImageViews.addArrangedSubview(firstArrowImageView)
-    
+     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
       self?.rotateArrowImageViews()
     }

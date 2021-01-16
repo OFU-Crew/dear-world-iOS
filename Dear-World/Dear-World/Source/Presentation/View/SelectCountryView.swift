@@ -29,7 +29,7 @@ final class SelectCountryView: UIView {
   
   // MARK: 🎛 Setup
   private func setupUI() {
-    self.backgroundColor = .grayWhite
+    self.backgroundColor = .refreshingWhite
     self.layer.cornerRadius = 7
     self.layer.masksToBounds = true
     
@@ -47,7 +47,7 @@ final class SelectCountryView: UIView {
     }
     titleLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.leading.equalTo(locationImageView.snp.trailing).offset(4)
+      $0.leading.equalTo(locationImageView.snp.trailing).offset(10)
     }
     
     addSubview(downArrowImageView)

@@ -48,14 +48,14 @@ final class SendMessageReactor: Reactor {
     @Revision var isPresentFilter: Bool = false
     @Revision var selectedCountry: Model.Country = .wholeWorld
     @Revision var countries: [Model.Country] = []
-    var emojiURL: String?
-    var emojiIsLoading: Bool = true
-    var canSendMessage: Bool = false
-    var name: String = ""
-    var message: String = ""
-    var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
-    var messageLimitGauge: Float = 0.0
-    var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
+    @Revision var emojiURL: String?
+    @Revision var emojiIsLoading: Bool = true
+    @Revision var canSendMessage: Bool = false
+    @Revision var name: String = ""
+    @Revision var message: String = ""
+    @Revision var nameStatusMessage: NSAttributedString = NSAttributedString(string: "0/15")
+    @Revision var messageLimitGauge: Float = 0.0
+    @Revision var messageStatusMessage: NSAttributedString = NSAttributedString(string: "0/300")
     fileprivate var emojiId: Int?
     fileprivate let nameCountLimit: Int = 15
     fileprivate let messageCountLimit: Int = 300
@@ -94,6 +94,9 @@ final class SendMessageReactor: Reactor {
       return .just(.setPresentFilter(true))
       
     case .tapClose:
+      if currentState.name.isEmpty && currentState.message.isEmpty {
+        return .just(.setPresent(false))
+      }
       return .just(.setPresentCancelAlert(true))
       
     case .tapRefresh:

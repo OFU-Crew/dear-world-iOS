@@ -73,8 +73,6 @@ final class MessageTableViewCell: UITableViewCell {
     let mainView: UIView = UIView().then {
       $0.backgroundColor = .white
       $0.layer.cornerRadius = 20
-      $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-      $0.layer.shadowOpacity = 0.1
       $0.layer.shadowColor = UIColor.black.cgColor
     }
     self.contentView.addSubview(mainView)
@@ -93,8 +91,8 @@ final class MessageTableViewCell: UITableViewCell {
       $0.height.width.equalTo(40)
     }
     emojiImageView.do {
-      $0.layer.shadowOffset = CGSize(width: 0, height: 2)
-      $0.layer.shadowOpacity = 0.6
+      $0.layer.shadowOffset = CGSize(width: 3, height: 5)
+      $0.layer.shadowOpacity = 0.2
       $0.layer.shadowColor = UIColor.black.cgColor
     }
     mainView.addSubview(emojiImageView)

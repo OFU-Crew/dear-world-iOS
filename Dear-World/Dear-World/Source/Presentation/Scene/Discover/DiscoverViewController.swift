@@ -28,11 +28,13 @@ final class DiscoverViewController: UIViewController, View {
   private var messages: [Message.Model.Message] = []
   private let filterContainerView: UIView = UIView()
   private let refreshControl: UIRefreshControl = UIRefreshControl()
+  private let messageEmptyView: UIStackView = UIStackView()
   
   var disposeBag: DisposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     setupUI()
     setupTableView()
     startInitAnimation()
@@ -69,6 +71,27 @@ final class DiscoverViewController: UIViewController, View {
     self.messageTableView.snp.makeConstraints {
       $0.top.bottom.trailing.leading.equalTo(self.view.safeAreaLayoutGuide)
     }
+    
+    messageEmptyView.do {
+      $0.axis = .vertical
+      $0.spacing = 25
+    }
+    self.view.addSubview(self.messageEmptyView)
+    messageEmptyView.snp.makeConstraints {
+      $0.center.equalToSuperview()
+    }
+    let emptyImageView: UIImageView = UIImageView().then {
+      $0.image = UIImage(named: "empty_message")
+    }
+    let emptyMessageLabel: UILabel = UILabel().then {
+      $0.numberOfLines = 0
+      $0.text = "Sorry..\nThere is no message yet.."
+      $0.textAlignment = .center
+      $0.textColor = .warmBlue
+      $0.font = .boldSystemFont(ofSize: 16)
+    }
+    messageEmptyView.addArrangedSubview(emptyImageView)
+    messageEmptyView.addArrangedSubview(emptyMessageLabel)
     
     filterContainerView.do {
       $0.backgroundColor = .breathingWhite
@@ -162,7 +185,6 @@ final class DiscoverViewController: UIViewController, View {
   
   // MARK: 🔗 Bind
   func bind(reactor: Reactor) {
-    _ = AllCountries.shared
     reactor.action.onNext(.countryDidChanged(.wholeWorld))
     
     reactor.state
@@ -179,6 +201,12 @@ final class DiscoverViewController: UIViewController, View {
         self?.messages = $0
         self?.messageTableView.reloadData()
       })
+      .disposed(by: self.disposeBag)
+    
+    reactor.state
+      .distinctUntilChanged(\.messageIsEmpty)
+      .map { !$0.messageIsEmpty }
+      .bind(to: messageEmptyView.rx.isHidden)
       .disposed(by: self.disposeBag)
     
     reactor.state
@@ -293,7 +321,7 @@ final class DiscoverViewController: UIViewController, View {
     reactor.state
       .distinctUntilChanged(\.$isRefreshing)
       .map(\.isRefreshing)
-      .filter{!$0}
+      .filter { !$0 }
       .bind(to: self.refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
     
@@ -337,7 +365,7 @@ final class DiscoverViewController: UIViewController, View {
       )
       $0.modalPresentationStyle = .overFullScreen
     }
-    self.present(viewController, animated: false, completion: nil)
+    self.present(viewController, animated: true, completion: nil)
     return viewController.expected.asObservable()
   }
 }

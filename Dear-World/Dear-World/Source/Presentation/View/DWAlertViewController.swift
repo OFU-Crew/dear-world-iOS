@@ -8,8 +8,9 @@
 import RxSwift
 import UIKit
 
-final class DWAlertViewController: UIViewController {
+final class DWAlertViewController: UIViewController, Promisable {
   
+  typealias Expected = Bool
   // MARK: 🖼 UI
   let okButton: UIButton = UIButton()
   let cancelButton: UIButton = UIButton()
@@ -26,6 +27,7 @@ final class DWAlertViewController: UIViewController {
     
     super.init(nibName: nil, bundle: nil)
     setupUI()
+    bind()
   }
   
   required init?(coder: NSCoder) {
@@ -34,6 +36,7 @@ final class DWAlertViewController: UIViewController {
     super.init(coder: coder)
     
     setupUI()
+    bind()
   }
   
   // MARK: 📍 Setup
@@ -88,8 +91,7 @@ final class DWAlertViewController: UIViewController {
     alertView.addSubview(buttonsStackView)
     buttonsStackView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(20)
-      $0.top.equalTo(messageLabel.snp.bottom).offset(20)
-      $0.height.equalTo(38)
+      $0.bottom.equalToSuperview().inset(20)
     }
     
     okButton.do {
@@ -100,7 +102,9 @@ final class DWAlertViewController: UIViewController {
       $0.layer.masksToBounds = true
       $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
-    
+    okButton.snp.makeConstraints {
+      $0.height.equalTo(38)
+    }
     cancelButton.do {
       $0.setTitle("Cancel", for: .normal)
       $0.backgroundColor = .loveRed
@@ -109,24 +113,34 @@ final class DWAlertViewController: UIViewController {
       $0.layer.masksToBounds = true
       $0.titleLabel?.font = .systemFont(ofSize: 14)
     }
+    cancelButton.snp.makeConstraints {
+      $0.height.equalTo(38)
+    }
   }
- 
-  func answer() -> Observable<Bool> {
-    Observable<Bool>.create { [weak self] observer in
-      guard let self = self else { return Disposables.create() }
-      Observable.merge(
-        self.okButton.rx.tap.map { _ in true },
-        self.cancelButton.rx.tap.map { _ in false }
-      )
+  
+  private func bind() {
+    okButton.rx.tap
       .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-      .subscribe(onNext: { [weak self] in
-        observer.onNext($0)
-        self?.dismiss(animated: true, completion: nil)
-        observer.onCompleted()
+      .map { _ in true }
+      .do(onNext: { [weak self] _ in
+        self?.close()
       })
-      .disposed(by: self.disposeBag)
-      
-      return Disposables.create()
+      .bind(to: expected)
+      .disposed(by: disposeBag)
+    
+    cancelButton.rx.tap
+      .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+      .map { _ in false }
+      .do(onNext: { [weak self] _ in
+        self?.close()
+      })
+      .bind(to: expected)
+      .disposed(by: disposeBag)
+  }
+  
+  private func close() {
+    DispatchQueue.main.async { [weak self] in
+      self?.dismiss(animated: false, completion: nil)
     }
   }
 }
