@@ -54,6 +54,7 @@ final class DiscoverReactor: Reactor {
     @Revision var firstMsgId: Int?
     @Revision var lastMsgId: Int?
     @Revision var messages: [Model.Message] = []
+    var messageIsEmpty: Bool = true
     var messageCount: Int = 0
     var isLoading: Bool = false
     var isAnimating: Bool = false
@@ -235,12 +236,14 @@ final class DiscoverReactor: Reactor {
     switch mutation {
     case .setMessages(let results):
       newState.messages = results
+      newState.messageIsEmpty = newState.messages.isEmpty
       
     case .setRefreshing(let flag):
       newState.isRefreshing = flag
       
     case .addMessages(let messages):
       newState.messages = currentState.messages + messages
+      newState.messageIsEmpty = newState.messages.isEmpty
       
     case .setCountry(let country):
       newState.selectedCountry = country
