@@ -77,15 +77,12 @@ final class CheeringMapViewController: UIViewController, ReactorKit.View {
     reactor.state
       .distinctUntilChanged(\.$isPresentAboutPage)
       .map { $0.isPresentAboutPage }
-      .filter { $0 }
+      .filter{ $0 }
       .subscribe(onNext: { [weak self] _ in
-        let viewController = AboutViewController().then {
+        let aboutViewController = AboutViewController().then {
           $0.reactor = AboutReactor()
         }
-        let naviController = UINavigationController(rootViewController: viewController).then {
-          $0.modalPresentationStyle = .fullScreen
-        }
-        self?.present(naviController, animated: false, completion: nil)
+        self?.navigationController?.pushViewController(aboutViewController, animated: true)
       })
       .disposed(by: self.disposeBag)
     

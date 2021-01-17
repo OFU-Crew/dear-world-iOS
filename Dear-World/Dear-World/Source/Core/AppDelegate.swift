@@ -30,7 +30,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   private func setupInitialScene() {
       let mainWindow: UIWindow = UIWindow()
       window = mainWindow
-      mainWindow.rootViewController = MainTabBarController()
+      mainWindow.rootViewController = UINavigationController(rootViewController: MainTabBarController()).then {
+        $0.navigationBar.isHidden = true
+      }
       mainWindow.makeKeyAndVisible()
   }
 }

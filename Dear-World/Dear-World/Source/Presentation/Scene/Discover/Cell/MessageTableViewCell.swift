@@ -12,13 +12,12 @@ import UIKit
 
 final class MessageTableViewCell: UITableViewCell {
   private enum HeartProgress: CGFloat {
-    case likeDefault = 30
     case unlikeDefault = 1
-    case likeTouchEnd = 15
-    case unlikeTouchEnd = 60
+    case likeTouchEnd = 30
+    case unlikeTouchEnd = 90
     
     func percent() -> CGFloat {
-      self.rawValue / 60
+      self.rawValue / 90
     }
   }
   
@@ -30,7 +29,7 @@ final class MessageTableViewCell: UITableViewCell {
   let countryFlagImageView: UIImageView = UIImageView()
   let detailTextView: UITextView = UITextView()
   let shareButton: UIButton = UIButton()
-  let likeView: AnimationView = AnimationView(animation: Animation.named("heart_fill"))
+  let likeView: AnimationView = AnimationView(animation: Animation.named("heart"))
   let likeCountLabel: UILabel = UILabel()
   var likeCount: Int = 0 {
     didSet {
@@ -39,7 +38,7 @@ final class MessageTableViewCell: UITableViewCell {
   }
   var isLike: Bool = false {
     didSet {
-      self.likeView.currentProgress = isLike ? HeartProgress.likeDefault.percent() : HeartProgress.unlikeDefault.percent()
+      self.likeView.currentProgress = isLike ? HeartProgress.likeTouchEnd.percent() : HeartProgress.unlikeDefault.percent()
       self.likeCountLabel.textColor = isLike ? .loveRed : .grayWhite
     }
   }
@@ -208,7 +207,7 @@ final class MessageTableViewCell: UITableViewCell {
         }
         likeView.play(
           // TODO : 각 상황에 대한 값들을 enum으로 정의할것
-          fromProgress: isLike ? HeartProgress.unlikeDefault.percent() : HeartProgress.likeDefault.percent(),
+          fromProgress: isLike ? HeartProgress.unlikeDefault.percent() : HeartProgress.likeTouchEnd.percent(),
           toProgress: isLike ? HeartProgress.likeTouchEnd.percent() : HeartProgress.unlikeTouchEnd.percent()) { completed in
           if completed && isLike{
             self?.likeCount += 1
