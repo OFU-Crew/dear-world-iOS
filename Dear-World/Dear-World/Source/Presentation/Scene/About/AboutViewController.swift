@@ -21,12 +21,8 @@ final class AboutViewController: UIViewController, View {
   private let noticeBadge: NoticeBadge = NoticeBadge()
   private let versionInfoView: UIView = UIView()
   private let versionLabel: UILabel = UILabel()
-  private let backButton: UIBarButtonItem = UIBarButtonItem(
-    image: UIImage(named: "back")!,
-    style: .plain,
-    target: nil,
-    action: nil
-  )
+  private let backButton: UIButton = UIButton()
+  
   var disposeBag: DisposeBag = DisposeBag()
   
   // MARK: 🏁 Initialize
@@ -41,18 +37,41 @@ final class AboutViewController: UIViewController, View {
     
     setupUI()
   }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    self.navigationController?.navigationBar.isHidden = false
-  }
-  
   // MARK: 🎛 Setup
   private func setupUI() {
-    view.backgroundColor = .breathingWhite
-    backButton.tintColor = .warmBlue
-    navigationItem.leftBarButtonItem = backButton
-    navigationItem.title = "About"
+    view.do {
+      $0.backgroundColor = .breathingWhite
+    }
+
+    let navigationView = UIView().then {
+      $0.backgroundColor = .breathingWhite
+    }
+    view.addSubview(navigationView)
+    navigationView.snp.makeConstraints {
+      $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+      $0.height.equalTo(50)
+    }
+    
+    let naviTitle = UILabel().then {
+      $0.textColor = .warmBlue
+      $0.font = .boldSystemFont(ofSize: 18)
+      $0.text = "More"
+    }
+    navigationView.addSubview(naviTitle)
+    naviTitle.snp.makeConstraints {
+      $0.center.equalToSuperview()
+    }
+    
+    backButton.do {
+      $0.setImage(UIImage(named: "back"), for: .normal)
+    }
+    navigationView.addSubview(backButton)
+    backButton.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(20)
+      $0.centerY.equalToSuperview()
+      $0.width.equalTo(10)
+      $0.height.equalTo(16)
+    }
     
     view.addSubview(stackView)
     stackView.do {
@@ -64,7 +83,8 @@ final class AboutViewController: UIViewController, View {
       $0.addArrangedSubview(versionInfoView)
     }
     stackView.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
+      $0.top.equalTo(navigationView.snp.bottom).offset(10)
+      $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20)
     }
     
     let crewInfoTitleLabel: UILabel = UILabel().then {
@@ -273,7 +293,7 @@ final class AboutViewController: UIViewController, View {
       .map { $0.willDismiss }
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
-        self?.dismiss(animated: true, completion: nil)
+        self?.navigationController?.popViewController(animated: true)
       })
       .disposed(by: disposeBag)
     

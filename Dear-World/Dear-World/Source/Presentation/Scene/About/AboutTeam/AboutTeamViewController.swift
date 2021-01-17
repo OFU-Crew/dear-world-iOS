@@ -34,15 +34,6 @@ final class AboutTeamViewController: UIViewController, View {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.isHidden = true
-  }
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    self.navigationController?.navigationBar.isHidden = false
-  }
   // MARK: 🎛 Setup
   private func setupUI() {
     
@@ -73,7 +64,9 @@ final class AboutTeamViewController: UIViewController, View {
     }
     backButton.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
-      $0.top.equalToSuperview().inset(66)
+      $0.width.equalTo(10)
+      $0.height.equalTo(16)
+      $0.top.equalToSuperview().inset(UIApplication.shared.windows[0].safeAreaInsets.top + 17)
     }
 
     let teamGreetingTitleLabel: UILabel = UILabel().then {
