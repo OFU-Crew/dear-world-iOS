@@ -36,9 +36,8 @@ final class AboutTeamViewController: UIViewController, View {
   }
   // MARK: 🎛 Setup
   private func setupUI() {
-    
     let scrollView: UIScrollView = UIScrollView().then {
-      $0.backgroundColor = .breathingWhite
+      $0.backgroundColor = .nightBlue
       $0.contentInsetAdjustmentBehavior = .never
     }
     self.view.addSubview(scrollView)
@@ -68,6 +67,14 @@ final class AboutTeamViewController: UIViewController, View {
       $0.height.equalTo(16)
       $0.top.equalToSuperview().inset(UIApplication.shared.windows[0].safeAreaInsets.top + 17)
     }
+    let bodyView = UIView().then {
+      $0.backgroundColor = .breathingWhite
+    }
+    scrollView.addSubview(bodyView)
+    bodyView.snp.makeConstraints {
+      $0.top.equalTo(headerView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+    }
 
     let teamGreetingTitleLabel: UILabel = UILabel().then {
       $0.text = "Hello, we are team OFU!"
@@ -84,11 +91,11 @@ final class AboutTeamViewController: UIViewController, View {
       $0.textColor = .nightBlue
       $0.numberOfLines = 0
     }
-    scrollView.addSubview(teamGreetingTitleLabel)
-    scrollView.addSubview(teamGreetingLabel)
+    bodyView.addSubview(teamGreetingTitleLabel)
+    bodyView.addSubview(teamGreetingLabel)
     teamGreetingTitleLabel.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(20)
-      $0.top.equalTo(headerView.snp.bottom).offset(30)
+      $0.top.equalToSuperview().inset(30)
     }
     teamGreetingLabel.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview().inset(20)
@@ -100,13 +107,13 @@ final class AboutTeamViewController: UIViewController, View {
       $0.textColor = .warmBlue
       $0.font = .boldSystemFont(ofSize: 16)
     }
-    scrollView.addSubview(crewsTitleLable)
+    bodyView.addSubview(crewsTitleLable)
     crewsTitleLable.snp.makeConstraints {
       $0.top.equalTo(teamGreetingLabel.snp.bottom).offset(50)
       $0.leading.trailing.equalToSuperview().inset(20)
     }
 
-    scrollView.addSubview(crewsCollectionView)
+    bodyView.addSubview(crewsCollectionView)
     crewsCollectionView.do {
       $0.register(CrewCollectionViewCell.self, forCellWithReuseIdentifier: "CrewCollectionViewCell")
       $0.backgroundColor = .breathingWhite
@@ -117,6 +124,7 @@ final class AboutTeamViewController: UIViewController, View {
       $0.top.equalTo(crewsTitleLable.snp.bottom).offset(20)
       $0.leading.trailing.equalToSuperview().inset(20)
       $0.height.equalTo(440)
+      $0.bottom.equalToSuperview().inset(20)
     }
 
     let footerView: UIView = UIView().then {
@@ -125,8 +133,7 @@ final class AboutTeamViewController: UIViewController, View {
     scrollView.addSubview(footerView)
     footerView.snp.makeConstraints {
       $0.leading.trailing.equalToSuperview()
-//      $0.height.equalTo(144)
-      $0.top.equalTo(crewsCollectionView.snp.bottom).offset(20)
+      $0.top.equalTo(bodyView.snp.bottom)
       $0.bottom.equalToSuperview()
     }
 
