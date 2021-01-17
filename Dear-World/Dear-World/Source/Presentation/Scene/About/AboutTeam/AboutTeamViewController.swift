@@ -73,7 +73,7 @@ final class AboutTeamViewController: UIViewController, View {
     }
     backButton.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
-      $0.top.equalToSuperview().inset(22)
+      $0.top.equalToSuperview().inset(66)
     }
 
     let teamGreetingTitleLabel: UILabel = UILabel().then {
@@ -175,7 +175,7 @@ final class AboutTeamViewController: UIViewController, View {
     reactor.state.distinctUntilChanged(\.$isWillDismiss)
       .filter { $0.isWillDismiss }
       .subscribe(onNext: { [weak self] _ in
-        self?.dismiss(animated: true, completion: nil)
+        self?.navigationController?.popViewController(animated: true)
       })
       .disposed(by: disposeBag)
     
