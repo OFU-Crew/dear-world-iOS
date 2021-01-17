@@ -37,18 +37,22 @@ final class AboutTeamViewController: UIViewController, View {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
     self.navigationController?.navigationBar.isHidden = true
+  }
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationController?.navigationBar.isHidden = false
   }
   // MARK: 🎛 Setup
   private func setupUI() {
     
     let scrollView: UIScrollView = UIScrollView().then {
       $0.backgroundColor = .breathingWhite
+      $0.contentInsetAdjustmentBehavior = .never
     }
     self.view.addSubview(scrollView)
     scrollView.snp.makeConstraints {
-      $0.top.bottom.leading.trailing.equalToSuperview()
+      $0.top.bottom.leading.trailing.equalTo(self.view)
     }
     scrollView.contentLayoutGuide.snp.makeConstraints {
       $0.leading.trailing.equalTo(self.view)
