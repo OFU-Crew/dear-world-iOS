@@ -11,6 +11,7 @@
 		121BDB44259735200062B15A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB43259735200062B15A /* UIColor+.swift */; };
 		121BDB592597652A0062B15A /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB582597652A0062B15A /* MessageTableViewCell.swift */; };
 		121BDB672597982F0062B15A /* DiscoverReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121BDB662597982F0062B15A /* DiscoverReactor.swift */; };
+		122D6E2825B4571200F9D249 /* heart.json in Resources */ = {isa = PBXBuildFile; fileRef = 122D6E2725B4571200F9D249 /* heart.json */; };
 		1263E09725A1C87400E3F121 /* Message.API.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09625A1C87400E3F121 /* Message.API.Countries.swift */; };
 		1263E09C25A1C8DD00E3F121 /* Message.Model.Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */; };
 		1263E0CF25A1F5ED00E3F121 /* Message.Model.MessageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */; };
@@ -73,7 +74,6 @@
 		39965E7A25ABDF8100069860 /* ItemBottomReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965E7925ABDF8100069860 /* ItemBottomReactor.swift */; };
 		39965E8825ABE32400069860 /* BottomSheetItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965E8725ABE32400069860 /* BottomSheetItemHeaderView.swift */; };
 		39965E8D25ACA87A00069860 /* BottomSheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965E8C25ACA87A00069860 /* BottomSheetItem.swift */; };
-		39965F2525B2E20A00069860 /* heart_fill.json in Resources */ = {isa = PBXBuildFile; fileRef = 39965F2425B2E20900069860 /* heart_fill.json */; };
 		39965F3325B308B000069860 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39965F3225B308B000069860 /* UIApplication+.swift */; };
 		39C832282597651F00236DDF /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832272597651F00236DDF /* RxRelay */; };
 		39C8322A2597651F00236DDF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39C832292597651F00236DDF /* RxSwift */; };
@@ -120,6 +120,7 @@
 		121BDB43259735200062B15A /* UIColor+.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		121BDB582597652A0062B15A /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		121BDB662597982F0062B15A /* DiscoverReactor.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DiscoverReactor.swift; sourceTree = "<group>"; tabWidth = 2; };
+		122D6E2725B4571200F9D249 /* heart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = heart.json; path = ../../../../Downloads/heart.json; sourceTree = "<group>"; };
 		1263E09625A1C87400E3F121 /* Message.API.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.API.Countries.swift; sourceTree = "<group>"; };
 		1263E09B25A1C8DD00E3F121 /* Message.Model.Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.Countries.swift; sourceTree = "<group>"; };
 		1263E0CE25A1F5ED00E3F121 /* Message.Model.MessageCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.Model.MessageCount.swift; sourceTree = "<group>"; };
@@ -174,7 +175,6 @@
 		39965E7925ABDF8100069860 /* ItemBottomReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBottomReactor.swift; sourceTree = "<group>"; };
 		39965E8725ABE32400069860 /* BottomSheetItemHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetItemHeaderView.swift; sourceTree = "<group>"; };
 		39965E8C25ACA87A00069860 /* BottomSheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetItem.swift; sourceTree = "<group>"; };
-		39965F2425B2E20900069860 /* heart_fill.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heart_fill.json; sourceTree = "<group>"; };
 		39965F3225B308B000069860 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		39E9F7CF25A1738F00BC2CC2 /* AboutReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutReactor.swift; sourceTree = "<group>"; };
 		39E9F7DA25A1BBED00BC2CC2 /* PixelWorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelWorldMapView.swift; sourceTree = "<group>"; };
@@ -385,7 +385,7 @@
 		395825AE25948E66007325AB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				39965F2425B2E20900069860 /* heart_fill.json */,
+				122D6E2725B4571200F9D249 /* heart.json */,
 				39658F9F259ADE770050D180 /* splash_1x.json */,
 				395825B625948EE4007325AB /* Colors.xcassets */,
 				3958258325948E43007325AB /* Assets.xcassets */,
@@ -765,7 +765,7 @@
 				39518C7725A8FA2400F777D1 /* GoogleService-Info.plist in Resources */,
 				395825B725948EE4007325AB /* Colors.xcassets in Resources */,
 				3958258425948E43007325AB /* Assets.xcassets in Resources */,
-				39965F2525B2E20A00069860 /* heart_fill.json in Resources */,
+				122D6E2825B4571200F9D249 /* heart.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
